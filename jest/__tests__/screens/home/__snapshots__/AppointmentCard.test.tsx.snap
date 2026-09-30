@@ -1,0 +1,381 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppointmentCard matches the snapshot 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="Dr. Rohan Mehta, Tue, 29 Sep, 11:30 AM"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 27,
+        "borderWidth": 2,
+        "flexDirection": "column",
+        "gap": 18,
+        "padding": 24,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "gap": 18,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#2F7D6D",
+            "borderRadius": 35,
+            "flexShrink": 0,
+            "height": 70,
+            "justifyContent": "center",
+            "width": 70,
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={1.3}
+          style={
+            {
+              "color": "#FFFFFF",
+              "fontFamily": "Figtree_700Bold",
+              "fontSize": 24,
+            }
+          }
+        >
+          RM
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "flex": 1,
+            "flexDirection": "column",
+            "minWidth": 0,
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={1.3}
+          style={
+            {
+              "color": "#14213D",
+              "fontFamily": "Figtree_700Bold",
+              "fontSize": 22,
+              "fontWeight": "700",
+            }
+          }
+        >
+          Dr. Rohan Mehta
+        </Text>
+        <Text
+          maxFontSizeMultiplier={1.3}
+          style={
+            {
+              "color": "#6B7A8C",
+              "fontFamily": "Figtree_400Regular",
+              "fontSize": 19,
+            }
+          }
+        >
+          Cardiologist · Room 204
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "#DCEBE6",
+            "borderRadius": 15,
+            "paddingHorizontal": 15,
+            "paddingVertical": 6,
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={1.3}
+          style={
+            {
+              "color": "#2F7D6D",
+              "fontFamily": "Figtree_700Bold",
+              "fontSize": 18,
+              "fontWeight": "700",
+            }
+          }
+        >
+          Today
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "#EEF4F1",
+          "borderRadius": 18,
+          "flexDirection": "row",
+          "gap": 24,
+          "paddingHorizontal": 18,
+          "paddingVertical": 15,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "gap": 9,
+          }
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={24}
+          bbWidth={24}
+          fill="none"
+          focusable={false}
+          height={24}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 24,
+                "width": 24,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={24}
+        >
+          <RNSVGGroup
+            fill={null}
+            propList={
+              [
+                "fill",
+              ]
+            }
+          >
+            <RNSVGRect
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              height={16}
+              propList={
+                [
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                ]
+              }
+              rx={2}
+              stroke={
+                {
+                  "payload": 4279509309,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeWidth={1.8}
+              width={18}
+              x={3}
+              y={5}
+            />
+            <RNSVGPath
+              d="M3 10h18M8 3v4M16 3v4"
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4279509309,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeWidth={1.8}
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+        <Text
+          maxFontSizeMultiplier={1.3}
+          style={
+            {
+              "color": "#14213D",
+              "fontFamily": "Figtree_600SemiBold",
+              "fontSize": 19,
+              "fontWeight": "600",
+            }
+          }
+        >
+          Tue, 29 Sep
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "gap": 9,
+          }
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={24}
+          bbWidth={24}
+          fill="none"
+          focusable={false}
+          height={24}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 24,
+                "width": 24,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={24}
+        >
+          <RNSVGGroup
+            fill={null}
+            propList={
+              [
+                "fill",
+              ]
+            }
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4279509309,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeWidth={1.8}
+            >
+              <RNSVGCircle
+                cx={12}
+                cy={12}
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+                r={9}
+              />
+              <RNSVGPath
+                d="M12 7v5l3 2"
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              />
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+        <Text
+          maxFontSizeMultiplier={1.3}
+          style={
+            {
+              "color": "#14213D",
+              "fontFamily": "Figtree_600SemiBold",
+              "fontSize": 19,
+              "fontWeight": "600",
+            }
+          }
+        >
+          11:30 AM
+        </Text>
+      </View>
+    </View>
+  </View>
+</KeyboardProvider>
+`;

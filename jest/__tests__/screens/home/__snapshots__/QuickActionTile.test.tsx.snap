@@ -1,0 +1,689 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QuickActionTile matches the snapshot for the amber variant 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="Book visit"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 27,
+        "borderWidth": 2,
+        "flexBasis": "45%",
+        "flexDirection": "column",
+        "flexGrow": 1,
+        "gap": 15,
+        "padding": 21,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#FBEFD9",
+          "borderRadius": 21,
+          "flexShrink": 0,
+          "height": 65,
+          "justifyContent": "center",
+          "width": 65,
+        }
+      }
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={30}
+        bbWidth={30}
+        fill="none"
+        focusable={false}
+        height={30}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            {
+              "flex": 0,
+              "height": 30,
+              "width": 30,
+            },
+          ]
+        }
+        vbHeight={24}
+        vbWidth={24}
+        width={30}
+      >
+        <RNSVGGroup
+          fill={null}
+          propList={
+            [
+              "fill",
+            ]
+          }
+        >
+          <RNSVGRect
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            height={16}
+            propList={
+              [
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            rx={2}
+            stroke={
+              {
+                "payload": 4289029646,
+                "type": 0,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth={1.8}
+            width={18}
+            x={3}
+            y={5}
+          />
+          <RNSVGPath
+            d="M3 10h18M8 3v4M16 3v4"
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            stroke={
+              {
+                "payload": 4289029646,
+                "type": 0,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth={1.8}
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#14213D",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 22,
+          "fontWeight": "700",
+        }
+      }
+    >
+      Book visit
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`QuickActionTile matches the snapshot for the blue variant 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="Book visit"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 27,
+        "borderWidth": 2,
+        "flexBasis": "45%",
+        "flexDirection": "column",
+        "flexGrow": 1,
+        "gap": 15,
+        "padding": 21,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#DFE9F4",
+          "borderRadius": 21,
+          "flexShrink": 0,
+          "height": 65,
+          "justifyContent": "center",
+          "width": 65,
+        }
+      }
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={30}
+        bbWidth={30}
+        fill="none"
+        focusable={false}
+        height={30}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            {
+              "flex": 0,
+              "height": 30,
+              "width": 30,
+            },
+          ]
+        }
+        vbHeight={24}
+        vbWidth={24}
+        width={30}
+      >
+        <RNSVGGroup
+          fill={null}
+          propList={
+            [
+              "fill",
+            ]
+          }
+        >
+          <RNSVGRect
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            height={16}
+            propList={
+              [
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            rx={2}
+            stroke={
+              {
+                "payload": 4282019493,
+                "type": 0,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth={1.8}
+            width={18}
+            x={3}
+            y={5}
+          />
+          <RNSVGPath
+            d="M3 10h18M8 3v4M16 3v4"
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            stroke={
+              {
+                "payload": 4282019493,
+                "type": 0,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth={1.8}
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#14213D",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 22,
+          "fontWeight": "700",
+        }
+      }
+    >
+      Book visit
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`QuickActionTile matches the snapshot for the emergency variant 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="Book visit"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#E4572E",
+        "borderColor": "#E4572E",
+        "borderRadius": 27,
+        "borderWidth": 2,
+        "flexBasis": "45%",
+        "flexDirection": "column",
+        "flexGrow": 1,
+        "gap": 15,
+        "padding": 21,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "rgba(255,255,255,0.18)",
+          "borderRadius": 21,
+          "flexShrink": 0,
+          "height": 65,
+          "justifyContent": "center",
+          "width": 65,
+        }
+      }
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={30}
+        bbWidth={30}
+        fill="none"
+        focusable={false}
+        height={30}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            {
+              "flex": 0,
+              "height": 30,
+              "width": 30,
+            },
+          ]
+        }
+        vbHeight={24}
+        vbWidth={24}
+        width={30}
+      >
+        <RNSVGGroup
+          fill={null}
+          propList={
+            [
+              "fill",
+            ]
+          }
+        >
+          <RNSVGRect
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            height={16}
+            propList={
+              [
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            rx={2}
+            stroke={
+              {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth={1.8}
+            width={18}
+            x={3}
+            y={5}
+          />
+          <RNSVGPath
+            d="M3 10h18M8 3v4M16 3v4"
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            stroke={
+              {
+                "payload": 4294967295,
+                "type": 0,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth={1.8}
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#FFFFFF",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 22,
+          "fontWeight": "700",
+        }
+      }
+    >
+      Book visit
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`QuickActionTile matches the snapshot for the green variant 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="Book visit"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 27,
+        "borderWidth": 2,
+        "flexBasis": "45%",
+        "flexDirection": "column",
+        "flexGrow": 1,
+        "gap": 15,
+        "padding": 21,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#DCEBE6",
+          "borderRadius": 21,
+          "flexShrink": 0,
+          "height": 65,
+          "justifyContent": "center",
+          "width": 65,
+        }
+      }
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={30}
+        bbWidth={30}
+        fill="none"
+        focusable={false}
+        height={30}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          [
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            {
+              "flex": 0,
+              "height": 30,
+              "width": 30,
+            },
+          ]
+        }
+        vbHeight={24}
+        vbWidth={24}
+        width={30}
+      >
+        <RNSVGGroup
+          fill={null}
+          propList={
+            [
+              "fill",
+            ]
+          }
+        >
+          <RNSVGRect
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            height={16}
+            propList={
+              [
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            rx={2}
+            stroke={
+              {
+                "payload": 4281302381,
+                "type": 0,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth={1.8}
+            width={18}
+            x={3}
+            y={5}
+          />
+          <RNSVGPath
+            d="M3 10h18M8 3v4M16 3v4"
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+            propList={
+              [
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            stroke={
+              {
+                "payload": 4281302381,
+                "type": 0,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth={1.8}
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#14213D",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 22,
+          "fontWeight": "700",
+        }
+      }
+    >
+      Book visit
+    </Text>
+  </View>
+</KeyboardProvider>
+`;

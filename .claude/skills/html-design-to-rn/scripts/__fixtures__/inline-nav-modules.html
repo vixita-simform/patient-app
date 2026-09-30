@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fixture — inline-style export with tabs, a flow, and an orphan screen</title>
+<style>
+:root{ --color-neutral-0:#FFFFFF; }
+.page{display:none}
+.page.active{display:block}
+</style>
+</head>
+<body>
+<div class="device">
+  <nav class="tabbar">
+    <button data-tab="home">Home</button>
+    <button data-tab="jobs">Jobs</button>
+  </nav>
+  <div class="scroll">
+    <section class="page active" id="p-home"></section>
+    <section class="page" id="p-jobs"></section>
+    <section class="page" id="p-job"></section>
+    <section class="page" id="p-signin"></section>
+    <section class="page" id="p-setpw"></section>
+    <section class="page" id="p-done"></section>
+    <section class="page" id="p-orphan"></section>
+  </div>
+</div>
+<script id="appjs">
+var META = {
+  home: { title: 'Home' },
+  jobs: { title: 'Jobs' },
+  job: { title: 'Job Detail', back: 'jobs' }
+};
+var onboardSteps = ['signin', 'setpw', 'done'];
+function goStep(n){ showPage(onboardSteps[n]); }
+function showPage(id){ console.log('show', id); }
+</script>
+</body>
+</html>

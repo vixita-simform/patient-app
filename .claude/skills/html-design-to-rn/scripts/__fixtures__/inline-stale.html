@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fixture — inline-style export with stale, runtime-overwritten markup</title>
+<style>
+:root{
+  --color-green-500:#1F5634;
+  --color-neutral-0:#FFFFFF;
+  --space-4:16px;
+}
+.card{background:var(--color-neutral-0);border-radius:12px}
+.btn{background:var(--color-green-500);color:var(--color-neutral-0)}
+.page{display:none}
+.page.active{display:block}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="scroll">
+    <!--
+      p-signin ships a complete, plausible screen that renderSignin() replaces
+      at load. No size heuristic can tell this apart from an authoritative
+      screen — only the fact that a render function targets its id can.
+    -->
+    <section class="page active" id="p-signin">
+      <div class="card">
+        <h1>Welcome back</h1>
+        <label>Work email</label>
+        <input class="inp" type="email" value="alex@example.com">
+        <label>Password</label>
+        <input class="inp" type="password" value="hunter2">
+        <button class="btn" onclick="goStep(1)">Sign In</button>
+      </div>
+    </section>
+    <section class="page" id="p-plan">
+      <div class="card"><p>Choose a plan</p></div>
+    </section>
+    <section class="page" id="p-dashboard"></section>
+  </div>
+</div>
+<script id="appjs">
+function goStep(n) { console.log('step', n); }
+function renderSignin(){
+  document.getElementById('p-signin').innerHTML =
+    '<div class="card"><h1>Sign in to continue</h1>' +
+    '<label>Temporary password</label><input class="inp" value="Uc-7Pm9xQ2">' +
+    '<button class="btn">Sign in &amp; set up account</button></div>';
+}
+function renderDashboard(){
+  document.getElementById('p-dashboard').innerHTML = '<div class="card"><p>Today</p></div>';
+}
+renderSignin(); renderDashboard();
+</script>
+</body>
+</html>

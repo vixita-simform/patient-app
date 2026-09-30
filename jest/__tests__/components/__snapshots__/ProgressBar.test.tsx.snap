@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressBar matches the snapshot 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityRole="progressbar"
+    accessibilityValue={
+      {
+        "max": 100,
+        "min": 0,
+        "now": 72,
+      }
+    }
+    style={
+      {
+        "backgroundColor": "rgba(255,255,255,0.14)",
+        "borderRadius": 6,
+        "height": 12,
+        "overflow": "hidden",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#6FD3B8",
+          "borderRadius": 6,
+          "height": "100%",
+          "width": "72%",
+        }
+      }
+    />
+  </View>
+</KeyboardProvider>
+`;

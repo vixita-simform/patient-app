@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar matches the snapshot with default tone and size 1`] = `
+<KeyboardProvider>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#2F7D6D",
+        "borderRadius": 35,
+        "flexShrink": 0,
+        "height": 70,
+        "justifyContent": "center",
+        "width": 70,
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#FFFFFF",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 24,
+        }
+      }
+    >
+      AP
+    </Text>
+  </View>
+</KeyboardProvider>
+`;

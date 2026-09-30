@@ -1,0 +1,24 @@
+{
+  "source": {
+    "extractDir": "design/.extracted",
+    "screenSelector": "div.phone"
+  },
+  "project": {
+    "router": "expo-router",
+    "routesDir": "src/app",
+    "screensDir": "src/screens",
+    "componentsDir": "src/components",
+    "iconsDir": "src/assets/icons",
+    "themeDir": "src/theme",
+    "colorsFile": "src/theme/colors.ts",
+    "scaleFn": "scale",
+    "themeHook": "useTheme",
+    "textComponent": "AppText",
+    "formLibrary": null
+  },
+  "verify": {
+    "viewport": { "width": 375, "height": 812 },
+    "themes": ["light"],
+    "platform": "ios"
+  }
+}

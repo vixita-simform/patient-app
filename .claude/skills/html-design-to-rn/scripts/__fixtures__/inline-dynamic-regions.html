@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fixture — inline-style export with sub-view dynamic regions</title>
+<style>
+:root{ --color-neutral-0:#FFFFFF; }
+.page{display:none}
+.page.active{display:block}
+</style>
+</head>
+<body>
+<div class="device">
+  <header class="hdr"><span id="hdrTitle">Title</span></header>
+  <div class="scroll" id="scroll">
+    <section class="page active" id="p-job">
+      <div class="card"><div id="jobActivity"></div></div>
+    </section>
+    <section class="page" id="p-alpha">
+      <div class="card"><div id="sharedWidget"></div></div>
+    </section>
+    <section class="page" id="p-beta">
+      <div class="card"><div id="sharedWidget"></div></div>
+    </section>
+  </div>
+</div>
+<script id="appjs">
+function renderJobActivity(){ document.getElementById('jobActivity').innerHTML = '<p>Activity</p>'; }
+function openJobTab(tab){ if (tab === 'activity') renderJobActivity(); }
+function setHeaderTitle(t){ document.getElementById('hdrTitle').innerHTML = t; }
+function showPage(id){ setHeaderTitle(id); }
+function renderShared(){ document.getElementById('sharedWidget').innerHTML = '<p>Shared</p>'; }
+function renderGhost(){ document.getElementById('ghostRegion').innerHTML = '<p>Ghost</p>'; }
+function clearScroll(){ document.getElementById('scroll').innerHTML = ''; }
+</script>
+</body>
+</html>
