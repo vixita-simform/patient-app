@@ -3,6 +3,7 @@ import { Pressable, View } from "react-native";
 
 import { Avatar, CustomButton, CustomText, StatusBadge } from "../../../../components";
 import { CalendarIcon, ClockIcon, VideoIcon } from "../../../../assets/icons";
+import { APPOINTMENT_ACTION_ICON, Strings } from "../../../../constants";
 import { useTheme } from "../../../../hooks";
 import { Colors, scale } from "../../../../theme";
 import AppointmentCardStyles from "./AppointmentCardStyles";
@@ -31,7 +32,7 @@ const AppointmentCard = ({
 }: AppointmentCardProps): ReactElement => {
   const { styles, theme } = useTheme(AppointmentCardStyles);
   const iconColor = Colors[theme].navy;
-  const detail = `${specialtyLabel} · ${visitModeLabel}`;
+  const detail = `${specialtyLabel}${Strings.Common.dotSeparator}${visitModeLabel}`;
 
   return (
     <Pressable
@@ -66,7 +67,7 @@ const AppointmentCard = ({
             <CustomButton
               accessibilityLabel={action.label}
               disabled={action.disabled}
-              icon={action.icon === "video" ? (
+              icon={action.icon === APPOINTMENT_ACTION_ICON.video ? (
                 <VideoIcon color={Colors[theme].white} size={scale(16)} />
               ) : undefined}
               key={action.label}

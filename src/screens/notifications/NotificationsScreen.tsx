@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
-import { Fragment, useCallback } from "react";
-import { FlatList, View } from "react-native";
+import { Fragment } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import { BackIcon } from "../../assets/icons";
 import { CustomText, IconButton, Screen } from "../../components";
@@ -12,6 +12,8 @@ import NotificationsScreenStyles from "./NotificationsScreenStyles";
 import type { NotificationGroupViewData } from "./NotificationsScreenTypes";
 import useNotificationsScreen from "./useNotificationsScreen";
 
+const keyExtractor = (group: NotificationGroupViewData): string => group.id;
+
 /**
  * Notifications screen: header (back button, title, "Mark all read" action),
  * then a scrollable list of recency-grouped notification cards (Today /
@@ -21,24 +23,27 @@ import useNotificationsScreen from "./useNotificationsScreen";
  */
 export default function NotificationsScreen(): ReactElement {
   const { styles, theme } = useTheme(NotificationsScreenStyles);
-  const { groups, hasUnread, onPressBack, onPressMarkAllRead, onPressNotification } =
-    useNotificationsScreen();
+  const {
+    groups,
+    hasUnread,
+    markAllReadAccessibilityState,
+    onPressBack,
+    onPressMarkAllRead,
+    onPressNotification,
+  } = useNotificationsScreen();
 
-  const renderGroup = useCallback(
-    ({ item }: { item: NotificationGroupViewData }) => (
-      <View style={styles.group}>
-        <CustomText style={styles.groupLabel}>{item.label}</CustomText>
-        <View style={styles.card}>
-          {item.notifications.map((notification, index) => (
-            <Fragment key={notification.id}>
-              {index > 0 ? <View style={styles.divider} /> : null}
-              <NotificationRow notification={notification} onPress={onPressNotification} />
-            </Fragment>
-          ))}
-        </View>
+  const renderGroup = ({ item }: { item: NotificationGroupViewData }): ReactElement => (
+    <View style={styles.group}>
+      <CustomText style={styles.groupLabel}>{item.label}</CustomText>
+      <View style={styles.card}>
+        {item.notifications.map((notification, index) => (
+          <Fragment key={notification.id}>
+            {index > 0 ? <View style={styles.divider} /> : null}
+            <NotificationRow notification={notification} onPress={onPressNotification} />
+          </Fragment>
+        ))}
       </View>
-    ),
-    [styles, onPressNotification],
+    </View>
   );
 
   return (
@@ -51,8 +56,10 @@ export default function NotificationsScreen(): ReactElement {
           <CustomText style={styles.headerTitle}>{Strings.NotificationsScreen.title}</CustomText>
           <CustomText
             accessibilityRole="button"
-            style={[styles.markAllRead, !hasUnread && styles.markAllReadDisabled]}
-            onPress={hasUnread ? onPressMarkAllRead : undefined}
+            accessibilityState={markAllReadAccessibilityState}
+            disabled={!hasUnread}
+            style={StyleSheet.flatten([styles.markAllRead, !hasUnread && styles.markAllReadDisabled])}
+            onPress={onPressMarkAllRead}
           >
             {Strings.NotificationsScreen.markAllRead}
           </CustomText>
@@ -60,7 +67,7 @@ export default function NotificationsScreen(): ReactElement {
         <FlatList
           contentContainerStyle={styles.bodyContent}
           data={groups}
-          keyExtractor={(group) => group.id}
+          keyExtractor={keyExtractor}
           renderItem={renderGroup}
           showsVerticalScrollIndicator={false}
           style={styles.body}

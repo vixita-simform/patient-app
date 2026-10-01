@@ -1,3 +1,5 @@
+import type { AccessibilityState } from "react-native";
+
 import type { NotificationRowData } from "./components";
 
 /** One recency-bucketed group, with each notification's time label pre-formatted for display. */
@@ -11,6 +13,8 @@ export interface NotificationGroupViewData {
 export interface UseNotificationsScreenReturn {
   groups: readonly NotificationGroupViewData[];
   hasUnread: boolean;
+  /** Stable `{ disabled }` state for the "Mark all read" action. */
+  markAllReadAccessibilityState: AccessibilityState;
   onPressBack: () => void;
   onPressMarkAllRead: () => void;
   onPressNotification: (id: string) => void;

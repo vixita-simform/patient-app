@@ -31,8 +31,18 @@ const styles = (theme: ThemeMode) => {
       fontWeight: Fonts.weight.extraSemi,
       color: Colors[theme].navy,
     },
+    disabled: {
+      opacity: 0.5,
+    },
     body: {
       flex: 1,
+    },
+    notFoundText: {
+      fontFamily: Fonts.family.regular,
+      fontSize: Fonts.size.h4,
+      color: Colors[theme].muted,
+      textAlign: "center",
+      paddingTop: scale(24),
     },
     bodyContent: {
       flexDirection: "column",

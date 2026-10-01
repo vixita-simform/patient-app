@@ -1,6 +1,5 @@
-import type { ComponentType, ReactElement } from "react";
-import { useCallback } from "react";
-import { Pressable, View } from "react-native";
+import type { ReactElement } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 
 import {
   BellIcon,
@@ -11,25 +10,12 @@ import {
   PillIcon,
 } from "../../../../assets/icons";
 import { CustomText } from "../../../../components";
-import { NOTIFICATION_TYPE } from "../../../../constants";
+import { NOTIFICATION_TYPE, Strings } from "../../../../constants";
 import type { NotificationType } from "../../../../constants";
 import { useTheme } from "../../../../hooks";
-import { Colors, scale, type ColorKey } from "../../../../theme";
+import { Colors, scale } from "../../../../theme";
 import NotificationRowStyles from "./NotificationRowStyles";
-import type { NotificationRowProps } from "./NotificationRowTypes";
-
-interface IconProps {
-  size?: number;
-  color?: string;
-}
-
-interface NotificationTypeMeta {
-  Icon: ComponentType<IconProps>;
-  /** Icon-box tint style key (see `NotificationRowStyles`). */
-  boxStyleKey: "iconBoxGreen" | "iconBoxBlue" | "iconBoxCoral" | "iconBoxAmber";
-  /** Icon stroke colour token. Medicine uses `amberInk` (see resolved decision: `.ib-amber` has no direct token match). */
-  iconColorKey: ColorKey;
-}
+import type { NotificationRowProps, NotificationTypeMeta } from "./NotificationRowTypes";
 
 /** Maps each notification type to its icon, icon-box tint and stroke colour. */
 const NOTIFICATION_TYPE_META: Record<NotificationType, NotificationTypeMeta> = Object.freeze({
@@ -52,15 +38,22 @@ const NotificationRow = ({ notification, onPress }: NotificationRowProps): React
   const meta = NOTIFICATION_TYPE_META[notification.type] ?? NOTIFICATION_TYPE_META[NOTIFICATION_TYPE.queueUpdate];
   const { Icon } = meta;
   const iconColor = Colors[theme][meta.iconColorKey];
-  const notificationId = notification.id;
+  const accessibilityLabel = notification.unread
+    ? `${notification.title}, ${Strings.NotificationsScreen.unread}`
+    : notification.title;
 
-  const handlePress = useCallback(() => {
-    onPress?.(notificationId);
-  }, [notificationId, onPress]);
+  const handlePress = (): void => {
+    onPress?.(notification.id);
+  };
 
   return (
-    <Pressable accessibilityRole="button" style={styles.row} onPress={handlePress}>
-      <View style={[styles.iconBox, styles[meta.boxStyleKey]]}>
+    <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      style={styles.row}
+      onPress={handlePress}
+    >
+      <View style={StyleSheet.flatten([styles.iconBox, styles[meta.boxStyleKey]])}>
         <Icon color={iconColor} size={scale(20)} />
       </View>
       <View style={styles.text}>

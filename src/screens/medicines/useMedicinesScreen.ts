@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { useCallback, useMemo } from "react";
 
-import { DOSE_STATUS, medicinesDummyData } from "../../constants";
+import { DOSE_STATUS, medicinesDummyData, Strings } from "../../constants";
 import type { UseMedicinesScreenReturn } from "./MedicinesScreenTypes";
 
 /**
@@ -14,26 +14,17 @@ const useMedicinesScreen = (): UseMedicinesScreenReturn => {
 
   const dosesTakenLabel = useMemo(() => {
     const takenCount = doses.filter((dose) => dose.status === DOSE_STATUS.done).length;
-    return `${takenCount} of ${doses.length} taken`;
+    return `${takenCount} ${Strings.Common.of} ${doses.length} ${Strings.MedicinesScreen.dosesTakenSuffix}`;
   }, [doses]);
 
   const prescriberLine = useMemo(
-    () => `${activePrescription.prescriberName} · ${activePrescription.date}`,
+    () =>
+      `${activePrescription.prescriberName}${Strings.Common.dotSeparator}${activePrescription.date}`,
     [activePrescription.prescriberName, activePrescription.date],
   );
 
   const onBackPress = useCallback(() => {
     router.back();
-  }, []);
-
-  // The header "+" button has no target defined by the design (spec §8: no handler).
-  const onAddPress = useCallback(() => {
-    // No-op placeholder until an "add medicine" flow/route is specified.
-  }, []);
-
-  // "Order refill from hospital pharmacy" has no destination defined by the design (spec §9 Q6).
-  const onOrderRefillPress = useCallback(() => {
-    // No-op placeholder until a refill flow/route is specified.
   }, []);
 
   return {
@@ -42,8 +33,10 @@ const useMedicinesScreen = (): UseMedicinesScreenReturn => {
     prescriberLine,
     medicines: activePrescription.medicines,
     onBackPress,
-    onAddPress,
-    onOrderRefillPress,
+    // The header "+" (spec §8) and "Order refill" (spec §9 Q6) have no flow yet, so
+    // no handler is returned and the screen renders both buttons disabled.
+    onAddPress: undefined,
+    onOrderRefillPress: undefined,
   };
 };
 

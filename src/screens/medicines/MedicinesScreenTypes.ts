@@ -7,6 +7,8 @@ export interface UseMedicinesScreenReturn {
   prescriberLine: string;
   medicines: readonly MedicineEntry[];
   onBackPress: () => void;
-  onAddPress: () => void;
-  onOrderRefillPress: () => void;
+  /** Undefined until an "add medicine" flow exists; the header "+" renders disabled. */
+  onAddPress?: () => void;
+  /** Undefined until a refill flow exists; "Order refill" renders disabled. */
+  onOrderRefillPress?: () => void;
 }

@@ -20,6 +20,13 @@ const Common = freezeStringsObject({
   back: "Back",
   cancel: "Cancel",
   done: "Done",
+  of: "of",
+  inPerson: "In-person",
+  videoCall: "Video call",
+  bloodGroup: "Blood group",
+  // Separators between two dynamic values, e.g. "Dr. Rao · 22 Sep", "13.5 – 17.5".
+  dotSeparator: " · ",
+  rangeSeparator: " – ",
 });
 
 const TabBar = freezeStringsObject({
@@ -100,15 +107,12 @@ const BookAppointmentScreen = freezeStringsObject({
   changeMonth: "Change month",
   availableSlots: "Available slots",
   visitType: "Visit type",
-  inPerson: "In-person",
   atTheHospital: "At the hospital",
-  videoCall: "Video call",
   fromHome: "From home",
   reasonForVisit: "Reason for visit",
   reasonPlaceholder: "Describe your symptoms or reason for the visit",
   selectATimeSlot: "Select a time slot",
   confirmBooking: "Confirm booking",
-  notFound: "Doctor not found",
 });
 
 const MyAppointmentsScreen = freezeStringsObject({
@@ -122,8 +126,6 @@ const MyAppointmentsScreen = freezeStringsObject({
   reschedule: "Reschedule",
   getDirections: "Get directions",
   joinCall: "Join call",
-  inPerson: "In-person",
-  videoCall: "Video call",
   emptyMessage: "No appointments here yet",
   errorMessage: "Something went wrong. Please try again.",
 });
@@ -138,6 +140,20 @@ const RecordsScreen = freezeStringsObject({
 
 const ProfileScreen = freezeStringsObject({
   title: "Profile",
+  editProfile: "Edit profile",
+  uhidPrefix: "UHID: ",
+  yrsSuffix: " yrs",
+  kgSuffix: " kg",
+  age: "Age",
+  weight: "Weight",
+  personalMedicalInfo: "Personal & medical info",
+  familyMembers: "Family members",
+  insuranceClaims: "Insurance & claims",
+  vitalsHistory: "Vitals history",
+  settings: "Settings",
+  helpSupport: "Help & support",
+  logOut: "Log out",
+  logOutFailed: "Could not log out. Please try again.",
 });
 
 const LabReportDetailScreen = freezeStringsObject({
@@ -150,7 +166,7 @@ const LabReportDetailScreen = freezeStringsObject({
   low: "Low",
   borderline: "Borderline",
   // Prefix for the per-result range line, e.g. "Normal 13.5 – 17.5".
-  normalRangePrefix: "Normal ",
+  normalRangePrefix: "Normal",
   downloadPdf: "Download PDF",
   notFound: "Report not found",
 });
@@ -161,6 +177,8 @@ const MedicinesScreen = freezeStringsObject({
   todaysDoses: "Today's doses",
   activePrescription: "Active prescription",
   taken: "Taken",
+  // "2 of 3 taken": the counts come from data.
+  dosesTakenSuffix: "taken",
   refillSoon: "Refill soon",
   stockLeft: "Stock left",
   orderRefill: "Order refill from hospital pharmacy",
@@ -178,6 +196,64 @@ const NotificationsScreen = freezeStringsObject({
   hrAgoSuffix: "hr ago",
 });
 
+const PersonalAndMedicalInfoScreen = freezeStringsObject({
+  title: "Medical info",
+  fullName: "Full name",
+  dateOfBirth: "Date of birth",
+  gender: "Gender",
+  male: "Male",
+  female: "Female",
+  other: "Other",
+  bloodAPositive: "A+",
+  bloodANegative: "A\u2212",
+  bloodBPositive: "B+",
+  bloodBNegative: "B\u2212",
+  bloodOPositive: "O+",
+  bloodONegative: "O\u2212",
+  bloodABPositive: "AB+",
+  bloodABNegative: "AB\u2212",
+  allergies: "Allergies",
+  addAllergy: "+ Add",
+  removeAllergy: "Remove allergy",
+  existingConditions: "Existing conditions",
+  emergencyContact: "Emergency contact",
+  editPhoto: "Edit photo",
+  saveChanges: "Save changes",
+});
+
+/**
+ * Sign in screen.
+ */
+const SignInScreen = freezeStringsObject({
+  hospitalName: "CAREWELL HOSPITAL",
+  title: "Sign in to your\npatient account",
+  subtitle: "Use the mobile number you registered with the hospital.",
+  tabMobileNumber: "Mobile number",
+  tabPatientId: "Patient ID",
+  mobilePlaceholder: "98765 43210",
+  patientIdPlaceholder: "e.g. CW-102938",
+  getOtp: "Get OTP",
+  or: "or",
+  signInWithPassword: "Sign in with password",
+  newPatientPrefix: "New patient? Register at the hospital help desk or on ",
+  websiteLink: "carewell.in",
+  newPatientSuffix: ", then sign in here.",
+  emergencyCall: "Emergency? Call 108",
+  selectCountry: "Select country code",
+  closeCountryPicker: "Close country list",
+  changeCountryCode: "Change country code",
+  mobileRequired: "Enter your mobile number",
+  mobileDigitsOnly: "Use digits only",
+  mobileLengthPrefix: "Mobile number must be ",
+  mobileLengthSuffix: " digits",
+  mobileInvalidStart: "Enter a valid mobile number for this country",
+  patientIdRequired: "Enter your patient ID",
+  patientIdTooShort: "Patient ID must be at least 4 characters",
+  patientIdInvalid: "Use letters, numbers and hyphens only",
+  signInFailed: "Could not sign in. Please try again.",
+  callFailed: "Could not start the call. Please dial 108 from your phone.",
+});
+
 export default Object.freeze({
   Common,
   TabBar,
@@ -192,4 +268,6 @@ export default Object.freeze({
   LabReportDetailScreen,
   MedicinesScreen,
   NotificationsScreen,
+  PersonalAndMedicalInfoScreen,
+  SignInScreen,
 });

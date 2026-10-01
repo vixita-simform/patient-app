@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthInput matches the snapshot as a mobile field with the country picker 1`] = `
+<KeyboardProvider>
+  <View
+    style={
+      {
+        "flexDirection": "column",
+        "gap": 12,
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#44525F",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 19,
+          "fontWeight": "600",
+        }
+      }
+    >
+      Mobile number
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#DDE5E1",
+          "borderRadius": 21,
+          "borderWidth": 2,
+          "flexDirection": "row",
+          "gap": 18,
+          "height": 76,
+          "paddingHorizontal": 21,
+          "paddingVertical": 0,
+        }
+      }
+    >
+      <View
+        accessibilityLabel="Change country code"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={12}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "gap": 6,
+          }
+        }
+      >
+        <Text
+          maxFontSizeMultiplier={1.3}
+          style={
+            {
+              "color": "#14213D",
+              "fontFamily": "Figtree_700Bold",
+              "fontSize": 22,
+              "fontWeight": "700",
+            }
+          }
+        >
+          +91
+        </Text>
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={24}
+          bbWidth={24}
+          fill="none"
+          focusable={false}
+          height={24}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 24,
+                "width": 24,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={24}
+        >
+          <RNSVGGroup
+            fill={null}
+            propList={
+              [
+                "fill",
+              ]
+            }
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4285233804,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeWidth={1.8}
+            >
+              <RNSVGPath
+                d="m6 9 6 6 6-6"
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              />
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "#DDE5E1",
+            "height": 35,
+            "width": 2,
+          }
+        }
+      />
+      <TextInput
+        accessibilityLabel="Mobile number"
+        autoCorrect={false}
+        keyboardType="number-pad"
+        maxLength={20}
+        onBlur={[Function]}
+        onChangeText={[MockFunction]}
+        onFocus={[Function]}
+        placeholder="98765 43210"
+        placeholderTextColor="#6B7A8C"
+        returnKeyType="done"
+        style={
+          {
+            "color": "#14213D",
+            "flex": 1,
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 22,
+            "height": "100%",
+            "padding": 0,
+          }
+        }
+        value=""
+      />
+    </View>
+  </View>
+</KeyboardProvider>
+`;

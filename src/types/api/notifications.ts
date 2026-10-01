@@ -1,7 +1,7 @@
 import type { NotificationType } from "../../constants";
 
 /** One notification row, as returned by the API (flat, ungrouped). */
-export interface Notification {
+export interface NotificationItem {
   id: string;
   type: NotificationType;
   title: string;
@@ -14,10 +14,10 @@ export interface Notification {
 export interface NotificationGroup {
   id: string;
   label: string;
-  notifications: readonly Notification[];
+  notifications: readonly NotificationItem[];
 }
 
 /** API response shape for Notifications (GET /patients/me/notifications). */
 export interface NotificationListResponse {
-  notifications: readonly Notification[];
+  notifications: readonly NotificationItem[];
 }

@@ -29,6 +29,7 @@ export default function MedicinesScreen(): ReactElement {
     onAddPress,
     onOrderRefillPress,
   } = useMedicinesScreen();
+  const isAddDisabled = !onAddPress;
 
   return (
     <Screen>
@@ -40,6 +41,7 @@ export default function MedicinesScreen(): ReactElement {
           <CustomText style={styles.headerTitle}>{Strings.MedicinesScreen.title}</CustomText>
           <IconButton
             accessibilityLabel={Strings.MedicinesScreen.addMedicine}
+            disabled={isAddDisabled}
             onPress={onAddPress}
           >
             <PlusIcon color={Colors[theme].navy} size={scale(20)} />

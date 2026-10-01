@@ -1,7 +1,6 @@
-import type { VisitMode } from "../../constants";
+import type { TimeSlotStatus } from "../../constants";
 
-/** Visual/selection state of a single time slot. */
-export type TimeSlotStatus = "available" | "selected" | "taken" | "past";
+export type { TimeSlotStatus };
 
 /** One 30-minute bookable slot. */
 export interface TimeSlot {
@@ -10,18 +9,4 @@ export interface TimeSlot {
   /** Display label, e.g. "10:00" or "1:30". */
   label: string;
   status: TimeSlotStatus;
-}
-
-/** One selectable visit type ("In-person" / "Video call"). */
-export type VisitTypeId = VisitMode;
-
-/** One day cell in the horizontal date strip. */
-export interface DateStripDay {
-  /** ISO "YYYY-MM-DD" key. */
-  id: string;
-  weekday: string;
-  dayNumber: string;
-  /** Past day relative to "today", shown dimmed and disabled. */
-  disabled: boolean;
-  date: Date;
 }

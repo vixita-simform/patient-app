@@ -1,5 +1,4 @@
-import type { DoseStatus } from "../../constants";
-import type { StatusBadgeTone } from "../../components";
+import type { DoseStatus, MedicineTint, StatusBadgeTone } from "../../constants";
 
 /** One chip in the "Today's doses" strip. */
 export interface DoseEntry {
@@ -17,7 +16,7 @@ export interface MedicineEntry {
   statusLabel: string;
   statusTone: StatusBadgeTone;
   /** Icon-box / stock-fill tint key, distinct from the badge tone (badge has no "blue"). */
-  tintKey: "green" | "blue" | "coral";
+  tintKey: MedicineTint;
   /** Dosage line, e.g. "1 tablet · after dinner · 30 days". */
   dosage: string;
   /** Units of stock remaining, e.g. 18 of 30. */

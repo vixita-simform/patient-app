@@ -1,6 +1,7 @@
 import { screen } from "@testing-library/react-native";
 
-import LabResultRow from "../../../../src/screens/lab-report-detail/components/lab-result-row/LabResultRow";
+import { STATUS_BADGE_TONE, Strings } from "../../../../src/constants";
+import { LabResultRow } from "../../../../src/screens/lab-report-detail/components";
 import type { LabResultRowData } from "../../../../src/screens/lab-report-detail/LabReportDetailScreenTypes";
 import { RenderWrapper } from "../../../Wrapper";
 
@@ -11,8 +12,8 @@ const result: LabResultRowData = {
   unit: "g/dL",
   normalMin: 12,
   normalMax: 16,
-  status: "green",
-  statusLabel: "Normal",
+  status: STATUS_BADGE_TONE.green,
+  statusLabel: Strings.LabReportDetailScreen.normal,
   markerPercent: 50,
 };
 
@@ -27,5 +28,15 @@ describe("LabResultRow", () => {
     expect(screen.getByText(result.name)).toBeOnTheScreen();
     expect(screen.getByText(result.statusLabel)).toBeOnTheScreen();
     expect(screen.getByText(result.unit)).toBeOnTheScreen();
+    expect(
+      screen.getByText(
+        `${Strings.LabReportDetailScreen.normalRangePrefix} 12${Strings.Common.rangeSeparator}16`,
+      ),
+    ).toBeOnTheScreen();
+  });
+
+  it("groups large values with Indian digit grouping", async () => {
+    await RenderWrapper(<LabResultRow isDivided result={{ ...result, value: 74000 }} />);
+    expect(screen.getByText(/74,000/)).toBeOnTheScreen();
   });
 });

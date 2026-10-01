@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native";
 
 import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
+import { RANGE_BAND } from "./LabResultRowConstants";
+
+/** Marker diameter; the rail is inset by half of it so the marker never overhangs the track. */
+const MARKER_SIZE = scale(14);
+const MARKER_HALF = MARKER_SIZE / 2;
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
@@ -48,10 +53,20 @@ const styles = (theme: ThemeMode) =>
       position: "relative",
       borderRadius: scale(3),
     },
+    // Inset rail that both the band and the marker are positioned in: the marker is
+    // centred on its percent (translateX below), so a half-marker inset on each side
+    // keeps it inside the track at 0% and 100%.
+    rangeRail: {
+      position: "absolute",
+      top: 0,
+      bottom: 0,
+      left: MARKER_HALF,
+      right: MARKER_HALF,
+    },
     rangeOk: {
       position: "absolute",
-      left: "30%",
-      width: "40%",
+      left: `${RANGE_BAND.start}%`,
+      width: `${RANGE_BAND.width}%`,
       height: "100%",
       // design-drift[backgroundColor]: literal '#BFE0D6' has no matching token; added Colors.rangeNormalBand
       backgroundColor: Colors[theme].rangeNormalBand,
@@ -60,8 +75,9 @@ const styles = (theme: ThemeMode) =>
     rangeMark: {
       position: "absolute",
       top: scale(-4),
-      width: scale(14),
-      height: scale(14),
+      width: MARKER_SIZE,
+      height: MARKER_SIZE,
+      transform: [{ translateX: -MARKER_HALF }],
       borderWidth: scale(3),
       borderColor: Colors[theme].white,
       // design-drift[box-shadow]: CSS `0 0 0 1px #DDE5E1` ring; RN shadow can't reproduce a

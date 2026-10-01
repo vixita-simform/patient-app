@@ -10,12 +10,18 @@ const styles = (theme: ThemeMode) => {
     padding: scale(16),
     borderRadius: scale(18),
   } as const;
+  const iconBtn = {
+    width: scale(40),
+    height: scale(40),
+    backgroundColor: Colors[theme].card,
+    borderWidth: scale(1),
+    borderColor: Colors[theme].line,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: scale(12),
+  } as const;
 
   return StyleSheet.create({
-    screen: {
-      flex: 1,
-      backgroundColor: Colors[theme].background,
-    },
     header: {
       flexDirection: "row",
       alignItems: "center",
@@ -32,17 +38,10 @@ const styles = (theme: ThemeMode) => {
       fontWeight: Fonts.weight.extraSemi,
       color: Colors[theme].navy,
     },
-    iconBtn: {
-      width: scale(40),
-      height: scale(40),
-      backgroundColor: Colors[theme].card,
-      borderWidth: scale(1),
-      borderColor: Colors[theme].line,
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: scale(12),
-    },
+    iconBtn,
+    /** Invisible spacer that keeps the header title centred. */
     iconBtnGhost: {
+      ...iconBtn,
       backgroundColor: Colors[theme].transparent,
       borderColor: Colors[theme].transparent,
     },
@@ -69,7 +68,8 @@ const styles = (theme: ThemeMode) => {
     col: {
       flexDirection: "column",
     },
-    flex1: {
+    doctorInfo: {
+      flexDirection: "column",
       flex: 1,
       minWidth: 0,
     },

@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileStatsStrip matches the snapshot 1`] = `
+<KeyboardProvider>
+  <View
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 27,
+        "borderWidth": 2,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "column",
+          "gap": 3,
+          "paddingHorizontal": 6,
+          "paddingVertical": 21,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#14213D",
+            "fontFamily": "Figtree_700Bold",
+            "fontSize": 25,
+            "fontWeight": "700",
+          }
+        }
+      >
+        B+
+      </Text>
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#6B7A8C",
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 18,
+          }
+        }
+      >
+        Blood group
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "borderLeftColor": "#DDE5E1",
+          "borderLeftWidth": 2,
+          "flex": 1,
+          "flexDirection": "column",
+          "gap": 3,
+          "paddingHorizontal": 6,
+          "paddingVertical": 21,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#14213D",
+            "fontFamily": "Figtree_700Bold",
+            "fontSize": 25,
+            "fontWeight": "700",
+          }
+        }
+      >
+        34 yrs
+      </Text>
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#6B7A8C",
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 18,
+          }
+        }
+      >
+        Age
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "borderLeftColor": "#DDE5E1",
+          "borderLeftWidth": 2,
+          "flex": 1,
+          "flexDirection": "column",
+          "gap": 3,
+          "paddingHorizontal": 6,
+          "paddingVertical": 21,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#14213D",
+            "fontFamily": "Figtree_700Bold",
+            "fontSize": 25,
+            "fontWeight": "700",
+          }
+        }
+      >
+        72 kg
+      </Text>
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#6B7A8C",
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 18,
+          }
+        }
+      >
+        Weight
+      </Text>
+    </View>
+  </View>
+</KeyboardProvider>
+`;

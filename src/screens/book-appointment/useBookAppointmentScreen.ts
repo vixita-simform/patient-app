@@ -1,7 +1,7 @@
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { TextInput, ViewStyle } from "react-native";
+import type { LayoutChangeEvent, TextInput, ViewStyle } from "react-native";
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -9,92 +9,30 @@ import {
   findADoctorDummyData,
   getDoctorProfileDetails,
   STACK_ROUTES,
+  Strings,
+  TIME_SLOT_STATUS,
   VISIT_MODE,
+  type VisitMode,
 } from "../../constants";
-import type {
-  DateStripDay,
-  TimeSlot,
-  VisitTypeId,
-} from "../../types/api/bookAppointment";
-import { formatCurrency, formatDate, formatTime, WEEKDAYS } from "../../utils";
+import { scale } from "../../theme";
+import type { TimeSlot } from "../../types";
+import {
+  buildDateStrip,
+  buildTimeSlots,
+  formatCurrency,
+  formatDate,
+  formatMonthYear,
+  formatTime,
+  startOfDay,
+  toLocalDayId,
+} from "../../utils";
 import type {
   BookAppointmentDoctorData,
   UseBookAppointmentScreenReturn,
 } from "./BookAppointmentScreenTypes";
 
-/** Number of days shown in the horizontal date strip, centred a day before "today". */
-const DATE_STRIP_DAYS = 6;
-const DATE_STRIP_LEAD_DAYS = 1;
-/** Booked-slot mock: every 3rd slot renders as taken, since there is no backend yet. */
-const TAKEN_SLOT_INTERVAL = 3;
-/** 30-minute slots, 10:00 AM through the last bookable start at 2:30 PM. */
-const SLOT_START_HOUR = 10;
-const SLOT_END_HOUR = 15;
-const SLOT_STEP_MINUTES = 30;
-
-/** Builds the 10:00-2:30 half-hour slot list, mocking every 3rd slot as taken and marking
- * any slot at or before `now` as past when `date` is today. */
-function buildTimeSlots(date: Date, now: Date): TimeSlot[] {
-  const isToday =
-    date.getFullYear() === now.getFullYear() &&
-    date.getMonth() === now.getMonth() &&
-    date.getDate() === now.getDate();
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
-
-  const slots: TimeSlot[] = [];
-  let index = 0;
-  for (let hour = SLOT_START_HOUR; hour < SLOT_END_HOUR; hour += 1) {
-    for (let minute = 0; minute < 60; minute += SLOT_STEP_MINUTES) {
-      const totalMinutes = hour * 60 + minute;
-      if (totalMinutes >= SLOT_END_HOUR * 60) {
-        break;
-      }
-      const displayHour = hour % 12 || 12;
-      const label = `${displayHour}:${String(minute).padStart(2, "0")}`;
-      const isPast = isToday && totalMinutes <= nowMinutes;
-      const status: TimeSlot["status"] = isPast
-        ? "past"
-        : (index + 1) % TAKEN_SLOT_INTERVAL === 0
-          ? "taken"
-          : "available";
-      slots.push({
-        id: `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`,
-        label,
-        status,
-      });
-      index += 1;
-    }
-  }
-  return slots;
-}
-
-/** Builds the horizontal date strip: `DATE_STRIP_LEAD_DAYS` before `centerDate`, rest after. */
-function buildDateStrip(centerDate: Date, today: Date): DateStripDay[] {
-  const start = new Date(centerDate);
-  start.setDate(start.getDate() - DATE_STRIP_LEAD_DAYS);
-  const todayStart = new Date(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate(),
-  );
-
-  return Array.from({ length: DATE_STRIP_DAYS }, (_, offset) => {
-    const date = new Date(start);
-    date.setDate(start.getDate() + offset);
-    const dateStart = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-    );
-    return {
-      id: date.toISOString().slice(0, 10),
-      weekday: WEEKDAYS[date.getDay()],
-      dayNumber: String(date.getDate()),
-      disabled: dateStart < todayStart,
-      date,
-    };
-  });
-}
+/** Matches `footerBar`'s paddingBottom in BookAppointmentScreenStyles. */
+const FOOTER_BOTTOM_BASE = 14;
 
 /**
  * State and handlers for the Book appointment screen.
@@ -116,69 +54,75 @@ export default function useBookAppointmentScreen(): UseBookAppointmentScreenRetu
     return summary && details ? { summary, details } : null;
   }, [id]);
 
-  const today = useMemo(() => new Date(), []);
-  const [selectedDate, setSelectedDate] = useState<Date>(today);
-  const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(() =>
-    buildTimeSlots(today, today),
-  );
+  // Re-read on every date change so "today" and past slots don't go stale across midnight.
+  const [now, setNow] = useState(() => new Date());
+  const [selectedDate, setSelectedDate] = useState(() => startOfDay(now));
+  // Single source of truth for the selection; slot statuses never store "selected".
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
-  const [selectedVisitType, setSelectedVisitType] =
-    useState<VisitTypeId>(VISIT_MODE.inPerson);
+  const [selectedVisitType, setSelectedVisitType] = useState<VisitMode>(
+    VISIT_MODE.inPerson,
+  );
   const [reason, setReason] = useState("");
+  const [footerHeight, setFooterHeight] = useState(0);
+  const [isIosPickerVisible, setIsIosPickerVisible] = useState(false);
+
+  const today = useMemo(() => startOfDay(now), [now]);
+  const baseSlots = useMemo(
+    () => buildTimeSlots(selectedDate, now),
+    [selectedDate, now],
+  );
+  const isSlotSelected = baseSlots.some(
+    (slot) =>
+      slot.id === selectedSlotId && slot.status === TIME_SLOT_STATUS.available,
+  );
+  const timeSlots = useMemo<TimeSlot[]>(
+    () =>
+      baseSlots.map((slot) =>
+        slot.id === selectedSlotId && slot.status === TIME_SLOT_STATUS.available
+          ? { ...slot, status: TIME_SLOT_STATUS.selected }
+          : slot,
+      ),
+    [baseSlots, selectedSlotId],
+  );
 
   const dateStripDays = useMemo(
     () => buildDateStrip(selectedDate, today),
     [selectedDate, today],
   );
-  const selectedDateId = selectedDate.toISOString().slice(0, 10);
-
-  const monthLabel = useMemo(
-    () =>
-      selectedDate.toLocaleDateString("en-US", {
-        month: "long",
-        year: "numeric",
-      }),
-    [selectedDate],
-  );
+  const selectedDateId = toLocalDayId(selectedDate);
+  const monthLabel = useMemo(() => formatMonthYear(selectedDate), [selectedDate]);
 
   const footerInsetStyle = useMemo<ViewStyle>(
-    () => ({ paddingBottom: bottom }),
+    // Keep the footer's own bottom padding and add the safe-area inset on top of it.
+    () => ({ paddingBottom: scale(FOOTER_BOTTOM_BASE) + bottom }),
     [bottom],
   );
 
   const summaryLabel = useMemo(() => {
-    if (!selectedSlotId) {
+    if (!selectedSlotId || !isSlotSelected) {
       return "";
     }
     const [hour, minute] = selectedSlotId.split(":").map(Number);
     const withTime = new Date(selectedDate);
     withTime.setHours(hour, minute, 0, 0);
-    return `${formatDate(selectedDate)} · ${formatTime(withTime)}`;
-  }, [selectedDate, selectedSlotId]);
+    return `${formatDate(selectedDate)}${Strings.Common.dotSeparator}${formatTime(withTime)}`;
+  }, [selectedDate, selectedSlotId, isSlotSelected]);
 
   const feeLabel = useMemo(
     () => (doctor ? formatCurrency(doctor.details.consultationFee) : ""),
     [doctor],
   );
+  const doctorSubtitle = doctor
+    ? `${doctor.summary.specialtyLabel}${Strings.Common.dotSeparator}${feeLabel}`
+    : "";
 
   const onBackPress = useCallback(() => {
     if (router.canGoBack()) {
       router.back();
     } else {
-      router.replace(STACK_ROUTES.doctorProfile);
+      router.replace({ pathname: STACK_ROUTES.doctorProfile, params: { id } });
     }
-  }, []);
-
-  const [isIosPickerVisible, setIsIosPickerVisible] = useState(false);
-
-  const onDatePicked = useCallback(
-    (date: Date) => {
-      setSelectedDate(date);
-      setSelectedSlotId(null);
-      setTimeSlots(buildTimeSlots(date, today));
-    },
-    [today],
-  );
+  }, [id]);
 
   /** Opens the native date picker: Android's imperative API, iOS's inline/modal component. */
   const onChangeMonthPress = useCallback(() => {
@@ -190,24 +134,23 @@ export default function useBookAppointmentScreen(): UseBookAppointmentScreenRetu
         minimumDate: today,
         onChange: (_event, date) => {
           if (date) {
-            onDatePicked(date);
+            setNow(new Date());
+            setSelectedDate(startOfDay(date));
+            setSelectedSlotId(null);
           }
         },
       });
       return;
     }
     setIsIosPickerVisible(true);
-  }, [onDatePicked, selectedDate, today]);
+  }, [selectedDate, today]);
 
-  const onIosDateChange = useCallback(
-    (_event: unknown, date?: Date) => {
-      setIsIosPickerVisible(false);
-      if (date) {
-        onDatePicked(date);
-      }
-    },
-    [onDatePicked],
-  );
+  const onIosDateChange = useCallback((date: Date) => {
+    setIsIosPickerVisible(false);
+    setNow(new Date());
+    setSelectedDate(startOfDay(date));
+    setSelectedSlotId(null);
+  }, []);
 
   const onDismissIosPicker = useCallback(() => {
     setIsIosPickerVisible(false);
@@ -217,47 +160,26 @@ export default function useBookAppointmentScreen(): UseBookAppointmentScreenRetu
     (dayId: string) => {
       const match = dateStripDays.find((day) => day.id === dayId);
       if (match && !match.disabled) {
+        setNow(new Date());
         setSelectedDate(match.date);
         setSelectedSlotId(null);
-        setTimeSlots(buildTimeSlots(match.date, today));
       }
     },
-    [dateStripDays, today],
+    [dateStripDays],
   );
 
   const onSelectSlot = useCallback(
     (slotId: string) => {
-      setTimeSlots((current) =>
-        current.map((slot) => {
-          if (slot.status === "taken" || slot.status === "past") {
-            return slot;
-          }
-          if (slot.id === slotId) {
-            return { ...slot, status: "selected" };
-          }
-          return slot.status === "selected"
-            ? { ...slot, status: "available" }
-            : slot;
-        }),
-      );
-      setSelectedSlotId((current) => {
-        const target = current === slotId ? null : slotId;
-        if (target) {
-          const targetSlot = timeSlots.find((slot) => slot.id === target);
-          if (
-            targetSlot &&
-            (targetSlot.status === "taken" || targetSlot.status === "past")
-          ) {
-            return current;
-          }
-        }
-        return target;
-      });
+      const target = baseSlots.find((slot) => slot.id === slotId);
+      if (target?.status !== TIME_SLOT_STATUS.available) {
+        return;
+      }
+      setSelectedSlotId((current) => (current === slotId ? null : slotId));
     },
-    [timeSlots],
+    [baseSlots],
   );
 
-  const onSelectVisitType = useCallback((visitType: VisitTypeId) => {
+  const onSelectVisitType = useCallback((visitType: VisitMode) => {
     setSelectedVisitType(visitType);
   }, []);
 
@@ -265,7 +187,12 @@ export default function useBookAppointmentScreen(): UseBookAppointmentScreenRetu
     setReason(value);
   }, []);
 
-  // TODO: booking confirmation flow (API call / success screen) not built yet.
+  const onFooterLayout = useCallback((event: LayoutChangeEvent) => {
+    setFooterHeight(event.nativeEvent.layout.height);
+  }, []);
+
+  // TODO: pending the booking API (request + success screen). Until then the confirm
+  // button stays disabled without a selected slot, and pressing it does nothing.
   const onConfirmPress = useCallback(() => {}, []);
 
   return {
@@ -278,18 +205,22 @@ export default function useBookAppointmentScreen(): UseBookAppointmentScreenRetu
     dateStripDays,
     selectedDateId,
     timeSlots,
-    selectedSlotId,
+    selectedSlotId: isSlotSelected ? selectedSlotId : null,
     selectedVisitType,
     reason,
+    doctorSubtitle,
     summaryLabel,
     feeLabel,
     footerInsetStyle,
+    footerHeight,
+    isConfirmDisabled: !isSlotSelected,
     reasonInputRef,
     isIosPickerVisible,
     onBackPress,
     onChangeMonthPress,
     onIosDateChange,
     onDismissIosPicker,
+    onFooterLayout,
     onSelectDate,
     onSelectSlot,
     onSelectVisitType,

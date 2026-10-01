@@ -1,8 +1,11 @@
 import {
   APPOINTMENT_STATUS,
   DOSE_STATUS,
+  MEDICINE_TINT,
   NOTIFICATION_TYPE,
+  RECORD_TRAILING_KIND,
   RECORD_TYPE,
+  STATUS_BADGE_TONE,
   VISIT_MODE,
 } from "./Constants";
 import type {
@@ -12,9 +15,12 @@ import type {
   HomeDashboardResponse,
   LabReportDetail,
   MedicinesResponse,
-  Notification,
+  NotificationItem,
   RecordListResponse,
 } from "../types";
+
+/** Record id of the latest lab report; the Home "Lab reports" shortcut opens it. */
+export const LATEST_LAB_REPORT_ID = "rec_cbc";
 
 /** Stand-in for the Home dashboard API until the backend is wired up. */
 export const homeScreenDummyData: HomeDashboardResponse = {
@@ -228,11 +234,11 @@ export const recordsDummyData: RecordListResponse = {
       monthLabel: "September 2026",
       records: [
         {
-          id: "rec_cbc",
+          id: LATEST_LAB_REPORT_ID,
           type: RECORD_TYPE.labReport,
           title: "Complete blood count",
           subtitle: "Pathology lab · 24 Sep",
-          trailing: { kind: "badge", label: "1 flag", tone: "coral" },
+          trailing: { kind: RECORD_TRAILING_KIND.badge, label: "1 flag", tone: STATUS_BADGE_TONE.coral },
           pressable: false,
         },
         {
@@ -240,14 +246,14 @@ export const recordsDummyData: RecordListResponse = {
           type: RECORD_TYPE.scan,
           title: "ECG report",
           subtitle: "Cardiology · 22 Sep",
-          trailing: { kind: "badge", label: "Normal", tone: "green" },
+          trailing: { kind: RECORD_TRAILING_KIND.badge, label: "Normal", tone: STATUS_BADGE_TONE.green },
         },
         {
           id: "rec_prescription",
           type: RECORD_TYPE.prescription,
           title: "Prescription",
           subtitle: "Dr. Rohan Mehta · 22 Sep",
-          trailing: { kind: "chevron" },
+          trailing: { kind: RECORD_TRAILING_KIND.chevron },
         },
       ],
     },
@@ -260,14 +266,14 @@ export const recordsDummyData: RecordListResponse = {
           type: RECORD_TYPE.discharge,
           title: "Discharge summary",
           subtitle: "Ward 3B · 4 days stay",
-          trailing: { kind: "chevron" },
+          trailing: { kind: RECORD_TRAILING_KIND.chevron },
         },
         {
           id: "rec_xray",
           type: RECORD_TYPE.scan,
           title: "Chest X-ray",
           subtitle: "Radiology · 11 Jul",
-          trailing: { kind: "badge", label: "Normal", tone: "green" },
+          trailing: { kind: RECORD_TRAILING_KIND.badge, label: "Normal", tone: STATUS_BADGE_TONE.green },
         },
       ],
     },
@@ -278,105 +284,109 @@ export const recordsDummyData: RecordListResponse = {
  * Stand-in for the Notifications API until the backend is wired up. Flat and ungrouped —
  * `useNotificationsScreen` buckets these into recency groups client-side. Today/Yesterday
  * entries copy the spec's verbatim titles/subtitles; This Week/Past have no design
- * reference so their copy is illustrative only.
+ * reference so their copy is illustrative only. Timestamps are built relative to `now`
+ * on each call, so "2 min ago" stays true instead of freezing at module load.
+ * @param {Date} now - reference time; defaults to the current time.
+ * @returns {readonly NotificationItem[]} The dummy notifications, newest first.
  */
-const now = new Date();
-const minutesAgo = (minutes: number): string =>
-  new Date(now.getTime() - minutes * 60 * 1000).toISOString();
-const hoursAgo = (hours: number): string => minutesAgo(hours * 60);
-const daysAgo = (days: number, hour: number, minute: number): string => {
-  const date = new Date(now);
-  date.setDate(date.getDate() - days);
-  date.setHours(hour, minute, 0, 0);
-  return date.toISOString();
-};
+export const getNotificationsDummyData = (now: Date = new Date()): readonly NotificationItem[] => {
+  const minutesAgo = (minutes: number): string =>
+    new Date(now.getTime() - minutes * 60 * 1000).toISOString();
+  const hoursAgo = (hours: number): string => minutesAgo(hours * 60);
+  const daysAgo = (days: number, hour: number, minute: number): string => {
+    const date = new Date(now);
+    date.setDate(date.getDate() - days);
+    date.setHours(hour, minute, 0, 0);
+    return date.toISOString();
+  };
 
-export const notificationsDummyData: readonly Notification[] = [
-  // Today (2 unread, 1 read)
-  {
-    id: "notif_queue",
-    type: NOTIFICATION_TYPE.queueUpdate,
-    title: "Your turn is coming up",
-    subtitle: "Token A-24 · 6 patients ahead. Please wait near Room 204.",
-    createdAt: minutesAgo(2),
-    unread: true,
-  },
-  {
-    id: "notif_lab",
-    type: NOTIFICATION_TYPE.labReport,
-    title: "Lab report ready",
-    subtitle: "Your complete blood count results are available.",
-    createdAt: hoursAgo(1),
-    unread: true,
-  },
-  {
-    id: "notif_medicine",
-    type: NOTIFICATION_TYPE.medicine,
-    title: "Medicine reminder",
-    subtitle: "Take Metoprolol 25 mg at 6:00 PM.",
-    createdAt: hoursAgo(3),
-    unread: false,
-  },
-  // Yesterday (all read)
-  {
-    id: "notif_appointment",
-    type: NOTIFICATION_TYPE.appointment,
-    title: "Appointment confirmed",
-    subtitle: "Dr. Rohan Mehta, Tue 29 Sep at 11:30 AM.",
-    createdAt: daysAgo(1, 18, 40),
-    unread: false,
-  },
-  {
-    id: "notif_bill",
-    type: NOTIFICATION_TYPE.billing,
-    title: "Bill generated",
-    subtitle: "₹4,350 due by 5 Oct. Pay online to skip the billing queue.",
-    createdAt: daysAgo(1, 14, 15),
-    unread: false,
-  },
-  {
-    id: "notif_insurance",
-    type: NOTIFICATION_TYPE.insurance,
-    title: "Insurance claim approved",
-    subtitle: "₹18,000 approved for your July ward stay.",
-    createdAt: daysAgo(1, 10, 5),
-    unread: false,
-  },
-  // This Week (no design reference — illustrative copy in the same tone)
-  {
-    id: "notif_prescription_renewed",
-    type: NOTIFICATION_TYPE.medicine,
-    title: "Prescription renewed",
-    subtitle: "Atorvastatin 10 mg renewed for another 30 days.",
-    createdAt: daysAgo(4, 9, 0),
-    unread: false,
-  },
-  {
-    id: "notif_appointment_rescheduled",
-    type: NOTIFICATION_TYPE.appointment,
-    title: "Appointment rescheduled",
-    subtitle: "Moved to Thu 2 Oct at 4:15 PM with Dr. Sneha Kapoor.",
-    createdAt: daysAgo(6, 12, 30),
-    unread: false,
-  },
-  // Past (older than a week — no design reference)
-  {
-    id: "notif_checkup_reminder",
-    type: NOTIFICATION_TYPE.queueUpdate,
-    title: "Annual checkup reminder",
-    subtitle: "It's been a year since your last full body checkup.",
-    createdAt: daysAgo(30, 9, 0),
-    unread: false,
-  },
-  {
-    id: "notif_discharge_summary",
-    type: NOTIFICATION_TYPE.labReport,
-    title: "Discharge summary available",
-    subtitle: "Your Ward 3B discharge summary has been uploaded.",
-    createdAt: daysAgo(45, 16, 0),
-    unread: false,
-  },
-];
+  return [
+    // Today (2 unread, 1 read)
+    {
+      id: "notif_queue",
+      type: NOTIFICATION_TYPE.queueUpdate,
+      title: "Your turn is coming up",
+      subtitle: "Token A-24 · 6 patients ahead. Please wait near Room 204.",
+      createdAt: minutesAgo(2),
+      unread: true,
+    },
+    {
+      id: "notif_lab",
+      type: NOTIFICATION_TYPE.labReport,
+      title: "Lab report ready",
+      subtitle: "Your complete blood count results are available.",
+      createdAt: hoursAgo(1),
+      unread: true,
+    },
+    {
+      id: "notif_medicine",
+      type: NOTIFICATION_TYPE.medicine,
+      title: "Medicine reminder",
+      subtitle: "Take Metoprolol 25 mg at 6:00 PM.",
+      createdAt: hoursAgo(3),
+      unread: false,
+    },
+    // Yesterday (all read)
+    {
+      id: "notif_appointment",
+      type: NOTIFICATION_TYPE.appointment,
+      title: "Appointment confirmed",
+      subtitle: "Dr. Rohan Mehta, Tue 29 Sep at 11:30 AM.",
+      createdAt: daysAgo(1, 18, 40),
+      unread: false,
+    },
+    {
+      id: "notif_bill",
+      type: NOTIFICATION_TYPE.billing,
+      title: "Bill generated",
+      subtitle: "₹4,350 due by 5 Oct. Pay online to skip the billing queue.",
+      createdAt: daysAgo(1, 14, 15),
+      unread: false,
+    },
+    {
+      id: "notif_insurance",
+      type: NOTIFICATION_TYPE.insurance,
+      title: "Insurance claim approved",
+      subtitle: "₹18,000 approved for your July ward stay.",
+      createdAt: daysAgo(1, 10, 5),
+      unread: false,
+    },
+    // This Week (no design reference — illustrative copy in the same tone)
+    {
+      id: "notif_prescription_renewed",
+      type: NOTIFICATION_TYPE.medicine,
+      title: "Prescription renewed",
+      subtitle: "Atorvastatin 10 mg renewed for another 30 days.",
+      createdAt: daysAgo(4, 9, 0),
+      unread: false,
+    },
+    {
+      id: "notif_appointment_rescheduled",
+      type: NOTIFICATION_TYPE.appointment,
+      title: "Appointment rescheduled",
+      subtitle: "Moved to Thu 2 Oct at 4:15 PM with Dr. Sneha Kapoor.",
+      createdAt: daysAgo(6, 12, 30),
+      unread: false,
+    },
+    // Past (older than a week — no design reference)
+    {
+      id: "notif_checkup_reminder",
+      type: NOTIFICATION_TYPE.queueUpdate,
+      title: "Annual checkup reminder",
+      subtitle: "It's been a year since your last full body checkup.",
+      createdAt: daysAgo(30, 9, 0),
+      unread: false,
+    },
+    {
+      id: "notif_discharge_summary",
+      type: NOTIFICATION_TYPE.labReport,
+      title: "Discharge summary available",
+      subtitle: "Your Ward 3B discharge summary has been uploaded.",
+      createdAt: daysAgo(45, 16, 0),
+      unread: false,
+    },
+  ];
+};
 
 /**
  * Safe lookup of a doctor's profile by route id: only own keys match, so ids such as
@@ -389,8 +399,8 @@ export const getDoctorProfileDetails = (id: string): DoctorProfileDetails | unde
 
 /** Stand-in for the Lab Report Detail API, keyed by the records-list record id. */
 export const labReportDetailDummyData: Readonly<Record<string, LabReportDetail>> = Object.freeze({
-  rec_cbc: {
-    id: "rec_cbc",
+  [LATEST_LAB_REPORT_ID]: {
+    id: LATEST_LAB_REPORT_ID,
     sampleCollectedAt: "24 Sep, 8:10 AM",
     orderedByDoctorName: "Dr. Rohan Mehta",
     reportId: "LAB-58213",
@@ -404,7 +414,7 @@ export const labReportDetailDummyData: Readonly<Record<string, LabReportDetail>>
         unit: "g/dL",
         normalMin: 13.5,
         normalMax: 17.5,
-        status: "coral",
+        status: STATUS_BADGE_TONE.coral,
         statusLabel: "Low",
       },
       {
@@ -414,7 +424,7 @@ export const labReportDetailDummyData: Readonly<Record<string, LabReportDetail>>
         unit: "/µL",
         normalMin: 4500,
         normalMax: 11000,
-        status: "green",
+        status: STATUS_BADGE_TONE.green,
         statusLabel: "Normal",
       },
       {
@@ -424,7 +434,7 @@ export const labReportDetailDummyData: Readonly<Record<string, LabReportDetail>>
         unit: "lakh/µL",
         normalMin: 1.5,
         normalMax: 4.5,
-        status: "green",
+        status: STATUS_BADGE_TONE.green,
         statusLabel: "Normal",
       },
       {
@@ -434,7 +444,7 @@ export const labReportDetailDummyData: Readonly<Record<string, LabReportDetail>>
         unit: "mill/µL",
         normalMin: 4.5,
         normalMax: 5.9,
-        status: "amber",
+        status: STATUS_BADGE_TONE.amber,
         statusLabel: "Borderline",
       },
     ],
@@ -466,8 +476,8 @@ export const medicinesDummyData: MedicinesResponse = {
         id: "med_atorvastatin",
         name: "Atorvastatin 10 mg",
         statusLabel: "Taken",
-        statusTone: "green",
-        tintKey: "green",
+        statusTone: STATUS_BADGE_TONE.green,
+        tintKey: MEDICINE_TINT.green,
         dosage: "1 tablet · after dinner · 30 days",
         stockRemaining: 18,
         stockTotal: 30,
@@ -477,8 +487,8 @@ export const medicinesDummyData: MedicinesResponse = {
         id: "med_metoprolol",
         name: "Metoprolol 25 mg",
         statusLabel: "6 PM",
-        statusTone: "amber",
-        tintKey: "blue",
+        statusTone: STATUS_BADGE_TONE.amber,
+        tintKey: MEDICINE_TINT.blue,
         dosage: "1 tablet · twice a day · 60 days",
         stockRemaining: 44,
         stockTotal: 120,
@@ -488,8 +498,8 @@ export const medicinesDummyData: MedicinesResponse = {
         id: "med_iron_folic",
         name: "Iron + Folic acid",
         statusLabel: "Refill soon",
-        statusTone: "coral",
-        tintKey: "coral",
+        statusTone: STATUS_BADGE_TONE.coral,
+        tintKey: MEDICINE_TINT.coral,
         dosage: "1 capsule · after lunch · 45 days",
         stockRemaining: 3,
         stockTotal: 45,

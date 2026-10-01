@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react-native";
 
-import DoseTimeline from "../../../../src/screens/medicines/components/dose-timeline/DoseTimeline";
 import { DOSE_STATUS } from "../../../../src/constants";
+import { DoseTimeline } from "../../../../src/screens/medicines/components";
 import type { DoseEntry } from "../../../../src/types";
 import { RenderWrapper } from "../../../Wrapper";
 

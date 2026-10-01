@@ -13,6 +13,9 @@ import { useEffect } from "react";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { ROOT_ROUTES } from "../constants";
+import { loadAuthToken, useAuth } from "../hooks";
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -23,10 +26,16 @@ export default function RootLayout() {
     Figtree_700Bold,
     Figtree_800ExtraBold,
   });
-  // Hide the splash on failure too, so a font error falls back to system fonts instead of hanging.
-  const isReady = fontsLoaded || fontError !== null;
+  const { isLoading, isSignedIn } = useAuth();
+  // A font error still counts as ready, so the app falls back to system fonts instead of hanging.
+  const isReady = (fontsLoaded || fontError !== null) && !isLoading;
 
   useEffect(() => {
+    loadAuthToken();
+  }, []);
+
+  useEffect(() => {
+    // Keep the splash up until fonts and the token are both resolved so no wrong route flashes.
     if (isReady) {
       SplashScreen.hideAsync();
     }
@@ -40,7 +49,15 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <KeyboardProvider>
         <StatusBar style="dark" />
-        <Stack screenOptions={{ headerShown: false }} />
+        {/* Guards pick the screen: a deep link to a guarded route redirects to the first allowed one. */}
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Protected guard={isSignedIn}>
+            <Stack.Screen name={ROOT_ROUTES.protected} />
+          </Stack.Protected>
+          <Stack.Protected guard={!isSignedIn}>
+            <Stack.Screen name={ROOT_ROUTES.signIn} />
+          </Stack.Protected>
+        </Stack>
       </KeyboardProvider>
     </SafeAreaProvider>
   );

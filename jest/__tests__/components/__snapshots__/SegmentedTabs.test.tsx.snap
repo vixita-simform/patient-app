@@ -1,0 +1,200 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentedTabs matches the snapshot 1`] = `
+<KeyboardProvider>
+  <View
+    style={
+      {
+        "backgroundColor": "#DDE7E3",
+        "borderRadius": 21,
+        "flexDirection": "row",
+        "padding": 6,
+      }
+    }
+  >
+    <View
+      accessibilityLabel="Upcoming"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": true,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 17,
+          "elevation": 2,
+          "flex": 1,
+          "justifyContent": "center",
+          "paddingHorizontal": 0,
+          "paddingVertical": 15,
+          "shadowColor": "rgba(20,33,61,0.4)",
+          "shadowOffset": {
+            "height": 2,
+            "width": 0,
+          },
+          "shadowOpacity": 0.12,
+          "shadowRadius": 5,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#14213D",
+            "fontFamily": "Figtree_600SemiBold",
+            "fontSize": 21,
+            "fontWeight": "600",
+            "textAlign": "center",
+          }
+        }
+      >
+        Upcoming
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Completed"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "borderRadius": 17,
+          "flex": 1,
+          "justifyContent": "center",
+          "paddingHorizontal": 0,
+          "paddingVertical": 15,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#6B7A8C",
+            "fontFamily": "Figtree_600SemiBold",
+            "fontSize": 21,
+            "fontWeight": "600",
+            "textAlign": "center",
+          }
+        }
+      >
+        Completed
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Cancelled"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "borderRadius": 17,
+          "flex": 1,
+          "justifyContent": "center",
+          "paddingHorizontal": 0,
+          "paddingVertical": 15,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#6B7A8C",
+            "fontFamily": "Figtree_600SemiBold",
+            "fontSize": 21,
+            "fontWeight": "600",
+            "textAlign": "center",
+          }
+        }
+      >
+        Cancelled
+      </Text>
+    </View>
+  </View>
+</KeyboardProvider>
+`;

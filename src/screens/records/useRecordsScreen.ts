@@ -2,15 +2,9 @@ import { router } from "expo-router";
 import { useCallback, useMemo } from "react";
 
 import { RECORD_SUMMARY_TILE_ID, STACK_ROUTES, Strings, recordsDummyData } from "../../constants";
+import type { RecordSummaryTileId } from "../../constants";
 import type { RecordSummaryTileData } from "./components";
-import type { RecordGroupListItem } from "./RecordsScreenTypes";
-
-interface UseRecordsScreenReturn {
-  summaryTiles: readonly RecordSummaryTileData[];
-  groups: readonly RecordGroupListItem[];
-  onRecordPress: (id: string) => void;
-  onSummaryTilePress: (id: string) => void;
-}
+import type { UseRecordsScreenReturn } from "./RecordsScreenTypes";
 
 /**
  * Medical Records screen state: static dummy data (no pagination/API) —
@@ -22,8 +16,9 @@ const useRecordsScreen = (): UseRecordsScreenReturn => {
     router.push({ pathname: STACK_ROUTES.labReportDetail, params: { id } });
   }, []);
 
-  // Only the Prescriptions tile currently has a target screen (Medicines).
-  const onSummaryTilePress = useCallback((id: string) => {
+  // Only the Prescriptions tile currently has a target screen (Medicines); it is the
+  // only tile flagged `pressable` below.
+  const onSummaryTilePress = useCallback((id: RecordSummaryTileId) => {
     if (id === RECORD_SUMMARY_TILE_ID.prescriptions) {
       router.push(STACK_ROUTES.medicines);
     }
@@ -35,16 +30,19 @@ const useRecordsScreen = (): UseRecordsScreenReturn => {
         id: RECORD_SUMMARY_TILE_ID.labReports,
         value: recordsDummyData.stats.labReportsCount,
         label: Strings.RecordsScreen.labReports,
+        pressable: false,
       },
       {
         id: RECORD_SUMMARY_TILE_ID.prescriptions,
         value: recordsDummyData.stats.prescriptionsCount,
         label: Strings.RecordsScreen.prescriptions,
+        pressable: true,
       },
       {
         id: RECORD_SUMMARY_TILE_ID.discharges,
         value: recordsDummyData.stats.dischargesCount,
         label: Strings.RecordsScreen.discharges,
+        pressable: false,
       },
     ],
     [],

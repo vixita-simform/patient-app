@@ -1,4 +1,6 @@
-export type AvatarTone = "navy" | "green" | "blue" | "amber";
+import type { AvatarTone } from "../../constants";
+
+export type { AvatarTone };
 export type AvatarSize = "compact" | "regular";
 
 export interface AvatarProps {

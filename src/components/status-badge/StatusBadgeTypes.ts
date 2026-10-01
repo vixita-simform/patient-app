@@ -1,4 +1,6 @@
-export type StatusBadgeTone = "green" | "amber" | "coral";
+import type { StatusBadgeTone } from "../../constants";
+
+export type { StatusBadgeTone };
 
 export interface StatusBadgeProps {
   label: string;

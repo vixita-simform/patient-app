@@ -1,10 +1,9 @@
-import type { RecordType } from "../../constants";
-import type { StatusBadgeTone } from "../../components";
+import type { RECORD_TRAILING_KIND, RecordType, StatusBadgeTone } from "../../constants";
 
 /** Record row trailing slot: a status pill, or a plain chevron (no status). */
 export type RecordTrailing =
-  | { kind: "badge"; label: string; tone: StatusBadgeTone }
-  | { kind: "chevron" };
+  | { kind: typeof RECORD_TRAILING_KIND.badge; label: string; tone: StatusBadgeTone }
+  | { kind: typeof RECORD_TRAILING_KIND.chevron };
 
 /** One record row as rendered inside a month-grouped card. */
 export interface RecordSummary {

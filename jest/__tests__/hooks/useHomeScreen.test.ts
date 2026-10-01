@@ -5,6 +5,7 @@ import { Linking } from "react-native";
 import {
   EMERGENCY_AMBULANCE_NUMBER,
   homeScreenDummyData,
+  LATEST_LAB_REPORT_ID,
   STACK_ROUTES,
   Strings,
 } from "../../../src/constants";
@@ -93,6 +94,33 @@ describe("useHomeScreen", () => {
     const { result } = await RenderWrapperForHooks(() => useHomeScreen());
     result.current.onPressBookVisit();
     expect(router.push).toHaveBeenCalledWith(STACK_ROUTES.findADoctor);
+  });
+
+  it("pushes Notifications from the bell", async () => {
+    const { result } = await RenderWrapperForHooks(() => useHomeScreen());
+    result.current.onPressBell();
+    expect(router.push).toHaveBeenCalledWith(STACK_ROUTES.notifications);
+  });
+
+  it("pushes the latest lab report detail from Lab reports", async () => {
+    const { result } = await RenderWrapperForHooks(() => useHomeScreen());
+    result.current.onPressLabReports();
+    expect(router.push).toHaveBeenCalledWith({
+      pathname: STACK_ROUTES.labReportDetail,
+      params: { id: LATEST_LAB_REPORT_ID },
+    });
+  });
+
+  it("pushes Medicines from the medicines shortcut", async () => {
+    const { result } = await RenderWrapperForHooks(() => useHomeScreen());
+    result.current.onPressMedicines();
+    expect(router.push).toHaveBeenCalledWith(STACK_ROUTES.medicines);
+  });
+
+  it("pushes My appointments from See all", async () => {
+    const { result } = await RenderWrapperForHooks(() => useHomeScreen());
+    result.current.onPressSeeAll();
+    expect(router.push).toHaveBeenCalledWith(STACK_ROUTES.myAppointments);
   });
 
   it("exposes the dummy dashboard as view data", async () => {

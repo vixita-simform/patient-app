@@ -3,11 +3,11 @@ import { ActivityIndicator, FlatList, Pressable, StyleSheet, View } from "react-
 import type { ListRenderItem } from "react-native";
 
 import { PlusIcon } from "../../assets/icons";
-import { CustomText, Screen } from "../../components";
+import { CustomText, Screen, SegmentedTabs } from "../../components";
 import { Strings } from "../../constants";
 import { useTheme } from "../../hooks";
 import { Colors, scale } from "../../theme";
-import { AppointmentCard, SegmentedTabs } from "./components";
+import { AppointmentCard } from "./components";
 import type { AppointmentListItem } from "./MyAppointmentsScreenTypes";
 import MyAppointmentsScreenStyles from "./MyAppointmentsScreenStyles";
 import useMyAppointmentsScreen from "./useMyAppointmentsScreen";

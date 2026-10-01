@@ -5,6 +5,7 @@ import { Linking } from "react-native";
 import {
   EMERGENCY_AMBULANCE_NUMBER,
   homeScreenDummyData,
+  LATEST_LAB_REPORT_ID,
   STACK_ROUTES,
   Strings,
 } from "../../constants";
@@ -89,10 +90,9 @@ const useHomeScreen = (): UseHomeScreenReturn => {
   const onPressLabReports = useCallback(() => {
     router.push({
       pathname: STACK_ROUTES.labReportDetail,
-      params: { id: "rec_cbc" },
+      params: { id: LATEST_LAB_REPORT_ID },
     });
   }, []);
-  // TODO: medicines screen not built yet
   const onPressMedicines = useCallback(() => {
     router.push(STACK_ROUTES.medicines);
   }, []);

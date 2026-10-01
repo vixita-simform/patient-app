@@ -16,7 +16,7 @@ interface DownloadIconProps extends Omit<SvgProps, "width" | "height" | "color">
  */
 export function DownloadIcon({
   size = 24,
-  color = theme.colors.white,
+  color = theme.colors.navy,
   strokeWidth = 1.8,
   ...rest
 }: DownloadIconProps): ReactElement {

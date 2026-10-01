@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import type { PressableStateCallbackType, StyleProp, ViewStyle } from "react-native";
 import { Pressable, StyleSheet } from "react-native";
 
@@ -41,18 +41,23 @@ const CustomButton = ({
       ]),
     [styles, variantStyle, disabled, style],
   );
+  const labelStyle = useMemo(
+    () => StyleSheet.flatten([styles.textBase, variantTextStyle, textStyle]),
+    [styles, variantTextStyle, textStyle],
+  );
+  const accessibilityState = useMemo(() => ({ disabled }), [disabled]);
 
   return (
     <Pressable
       accessibilityLabel={accessibilityLabel ?? label}
       accessibilityRole="button"
-      accessibilityState={{ disabled }}
+      accessibilityState={accessibilityState}
       disabled={disabled}
       style={getStyle}
       onPress={onPress}
     >
       {icon}
-      <CustomText style={[styles.textBase, variantTextStyle, textStyle]}>{label}</CustomText>
+      <CustomText style={labelStyle}>{label}</CustomText>
     </Pressable>
   );
 };

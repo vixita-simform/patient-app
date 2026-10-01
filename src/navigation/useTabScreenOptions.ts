@@ -24,6 +24,7 @@ export default function useTabScreenOptions(): BottomTabNavigationOptions {
         styles.tabBar,
         { height: TAB_BAR_BASE_HEIGHT + bottom },
       ]),
+      tabBarItemStyle: styles.tabBarItem,
       tabBarLabelStyle: styles.tabBarLabel,
     }),
     [theme, styles, bottom],

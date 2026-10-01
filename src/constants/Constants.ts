@@ -73,3 +73,129 @@ export const RECORD_SUMMARY_TILE_ID = {
 
 export type RecordSummaryTileId =
   (typeof RECORD_SUMMARY_TILE_ID)[keyof typeof RECORD_SUMMARY_TILE_ID];
+
+/** Profile: the 6 menu-row ids. */
+export const PROFILE_MENU_ID = {
+  personalInfo: "personalInfo",
+  familyMembers: "familyMembers",
+  insurance: "insurance",
+  vitalsHistory: "vitalsHistory",
+  settings: "settings",
+  help: "help",
+} as const;
+
+export type ProfileMenuId = (typeof PROFILE_MENU_ID)[keyof typeof PROFILE_MENU_ID];
+
+/** Profile: menu-row icon-box tint. */
+export const PROFILE_MENU_TONE = {
+  green: "green",
+  blue: "blue",
+  amber: "amber",
+} as const;
+
+export type ProfileMenuTone = (typeof PROFILE_MENU_TONE)[keyof typeof PROFILE_MENU_TONE];
+
+/** Personal & medical info: gender options, in display order. */
+export const GENDER = {
+  male: "male",
+  female: "female",
+  other: "other",
+} as const;
+
+export type Gender = (typeof GENDER)[keyof typeof GENDER];
+
+/** Personal & medical info: the 8 blood groups, in display order. */
+export const BLOOD_GROUP = {
+  aPositive: "aPositive",
+  aNegative: "aNegative",
+  bPositive: "bPositive",
+  bNegative: "bNegative",
+  oPositive: "oPositive",
+  oNegative: "oNegative",
+  abPositive: "abPositive",
+  abNegative: "abNegative",
+} as const;
+
+export type BloodGroup = (typeof BLOOD_GROUP)[keyof typeof BLOOD_GROUP];
+
+/** Sign in: the two identifier tabs. */
+export const AUTH_TAB = {
+  mobile: "mobile",
+  patientId: "patientId",
+} as const;
+
+export type AuthTab = (typeof AUTH_TAB)[keyof typeof AUTH_TAB];
+
+/** Status pill tone (StatusBadge), also used for lab result and record statuses. */
+export const STATUS_BADGE_TONE = {
+  green: "green",
+  amber: "amber",
+  coral: "coral",
+} as const;
+
+export type StatusBadgeTone = (typeof STATUS_BADGE_TONE)[keyof typeof STATUS_BADGE_TONE];
+
+/** Avatar background tone. */
+export const AVATAR_TONE = {
+  navy: "navy",
+  green: "green",
+  blue: "blue",
+  amber: "amber",
+} as const;
+
+export type AvatarTone = (typeof AVATAR_TONE)[keyof typeof AVATAR_TONE];
+
+/** Book appointment: visual/selection state of a single time slot. */
+export const TIME_SLOT_STATUS = {
+  available: "available",
+  selected: "selected",
+  taken: "taken",
+  past: "past",
+} as const;
+
+export type TimeSlotStatus = (typeof TIME_SLOT_STATUS)[keyof typeof TIME_SLOT_STATUS];
+
+/** Records: what a record row shows on its trailing edge. */
+export const RECORD_TRAILING_KIND = {
+  badge: "badge",
+  chevron: "chevron",
+} as const;
+
+export type RecordTrailingKind =
+  (typeof RECORD_TRAILING_KIND)[keyof typeof RECORD_TRAILING_KIND];
+
+/** Medicines: icon-box / stock-fill tint (distinct from the badge tone; has "blue"). */
+export const MEDICINE_TINT = {
+  green: "green",
+  blue: "blue",
+  coral: "coral",
+} as const;
+
+export type MedicineTint = (typeof MEDICINE_TINT)[keyof typeof MEDICINE_TINT];
+
+/** My Appointments: optional leading icon on an appointment card action. */
+export const APPOINTMENT_ACTION_ICON = {
+  video: "video",
+} as const;
+
+export type AppointmentActionIcon =
+  (typeof APPOINTMENT_ACTION_ICON)[keyof typeof APPOINTMENT_ACTION_ICON];
+
+/** Notifications: recency groups, in display order. */
+export const NOTIFICATION_GROUP = {
+  today: "today",
+  yesterday: "yesterday",
+  thisWeek: "thisWeek",
+  past: "past",
+} as const;
+
+export type NotificationGroupId = (typeof NOTIFICATION_GROUP)[keyof typeof NOTIFICATION_GROUP];
+
+/** Profile: the stats strip tiles. */
+export const PROFILE_STAT_ID = {
+  bloodGroup: "bloodGroup",
+  age: "age",
+  weight: "weight",
+} as const;
+
+export type ProfileStatId = (typeof PROFILE_STAT_ID)[keyof typeof PROFILE_STAT_ID];

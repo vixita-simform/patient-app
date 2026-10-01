@@ -4,15 +4,12 @@ exports[`LabResultRow matches the snapshot 1`] = `
 <KeyboardProvider>
   <View
     style={
-      [
-        {
-          "flexDirection": "column",
-          "gap": 12,
-          "paddingHorizontal": 0,
-          "paddingVertical": 21,
-        },
-        false,
-      ]
+      {
+        "flexDirection": "column",
+        "gap": 12,
+        "paddingHorizontal": 0,
+        "paddingVertical": 21,
+      }
     }
   >
     <View
@@ -39,16 +36,12 @@ exports[`LabResultRow matches the snapshot 1`] = `
       </Text>
       <View
         style={
-          [
-            {
-              "borderRadius": 15,
-              "paddingHorizontal": 15,
-              "paddingVertical": 6,
-            },
-            {
-              "backgroundColor": "#DCEBE6",
-            },
-          ]
+          {
+            "backgroundColor": "#DCEBE6",
+            "borderRadius": 15,
+            "paddingHorizontal": 15,
+            "paddingVertical": 6,
+          }
         }
       >
         <Text
@@ -126,24 +119,36 @@ exports[`LabResultRow matches the snapshot 1`] = `
       <View
         style={
           {
-            "backgroundColor": "#BFE0D6",
-            "borderRadius": 5,
-            "height": "100%",
-            "left": "30%",
+            "bottom": 0,
+            "left": 10.5,
             "position": "absolute",
-            "width": "40%",
+            "right": 10.5,
+            "top": 0,
           }
         }
-      />
-      <View
-        style={
-          [
+      >
+        <View
+          style={
             {
+              "backgroundColor": "#BFE0D6",
+              "borderRadius": 5,
+              "height": "100%",
+              "left": "30%",
+              "position": "absolute",
+              "width": "40%",
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "#2F7D6D",
               "borderColor": "#FFFFFF",
               "borderRadius": 11,
               "borderWidth": 5,
               "elevation": 1,
               "height": 21,
+              "left": "50%",
               "position": "absolute",
               "shadowColor": "#DDE5E1",
               "shadowOffset": {
@@ -153,17 +158,16 @@ exports[`LabResultRow matches the snapshot 1`] = `
               "shadowOpacity": 1,
               "shadowRadius": 0,
               "top": -5,
+              "transform": [
+                {
+                  "translateX": -10.5,
+                },
+              ],
               "width": 21,
-            },
-            {
-              "backgroundColor": "#2F7D6D",
-            },
-            {
-              "left": "50%",
-            },
-          ]
-        }
-      />
+            }
+          }
+        />
+      </View>
     </View>
   </View>
 </KeyboardProvider>

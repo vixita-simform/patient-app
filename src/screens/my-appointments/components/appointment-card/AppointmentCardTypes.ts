@@ -1,11 +1,11 @@
 import type { AvatarTone, StatusBadgeTone } from "../../../../components";
-import type { ButtonVariant, VisitMode } from "../../../../constants";
+import type { AppointmentActionIcon, ButtonVariant } from "../../../../constants";
 
 export interface AppointmentActionItem {
   label: string;
   variant: ButtonVariant;
   /** Optional leading icon key, e.g. "video" on "Join call" — the card renders the matching icon. */
-  icon?: "video";
+  icon?: AppointmentActionIcon;
   /** True while this action's flow isn't built yet, so the button renders but can't be pressed. */
   disabled?: boolean;
   onPress: () => void;
@@ -16,7 +16,6 @@ export interface AppointmentCardProps {
   avatarTone: AvatarTone;
   doctorName: string;
   specialtyLabel: string;
-  visitMode: VisitMode;
   visitModeLabel: string;
   badgeLabel: string;
   badgeTone: StatusBadgeTone;

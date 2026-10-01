@@ -4,16 +4,18 @@ import { Pressable, StyleSheet, View } from "react-native";
 
 import { CustomText } from "../../../../components";
 import { useTheme } from "../../../../hooks";
+import { scale } from "../../../../theme";
 import VisitTypeCardStyles from "./VisitTypeCardStyles";
 import type { VisitTypeCardProps } from "./VisitTypeCardTypes";
 
 /**
  * Selectable visit-type card: leading icon + radio row, then title and subtitle.
- * @param {VisitTypeCardProps} props - icon, copy, selection state and press handler.
+ * @param {VisitTypeCardProps} props - visit mode id, icon, copy, selection state and press handler.
  * @returns {ReactElement} A React Element.
  */
-const VisitTypeCard = ({ Icon, iconColor, title, subtitle, active, onPress }: VisitTypeCardProps): ReactElement => {
+const VisitTypeCard = ({ id, Icon, iconColor, title, subtitle, active, onPress }: VisitTypeCardProps): ReactElement => {
   const { styles } = useTheme(VisitTypeCardStyles);
+  const handlePress = () => onPress(id);
 
   const containerStyle = useMemo(
     () => StyleSheet.flatten([styles.visit, active && styles.visitActive]),
@@ -23,16 +25,18 @@ const VisitTypeCard = ({ Icon, iconColor, title, subtitle, active, onPress }: Vi
     () => StyleSheet.flatten([styles.radio, active && styles.visitActiveRadio]),
     [styles, active],
   );
+  const accessibilityState = useMemo(() => ({ checked: active }), [active]);
 
   return (
     <Pressable
+      accessibilityLabel={title}
       accessibilityRole="radio"
-      accessibilityState={{ selected: active }}
+      accessibilityState={accessibilityState}
       style={containerStyle}
-      onPress={onPress}
+      onPress={handlePress}
     >
       <View style={styles.row}>
-        <Icon color={iconColor} size={20} />
+        <Icon color={iconColor} size={scale(20)} />
         <View style={radioStyle} />
       </View>
       <CustomText style={styles.title}>{title}</CustomText>

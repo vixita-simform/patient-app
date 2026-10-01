@@ -1,0 +1,236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateChip matches the snapshot when active=false disabled=false 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 24,
+        "borderWidth": 2,
+        "flexDirection": "column",
+        "flexShrink": 0,
+        "gap": 6,
+        "height": 108,
+        "justifyContent": "center",
+        "width": 85,
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#6B7A8C",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 18,
+          "fontWeight": "600",
+        }
+      }
+    >
+      Fri
+    </Text>
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#14213D",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 30,
+        }
+      }
+    >
+      2
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`DateChip matches the snapshot when active=false disabled=true 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": true,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 24,
+        "borderWidth": 2,
+        "flexDirection": "column",
+        "flexShrink": 0,
+        "gap": 6,
+        "height": 108,
+        "justifyContent": "center",
+        "opacity": 0.4,
+        "width": 85,
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#6B7A8C",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 18,
+          "fontWeight": "600",
+        }
+      }
+    >
+      Fri
+    </Text>
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#14213D",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 30,
+        }
+      }
+    >
+      2
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`DateChip matches the snapshot when active=true disabled=false 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": true,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#2F7D6D",
+        "borderColor": "#2F7D6D",
+        "borderRadius": 24,
+        "borderWidth": 2,
+        "flexDirection": "column",
+        "flexShrink": 0,
+        "gap": 6,
+        "height": 108,
+        "justifyContent": "center",
+        "width": 85,
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#CDE6DF",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 18,
+          "fontWeight": "600",
+        }
+      }
+    >
+      Fri
+    </Text>
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#FFFFFF",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 30,
+        }
+      }
+    >
+      2
+    </Text>
+  </View>
+</KeyboardProvider>
+`;

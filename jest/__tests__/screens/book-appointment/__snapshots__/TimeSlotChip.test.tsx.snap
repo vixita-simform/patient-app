@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimeSlotChip matches the snapshot when available 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="1:30"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 18,
+        "borderWidth": 2,
+        "height": 65,
+        "justifyContent": "center",
+        "width": "31%",
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#14213D",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 21,
+          "fontWeight": "600",
+        }
+      }
+    >
+      1:30
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`TimeSlotChip matches the snapshot when past 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="1:30"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": true,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#DDE5E1",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 18,
+        "borderWidth": 2,
+        "height": 65,
+        "justifyContent": "center",
+        "opacity": 0.6,
+        "width": "31%",
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#9AA7B4",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 21,
+          "fontWeight": "600",
+        }
+      }
+    >
+      1:30
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`TimeSlotChip matches the snapshot when selected 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="1:30"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": true,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#14213D",
+        "borderColor": "#14213D",
+        "borderRadius": 18,
+        "borderWidth": 2,
+        "height": 65,
+        "justifyContent": "center",
+        "width": "31%",
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#FFFFFF",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 21,
+          "fontWeight": "600",
+        }
+      }
+    >
+      1:30
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`TimeSlotChip matches the snapshot when taken 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="1:30"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": true,
+        "expanded": undefined,
+        "selected": false,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#DDE5E1",
+        "borderColor": "#DDE5E1",
+        "borderRadius": 18,
+        "borderWidth": 2,
+        "height": 65,
+        "justifyContent": "center",
+        "width": "31%",
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#9AA7B4",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 21,
+          "fontWeight": "600",
+          "textDecorationLine": "line-through",
+        }
+      }
+    >
+      1:30
+    </Text>
+  </View>
+</KeyboardProvider>
+`;

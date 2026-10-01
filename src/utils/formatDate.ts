@@ -1,7 +1,7 @@
 // Formatted by hand rather than via Intl: en-IN output differs across ICU versions
 // ("Sept" vs "Sep", "am" vs "AM"), and we want identical output on iOS and Android.
-export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export const WEEKDAYS: readonly string[] = Object.freeze(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]);
+const MONTHS: readonly string[] = Object.freeze(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]);
 
 type DateInput = Date | string | number;
 
@@ -16,6 +16,15 @@ export function formatDate(value: DateInput): string {
     return "";
   }
   return `${WEEKDAYS[date.getDay()]}, ${date.getDate()} ${MONTHS[date.getMonth()]}`;
+}
+
+/** e.g. "14 Mar 1992"; returns "" for an invalid date. */
+export function formatDateWithYear(value: DateInput): string {
+  const date = toDate(value);
+  if (!isValidDate(date)) {
+    return "";
+  }
+  return `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
 
 /** True when `value` falls on the same calendar day as `now`. */

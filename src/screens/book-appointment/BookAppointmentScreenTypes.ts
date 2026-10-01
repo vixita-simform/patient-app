@@ -1,8 +1,9 @@
 import type { RefObject } from "react";
-import type { TextInput, ViewStyle } from "react-native";
+import type { LayoutChangeEvent, TextInput, ViewStyle } from "react-native";
 
-import type { DoctorProfileDetails, DoctorSummary } from "../../types";
-import type { DateStripDay, TimeSlot, VisitTypeId } from "../../types/api/bookAppointment";
+import type { VisitMode } from "../../constants";
+import type { DoctorProfileDetails, DoctorSummary, TimeSlot } from "../../types";
+import type { DateStripDay } from "../../utils";
 
 /** Summary from the list joined with the profile-only fee, same shape as doctor-profile. */
 export interface BookAppointmentDoctorData {
@@ -23,25 +24,33 @@ export interface UseBookAppointmentScreenReturn {
   today: Date;
   dateStripDays: readonly DateStripDay[];
   selectedDateId: string;
+  /** Slots with the displayed status: the selected slot reports `selected`. */
   timeSlots: readonly TimeSlot[];
   selectedSlotId: string | null;
-  selectedVisitType: VisitTypeId;
+  selectedVisitType: VisitMode;
   reason: string;
+  /** "Cardiology · ₹800" line under the doctor's name. */
+  doctorSubtitle: string;
   /** "Tue, 29 Sep · 11:30 AM" footer summary, or "" until a slot is chosen. */
   summaryLabel: string;
   feeLabel: string;
   /** Bottom safe-area padding for the fixed footer. */
   footerInsetStyle: ViewStyle;
+  /** Measured footer height, used as the keyboard-aware scroll's bottom offset. */
+  footerHeight: number;
+  /** True until a bookable slot is selected. */
+  isConfirmDisabled: boolean;
   reasonInputRef: RefObject<TextInput | null>;
   /** iOS renders its date picker inline/modally in the screen; Android opens it imperatively. */
   isIosPickerVisible: boolean;
   onBackPress: () => void;
   onChangeMonthPress: () => void;
-  onIosDateChange: (event: unknown, date?: Date) => void;
+  onIosDateChange: (date: Date) => void;
   onDismissIosPicker: () => void;
+  onFooterLayout: (event: LayoutChangeEvent) => void;
   onSelectDate: (id: string) => void;
   onSelectSlot: (id: string) => void;
-  onSelectVisitType: (id: VisitTypeId) => void;
+  onSelectVisitType: (id: VisitMode) => void;
   onChangeReason: (value: string) => void;
   onConfirmPress: () => void;
 }

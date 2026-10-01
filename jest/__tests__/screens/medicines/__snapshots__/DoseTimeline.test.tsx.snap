@@ -12,21 +12,16 @@ exports[`DoseTimeline matches the snapshot 1`] = `
   >
     <View
       style={
-        [
-          {
-            "alignItems": "center",
-            "backgroundColor": "#EEF4F1",
-            "borderRadius": 21,
-            "flex": 1,
-            "flexDirection": "column",
-            "gap": 6,
-            "paddingHorizontal": 12,
-            "paddingVertical": 15,
-          },
-          {
-            "backgroundColor": "#DCEBE6",
-          },
-        ]
+        {
+          "alignItems": "center",
+          "backgroundColor": "#DCEBE6",
+          "borderRadius": 21,
+          "flex": 1,
+          "flexDirection": "column",
+          "gap": 6,
+          "paddingHorizontal": 12,
+          "paddingVertical": 15,
+        }
       }
     >
       <RNSVGSvgView
@@ -108,21 +103,16 @@ exports[`DoseTimeline matches the snapshot 1`] = `
     </View>
     <View
       style={
-        [
-          {
-            "alignItems": "center",
-            "backgroundColor": "#EEF4F1",
-            "borderRadius": 21,
-            "flex": 1,
-            "flexDirection": "column",
-            "gap": 6,
-            "paddingHorizontal": 12,
-            "paddingVertical": 15,
-          },
-          {
-            "backgroundColor": "#14213D",
-          },
-        ]
+        {
+          "alignItems": "center",
+          "backgroundColor": "#14213D",
+          "borderRadius": 21,
+          "flex": 1,
+          "flexDirection": "column",
+          "gap": 6,
+          "paddingHorizontal": 12,
+          "paddingVertical": 15,
+        }
       }
     >
       <RNSVGSvgView
@@ -224,19 +214,16 @@ exports[`DoseTimeline matches the snapshot 1`] = `
     </View>
     <View
       style={
-        [
-          {
-            "alignItems": "center",
-            "backgroundColor": "#EEF4F1",
-            "borderRadius": 21,
-            "flex": 1,
-            "flexDirection": "column",
-            "gap": 6,
-            "paddingHorizontal": 12,
-            "paddingVertical": 15,
-          },
-          undefined,
-        ]
+        {
+          "alignItems": "center",
+          "backgroundColor": "#EEF4F1",
+          "borderRadius": 21,
+          "flex": 1,
+          "flexDirection": "column",
+          "gap": 6,
+          "paddingHorizontal": 12,
+          "paddingVertical": 15,
+        }
       }
     >
       <RNSVGSvgView

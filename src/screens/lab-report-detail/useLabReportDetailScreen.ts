@@ -1,8 +1,9 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useMemo } from "react";
 
-import { getLabReportDetail } from "../../constants";
+import { getLabReportDetail, STATUS_BADGE_TONE } from "../../constants";
 import type { LabReportDetail } from "../../types";
+import { RANGE_BAND } from "./components";
 import type {
   LabResultRowData,
   UseLabReportDetailScreenReturn,
@@ -10,18 +11,20 @@ import type {
 
 /**
  * Computes a result's range-bar marker position as a percentage of the
- * track width, from its value against its own normal min/max, clamped so an
- * out-of-range value never renders the marker off the bar.
+ * marker rail. The normal min/max map onto the green band's start/end
+ * (`RANGE_BAND`), so in-range values sit inside the band and out-of-range
+ * values fall either side of it; the result is clamped so the marker never
+ * renders off the bar.
  * @param {number} value - the measured value.
  * @param {number} min - normal range minimum.
  * @param {number} max - normal range maximum.
  * @returns {number} a percentage in [0, 100].
  */
-const computeMarkerPercent = (value: number, min: number, max: number): number => {
+export const computeMarkerPercent = (value: number, min: number, max: number): number => {
   if (max <= min) {
     return 0;
   }
-  const percent = ((value - min) / (max - min)) * 100;
+  const percent = RANGE_BAND.start + ((value - min) / (max - min)) * RANGE_BAND.width;
   return Math.min(100, Math.max(0, percent));
 };
 
@@ -48,7 +51,7 @@ export default function useLabReportDetailScreen(): UseLabReportDetailScreenRetu
   );
 
   const showAlert = useMemo(
-    () => results.some((result) => result.status === "coral"),
+    () => results.some((result) => result.status === STATUS_BADGE_TONE.coral),
     [results],
   );
 
@@ -56,17 +59,14 @@ export default function useLabReportDetailScreen(): UseLabReportDetailScreenRetu
     router.back();
   }, []);
 
-  // No sharing target defined by the design; harmless no-op stub.
-  const onSharePress = useCallback(() => {}, []);
-  // No document backend defined by the design; harmless no-op stub.
-  const onDownloadPress = useCallback(() => {}, []);
-
   return {
     report,
     results,
     showAlert,
     onBackPress,
-    onSharePress,
-    onDownloadPress,
+    // Share and Download PDF await a report-document backend; until then no
+    // handler is returned and the screen renders both buttons disabled.
+    onSharePress: undefined,
+    onDownloadPress: undefined,
   };
 }

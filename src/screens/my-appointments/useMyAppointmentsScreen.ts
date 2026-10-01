@@ -2,29 +2,36 @@ import { router } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
 
 import {
+  APPOINTMENT_ACTION_ICON,
   APPOINTMENT_STATUS,
+  APPOINTMENT_TAB,
   appointmentsDummyData,
   BUTTON_VARIANT,
   STACK_ROUTES,
+  STATUS_BADGE_TONE,
   Strings,
   VISIT_MODE,
 } from "../../constants";
-import type { AppointmentStatus, AppointmentTab, VisitMode } from "../../constants";
-import type { AvatarTone } from "../../components";
+import type {
+  AppointmentStatus,
+  AppointmentTab,
+  StatusBadgeTone,
+  VisitMode,
+} from "../../constants";
+import type { AvatarTone, SegmentedTabItem } from "../../components";
 import type { AppointmentSummary } from "../../types";
 import { formatDate, formatTime } from "../../utils";
-import type { AppointmentActionItem } from "./components/appointment-card/AppointmentCardTypes";
+import type { AppointmentActionItem } from "./components";
 import type {
   AppointmentListItem,
   UseMyAppointmentsScreenReturn,
 } from "./MyAppointmentsScreenTypes";
-import type { SegmentedTabItem } from "./components/segmented-tabs/SegmentedTabsTypes";
 
 /** Tab order and labels as designed. */
-const TABS: readonly SegmentedTabItem[] = Object.freeze([
-  { id: "upcoming", label: Strings.MyAppointmentsScreen.upcoming },
-  { id: "completed", label: Strings.MyAppointmentsScreen.completed },
-  { id: "cancelled", label: Strings.MyAppointmentsScreen.cancelled },
+const TABS: readonly SegmentedTabItem<AppointmentTab>[] = Object.freeze([
+  { id: APPOINTMENT_TAB.upcoming, label: Strings.MyAppointmentsScreen.upcoming },
+  { id: APPOINTMENT_TAB.completed, label: Strings.MyAppointmentsScreen.completed },
+  { id: APPOINTMENT_TAB.cancelled, label: Strings.MyAppointmentsScreen.cancelled },
 ]);
 
 /** Badge label/tone per appointment status. Completed/cancelled reuse the green/amber
@@ -33,25 +40,25 @@ const TABS: readonly SegmentedTabItem[] = Object.freeze([
 const STATUS_BADGE = Object.freeze({
   [APPOINTMENT_STATUS.confirmed]: {
     label: Strings.MyAppointmentsScreen.confirmed,
-    tone: "green",
+    tone: STATUS_BADGE_TONE.green,
   },
   [APPOINTMENT_STATUS.pending]: {
     label: Strings.MyAppointmentsScreen.pending,
-    tone: "amber",
+    tone: STATUS_BADGE_TONE.amber,
   },
   [APPOINTMENT_STATUS.completed]: {
     label: Strings.MyAppointmentsScreen.completed,
-    tone: "green",
+    tone: STATUS_BADGE_TONE.green,
   },
   [APPOINTMENT_STATUS.cancelled]: {
     label: Strings.MyAppointmentsScreen.cancelled,
-    tone: "amber",
+    tone: STATUS_BADGE_TONE.amber,
   },
-} as const satisfies Record<AppointmentStatus, { label: string; tone: "green" | "amber" }>);
+} as const satisfies Record<AppointmentStatus, { label: string; tone: StatusBadgeTone }>);
 
 const VISIT_MODE_LABEL = Object.freeze({
-  [VISIT_MODE.inPerson]: Strings.MyAppointmentsScreen.inPerson,
-  [VISIT_MODE.video]: Strings.MyAppointmentsScreen.videoCall,
+  [VISIT_MODE.inPerson]: Strings.Common.inPerson,
+  [VISIT_MODE.video]: Strings.Common.videoCall,
 } as const satisfies Record<VisitMode, string>);
 
 /**
@@ -92,7 +99,7 @@ const buildActions = (
       {
         label: Strings.MyAppointmentsScreen.joinCall,
         variant: BUTTON_VARIANT.fill,
-        icon: "video",
+        icon: APPOINTMENT_ACTION_ICON.video,
         // Disabled: join video call flow not built yet.
         disabled: true,
         onPress: () => {},
@@ -119,19 +126,24 @@ const buildActions = (
 };
 
 /**
+ * Opens the doctor profile behind an appointment card. Module-level so the list
+ * memo depends only on values, not on a handler reference.
+ * @param {string} doctorId - the appointment's doctor id.
+ */
+const openDoctorProfile = (doctorId: string): void => {
+  router.push({ pathname: STACK_ROUTES.doctorProfile, params: { id: doctorId } });
+};
+
+/**
  * State and handlers for My Appointments: tab selection, dummy data per tab,
  * and navigation to the doctor profile on card tap.
  * @returns {UseMyAppointmentsScreenReturn} tabs, list data, render helpers and handlers.
  */
 export default function useMyAppointmentsScreen(): UseMyAppointmentsScreenReturn {
-  const [activeTab, setActiveTab] = useState<AppointmentTab>("upcoming");
+  const [activeTab, setActiveTab] = useState<AppointmentTab>(APPOINTMENT_TAB.upcoming);
   // Mock request state: the static data never loads or fails.
   const isLoading = false;
   const isError = false;
-
-  const onCardPress = useCallback((doctorId: string) => {
-    router.push({ pathname: STACK_ROUTES.doctorProfile, params: { id: doctorId } });
-  }, []);
 
   const listData = useMemo<readonly AppointmentListItem[]>(() => {
     return appointmentsDummyData[activeTab].map((appointment, index) => {
@@ -143,24 +155,25 @@ export default function useMyAppointmentsScreen(): UseMyAppointmentsScreenReturn
         avatarTone: AVATAR_TONES[index % AVATAR_TONES.length],
         doctorName: appointment.doctorName,
         specialtyLabel: appointment.specialtyLabel,
-        visitMode: appointment.visitMode,
         visitModeLabel: VISIT_MODE_LABEL[appointment.visitMode],
         badgeLabel: badge.label,
         badgeTone: badge.tone,
         date: formatDate(appointment.scheduledAt),
         time: formatTime(appointment.scheduledAt),
         actions: buildActions(appointment),
-        onPress: () => onCardPress(appointment.doctorId),
+        onPress: () => openDoctorProfile(appointment.doctorId),
       };
     });
-  }, [activeTab, onCardPress]);
+  }, [activeTab]);
 
   const onTabPress = useCallback((id: AppointmentTab) => {
     setActiveTab(id);
   }, []);
 
-  // TODO: new appointment / booking entry not built yet
-  const onPressAdd = useCallback(() => {}, []);
+  // Booking needs a chosen doctor, so "+" starts at Find a doctor, the booking entry point.
+  const onPressAdd = useCallback(() => {
+    router.push(STACK_ROUTES.findADoctor);
+  }, []);
 
   return {
     tabs: TABS,

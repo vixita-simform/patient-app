@@ -1,11 +1,11 @@
 import type { ReactElement } from "react";
-import { useCallback, useState } from "react";
-import type { LayoutChangeEvent } from "react-native";
+import { useMemo } from "react";
 import {
   ActivityIndicator,
   Platform,
   Pressable,
   ScrollView,
+  StyleSheet,
   TextInput,
   View,
 } from "react-native";
@@ -13,23 +13,26 @@ import {
   KeyboardAwareScrollView,
   KeyboardStickyView,
 } from "react-native-keyboard-controller";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import { BackIcon, ClockIcon, HomeIcon, VideoIcon } from "../../assets/icons";
-import { Avatar, CustomButton, CustomText } from "../../components";
-import { BUTTON_VARIANT, Strings, VISIT_MODE } from "../../constants";
+import {
+  Avatar,
+  CalendarModal,
+  CustomButton,
+  CustomText,
+  Screen,
+} from "../../components";
+import {
+  AVATAR_TONE,
+  BUTTON_VARIANT,
+  Strings,
+  VISIT_MODE,
+} from "../../constants";
 import { useTheme } from "../../hooks";
 import { Colors, scale } from "../../theme";
 import BookAppointmentScreenStyles from "./BookAppointmentScreenStyles";
-import {
-  CalendarModal,
-  DateChip,
-  TimeSlotChip,
-  VisitTypeCard,
-} from "./components";
+import { DateChip, TimeSlotChip, VisitTypeCard } from "./components";
 import useBookAppointmentScreen from "./useBookAppointmentScreen";
-
-const TOP_EDGE = Object.freeze(["top"] as const);
 
 /**
  * Book appointment: doctor summary, date/time slot pickers, visit type and
@@ -49,15 +52,19 @@ export default function BookAppointmentScreen(): ReactElement {
     timeSlots,
     selectedVisitType,
     reason,
+    doctorSubtitle,
     summaryLabel,
     feeLabel,
     footerInsetStyle,
+    footerHeight,
+    isConfirmDisabled,
     reasonInputRef,
     isIosPickerVisible,
     onBackPress,
     onChangeMonthPress,
     onIosDateChange,
     onDismissIosPicker,
+    onFooterLayout,
     today,
     onSelectDate,
     onSelectSlot,
@@ -66,21 +73,21 @@ export default function BookAppointmentScreen(): ReactElement {
     onConfirmPress,
   } = useBookAppointmentScreen();
 
-  const [footerHeight, setFooterHeight] = useState(0);
-  const onFooterLayout = useCallback((event: LayoutChangeEvent) => {
-    setFooterHeight(event.nativeEvent.layout.height);
-  }, []);
+  const footerBarStyle = useMemo(
+    () => StyleSheet.flatten([styles.footerBar, footerInsetStyle]),
+    [styles.footerBar, footerInsetStyle],
+  );
 
   const stateContent = isLoading ? (
     <ActivityIndicator color={Colors[theme].green} />
   ) : (
     <CustomText style={styles.stateText}>
-      {Strings.BookAppointmentScreen.notFound}
+      {Strings.DoctorProfileScreen.notFound}
     </CustomText>
   );
 
   return (
-    <SafeAreaView edges={TOP_EDGE} style={styles.screen}>
+    <Screen>
       <View style={styles.header}>
         <Pressable
           accessibilityLabel={Strings.Common.back}
@@ -93,7 +100,7 @@ export default function BookAppointmentScreen(): ReactElement {
         <CustomText style={styles.headerTitle}>
           {Strings.DoctorProfileScreen.bookAppointment}
         </CustomText>
-        <View style={[styles.iconBtn, styles.iconBtnGhost]} />
+        <View style={styles.iconBtnGhost} />
       </View>
 
       <View style={styles.bodyWrapper}>
@@ -109,14 +116,15 @@ export default function BookAppointmentScreen(): ReactElement {
           ) : (
             <>
               <View style={styles.doctorCard}>
-                <Avatar initials={doctor.summary.initials} tone="green" />
-                <View style={[styles.col, styles.flex1]}>
+                <Avatar
+                  initials={doctor.summary.initials}
+                  tone={AVATAR_TONE.green}
+                />
+                <View style={styles.doctorInfo}>
                   <CustomText style={styles.tTitle}>
                     {doctor.summary.name}
                   </CustomText>
-                  <CustomText style={styles.tSub}>
-                    {doctor.summary.specialtyLabel} · {feeLabel}
-                  </CustomText>
+                  <CustomText style={styles.tSub}>{doctorSubtitle}</CustomText>
                 </View>
               </View>
 
@@ -126,6 +134,7 @@ export default function BookAppointmentScreen(): ReactElement {
                     {monthLabel}
                   </CustomText>
                   <Pressable
+                    accessibilityLabel={Strings.BookAppointmentScreen.changeMonth}
                     accessibilityRole="button"
                     onPress={onChangeMonthPress}
                   >
@@ -145,9 +154,10 @@ export default function BookAppointmentScreen(): ReactElement {
                       active={day.id === selectedDateId}
                       dayNumber={day.dayNumber}
                       disabled={day.disabled}
+                      id={day.id}
                       key={day.id}
                       weekday={day.weekday}
-                      onPress={() => onSelectDate(day.id)}
+                      onPress={onSelectDate}
                     />
                   ))}
                 </ScrollView>
@@ -160,10 +170,11 @@ export default function BookAppointmentScreen(): ReactElement {
                 <View style={styles.slots}>
                   {timeSlots.map((slot) => (
                     <TimeSlotChip
+                      id={slot.id}
                       key={slot.id}
                       label={slot.label}
                       status={slot.status}
-                      onPress={() => onSelectSlot(slot.id)}
+                      onPress={onSelectSlot}
                     />
                   ))}
                 </View>
@@ -178,17 +189,19 @@ export default function BookAppointmentScreen(): ReactElement {
                     active={selectedVisitType === VISIT_MODE.inPerson}
                     Icon={HomeIcon}
                     iconColor={Colors[theme].green}
+                    id={VISIT_MODE.inPerson}
                     subtitle={Strings.BookAppointmentScreen.atTheHospital}
-                    title={Strings.BookAppointmentScreen.inPerson}
-                    onPress={() => onSelectVisitType(VISIT_MODE.inPerson)}
+                    title={Strings.Common.inPerson}
+                    onPress={onSelectVisitType}
                   />
                   <VisitTypeCard
                     active={selectedVisitType === VISIT_MODE.video}
                     Icon={VideoIcon}
                     iconColor={Colors[theme].blue}
+                    id={VISIT_MODE.video}
                     subtitle={Strings.BookAppointmentScreen.fromHome}
-                    title={Strings.BookAppointmentScreen.videoCall}
-                    onPress={() => onSelectVisitType(VISIT_MODE.video)}
+                    title={Strings.Common.videoCall}
+                    onPress={onSelectVisitType}
                   />
                 </View>
               </View>
@@ -215,10 +228,7 @@ export default function BookAppointmentScreen(): ReactElement {
         </KeyboardAwareScrollView>
 
         <KeyboardStickyView>
-          <View
-            style={[styles.footerBar, footerInsetStyle]}
-            onLayout={onFooterLayout}
-          >
+          <View style={footerBarStyle} onLayout={onFooterLayout}>
             <View style={styles.footerRow}>
               <View style={styles.footerSummary}>
                 <ClockIcon color={Colors[theme].muted} size={scale(14)} />
@@ -231,6 +241,7 @@ export default function BookAppointmentScreen(): ReactElement {
             </View>
             <CustomButton
               accessibilityLabel={Strings.BookAppointmentScreen.confirmBooking}
+              disabled={isConfirmDisabled}
               label={Strings.BookAppointmentScreen.confirmBooking}
               style={styles.btnPrimary}
               variant={BUTTON_VARIANT.fill}
@@ -245,10 +256,10 @@ export default function BookAppointmentScreen(): ReactElement {
           minimumDate={today}
           selectedDate={selectedDate}
           visible={isIosPickerVisible}
-          onChange={onIosDateChange}
+          onConfirm={onIosDateChange}
           onDismiss={onDismissIosPicker}
         />
       )}
-    </SafeAreaView>
+    </Screen>
   );
 }

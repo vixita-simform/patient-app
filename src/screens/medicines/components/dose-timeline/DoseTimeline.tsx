@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { CheckIcon, ClockIcon } from "../../../../assets/icons";
 import { CustomText } from "../../../../components";
@@ -40,14 +40,22 @@ const DoseTimeline = ({ doses }: DoseTimelineProps): ReactElement => {
         return (
           <View
             key={dose.id}
-            style={[styles.dose, styleKey.chip ? styles[styleKey.chip] : undefined]}
+            style={StyleSheet.flatten([
+              styles.dose,
+              styleKey.chip ? styles[styleKey.chip] : undefined,
+            ])}
           >
             {isDone ? (
               <CheckIcon color={iconColor} size={scale(16)} />
             ) : (
               <ClockIcon color={iconColor} size={scale(16)} />
             )}
-            <CustomText style={[styles.doseTime, styleKey.text ? styles[styleKey.text] : undefined]}>
+            <CustomText
+              style={StyleSheet.flatten([
+                styles.doseTime,
+                styleKey.text ? styles[styleKey.text] : undefined,
+              ])}
+            >
               {dose.time}
             </CustomText>
           </View>

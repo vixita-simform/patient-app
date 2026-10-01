@@ -10,3 +10,5 @@ export { default as MyAppointmentsScreen } from "./my-appointments/MyAppointment
 export { default as LabReportDetailScreen } from "./lab-report-detail/LabReportDetailScreen";
 export { default as MedicinesScreen } from "./medicines/MedicinesScreen";
 export { default as NotificationsScreen } from "./notifications/NotificationsScreen";
+export { default as PersonalAndMedicalInfoScreen } from "./personal-and-medical-info/PersonalAndMedicalInfoScreen";
+export { default as SignInScreen } from "./sign-in/SignInScreen";

@@ -28,7 +28,6 @@ const styles = (theme: ThemeMode) =>
       backgroundColor: Colors[theme].navy,
       borderColor: Colors[theme].navy,
     },
-    // design-drift[text-decoration]: RN Text has no strikethrough token; textDecorationLine covers the taken state visually
     slotTaken: {
       backgroundColor: Colors[theme].line,
       borderColor: Colors[theme].line,
@@ -47,6 +46,7 @@ const styles = (theme: ThemeMode) =>
     slotActiveLabel: {
       color: Colors[theme].white,
     },
+    // design-drift[text-decoration]: RN Text has no strikethrough token; textDecorationLine covers the taken state visually
     slotTakenLabel: {
       color: Colors[theme].tabInactive,
       textDecorationLine: "line-through",

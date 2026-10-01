@@ -17,6 +17,9 @@ const styles = (theme: ThemeMode) =>
     pressed: {
       opacity: 0.7,
     },
+    disabled: {
+      opacity: 0.5,
+    },
   });
 
 export default styles;

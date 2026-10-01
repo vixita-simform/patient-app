@@ -9,11 +9,12 @@ import type { DateChipProps } from "./DateChipTypes";
 
 /**
  * One day cell in the horizontal date strip: weekday label over the day number.
- * @param {DateChipProps} props - weekday/day number, selection state and press handler.
+ * @param {DateChipProps} props - day id, weekday/day number, selection state and press handler.
  * @returns {ReactElement} A React Element.
  */
-const DateChip = ({ weekday, dayNumber, active, disabled, onPress }: DateChipProps): ReactElement => {
+const DateChip = ({ id, weekday, dayNumber, active, disabled, onPress }: DateChipProps): ReactElement => {
   const { styles } = useTheme(DateChipStyles);
+  const handlePress = () => onPress(id);
 
   const containerStyle = useMemo(
     () => StyleSheet.flatten([styles.date, active && styles.dateActive, disabled && styles.dateOff]),
@@ -27,14 +28,15 @@ const DateChip = ({ weekday, dayNumber, active, disabled, onPress }: DateChipPro
     () => StyleSheet.flatten([styles.dateNum, active && styles.dateActiveNum]),
     [styles, active],
   );
+  const accessibilityState = useMemo(() => ({ selected: active, disabled }), [active, disabled]);
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityState={{ selected: active, disabled }}
+      accessibilityState={accessibilityState}
       disabled={disabled}
       style={containerStyle}
-      onPress={onPress}
+      onPress={handlePress}
     >
       <CustomText style={dayStyle}>{weekday}</CustomText>
       <CustomText style={numStyle}>{dayNumber}</CustomText>

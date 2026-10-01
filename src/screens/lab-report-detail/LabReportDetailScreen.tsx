@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { Pressable, ScrollView, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 import { AlertIcon, BackIcon, DownloadIcon, ShareIcon } from "../../assets/icons";
 import { CustomText, IconButton, Screen } from "../../components";
@@ -9,6 +9,9 @@ import { Colors, scale } from "../../theme";
 import { LabResultRow } from "./components";
 import LabReportDetailScreenStyles from "./LabReportDetailScreenStyles";
 import useLabReportDetailScreen from "./useLabReportDetailScreen";
+
+/** Shared size for the header, alert and footer icons. */
+const ICON_SIZE = scale(20);
 
 /**
  * Lab Report Detail: fixed header (back/title/share), a scrolling body of a
@@ -21,19 +24,25 @@ export default function LabReportDetailScreen(): ReactElement {
   const { styles, theme } = useTheme(LabReportDetailScreenStyles);
   const { report, results, showAlert, onBackPress, onSharePress, onDownloadPress } =
     useLabReportDetailScreen();
+  const isShareDisabled = !onSharePress;
+  const isDownloadDisabled = !onDownloadPress;
 
   return (
     <Screen>
       <View style={styles.screen}>
         <View style={styles.header}>
           <IconButton accessibilityLabel={Strings.Common.back} onPress={onBackPress}>
-            <BackIcon color={Colors[theme].navy} size={scale(20)} />
+            <BackIcon color={Colors[theme].navy} size={ICON_SIZE} />
           </IconButton>
           <CustomText style={styles.headerTitle}>
             {Strings.LabReportDetailScreen.title}
           </CustomText>
-          <IconButton accessibilityLabel={Strings.LabReportDetailScreen.share} onPress={onSharePress}>
-            <ShareIcon color={Colors[theme].navy} size={scale(20)} />
+          <IconButton
+            accessibilityLabel={Strings.LabReportDetailScreen.share}
+            disabled={isShareDisabled}
+            onPress={onSharePress}
+          >
+            <ShareIcon color={Colors[theme].navy} size={ICON_SIZE} />
           </IconButton>
         </View>
         <ScrollView
@@ -42,7 +51,7 @@ export default function LabReportDetailScreen(): ReactElement {
           style={styles.body}
         >
           {!report ? (
-            <CustomText style={styles.headerTitle}>
+            <CustomText style={styles.notFoundText}>
               {Strings.LabReportDetailScreen.notFound}
             </CustomText>
           ) : (
@@ -70,7 +79,7 @@ export default function LabReportDetailScreen(): ReactElement {
               {showAlert && (
                 <View style={styles.alertCard}>
                   <View style={styles.alertIcon}>
-                    <AlertIcon color={Colors[theme].coral} size={scale(20)} />
+                    <AlertIcon color={Colors[theme].coral} size={ICON_SIZE} />
                   </View>
                   <CustomText style={styles.alertText}>{report.alertMessage}</CustomText>
                 </View>
@@ -87,10 +96,15 @@ export default function LabReportDetailScreen(): ReactElement {
           <Pressable
             accessibilityLabel={Strings.LabReportDetailScreen.downloadPdf}
             accessibilityRole="button"
-            style={styles.btnPrimary}
+            accessibilityState={{ disabled: isDownloadDisabled }}
+            disabled={isDownloadDisabled}
+            style={StyleSheet.flatten([
+              styles.btnPrimary,
+              isDownloadDisabled && styles.disabled,
+            ])}
             onPress={onDownloadPress}
           >
-            <DownloadIcon color={Colors[theme].white} size={scale(20)} />
+            <DownloadIcon color={Colors[theme].white} size={ICON_SIZE} />
             <CustomText style={styles.btnPrimaryText}>
               {Strings.LabReportDetailScreen.downloadPdf}
             </CustomText>

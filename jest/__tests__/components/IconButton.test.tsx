@@ -26,4 +26,18 @@ describe("IconButton", () => {
     await user.press(screen.getByRole("button", { name: Strings.HomeScreen.notifications }));
     expect(onPress).toHaveBeenCalledTimes(1);
   });
+
+  it("ignores presses and reports disabled when disabled", async () => {
+    const user = userEvent.setup();
+    const onPress = jest.fn();
+    await RenderWrapper(
+      <IconButton disabled accessibilityLabel={Strings.HomeScreen.notifications} onPress={onPress}>
+        <BellIcon />
+      </IconButton>,
+    );
+    const button = screen.getByRole("button", { name: Strings.HomeScreen.notifications });
+    expect(button).toBeDisabled();
+    await user.press(button);
+    expect(onPress).not.toHaveBeenCalled();
+  });
 });

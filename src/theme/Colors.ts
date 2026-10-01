@@ -38,6 +38,10 @@ const palette = {
   rangeTrack: "#E6ECE9",
   // Lab report detail: range-bar "normal" band background, no matching token.
   rangeNormalBand: "#BFE0D6",
+  // Profile: grey count-badge background ("4" on Family members).
+  greyBadge: "#E8ECEF",
+  // Sign in: info-card body text on `blueSoft`.
+  infoInk: "#2C4F76",
 } as const;
 
 export type ColorKey = keyof typeof palette;
