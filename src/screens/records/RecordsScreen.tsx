@@ -1,20 +1,51 @@
 import type { ReactElement } from "react";
+import { ScrollView, View } from "react-native";
 
-import { CustomText, Screen } from "../../components";
+import { CustomText, IconButton, Screen } from "../../components";
+import { SearchIcon } from "../../assets/icons";
 import { Strings } from "../../constants";
 import { useTheme } from "../../hooks";
+import { Colors, scale } from "../../theme";
+import { RecordGroupCard, RecordSummaryCard } from "./components";
 import RecordsScreenStyles from "./RecordsScreenStyles";
+import useRecordsScreen from "./useRecordsScreen";
 
 /**
- * Records tab placeholder until the screen is designed.
+ * Medical Records tab: header with a search icon button, a green summary
+ * strip (lab reports / prescriptions / discharges counts), then
+ * month-grouped cards of record rows. Static dummy data stands in for the
+ * API — see `useRecordsScreen`.
  * @returns {ReactElement} A React Element.
  */
 export default function RecordsScreen(): ReactElement {
-  const { styles } = useTheme(RecordsScreenStyles);
+  const { styles, theme } = useTheme(RecordsScreenStyles);
+  const { summaryTiles, groups, onRecordPress, onSummaryTilePress } = useRecordsScreen();
 
   return (
     <Screen>
-      <CustomText style={styles.title}>{Strings.RecordsScreen.title}</CustomText>
+      <View style={styles.screen}>
+        <View style={styles.header}>
+          <CustomText style={styles.headerTitle}>
+            {Strings.RecordsScreen.headerTitle}
+          </CustomText>
+          <IconButton accessibilityLabel={Strings.RecordsScreen.search}>
+            <SearchIcon color={Colors[theme].navy} size={scale(20)} />
+          </IconButton>
+        </View>
+        <ScrollView
+          contentContainerStyle={styles.bodyContent}
+          showsVerticalScrollIndicator={false}
+          style={styles.body}
+        >
+          <RecordSummaryCard tiles={summaryTiles} onTilePress={onSummaryTilePress} />
+          {groups.map((group) => (
+            <View key={group.id} style={styles.group}>
+              <CustomText style={styles.groupLabel}>{group.monthLabel}</CustomText>
+              <RecordGroupCard records={group.records} onRecordPress={onRecordPress} />
+            </View>
+          ))}
+        </ScrollView>
+      </View>
     </Screen>
   );
 }

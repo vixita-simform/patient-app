@@ -83,14 +83,22 @@ const useHomeScreen = (): UseHomeScreenReturn => {
     });
   }, []);
 
-  // TODO: notifications screen not built yet
-  const onPressBell = useCallback(() => {}, []);
-  // TODO: lab reports screen not built yet
-  const onPressLabReports = useCallback(() => {}, []);
+  const onPressBell = useCallback(() => {
+    router.push(STACK_ROUTES.notifications);
+  }, []);
+  const onPressLabReports = useCallback(() => {
+    router.push({
+      pathname: STACK_ROUTES.labReportDetail,
+      params: { id: "rec_cbc" },
+    });
+  }, []);
   // TODO: medicines screen not built yet
-  const onPressMedicines = useCallback(() => {}, []);
-  // TODO: appointments list screen not built yet
-  const onPressSeeAll = useCallback(() => {}, []);
+  const onPressMedicines = useCallback(() => {
+    router.push(STACK_ROUTES.medicines);
+  }, []);
+  const onPressSeeAll = useCallback(() => {
+    router.push(STACK_ROUTES.myAppointments);
+  }, []);
   // TODO: vitals history screen not built yet
   const onPressHistory = useCallback(() => {}, []);
   // TODO: appointment detail screen not built yet

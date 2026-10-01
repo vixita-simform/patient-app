@@ -12,12 +12,12 @@ inventory** listing what exists to reuse. Build from those.
 
 ## Inputs
 
-| Input | What it is | How to treat it |
-| --- | --- | --- |
-| `design/.extracted/.build/<Name>.spec.md` | element tree, verbatim copy, style table (one row per styleKey — `prop: Token` where the design resolved to a token, `prop: <expr> ⚠<why>` where it did not), assets, drift, behaviour | **the design's authority for values** — read it whole **once**; it is capped at 250 lines |
-| `screens[].screenshot` (PNG) | the design's own rendering | **the design's authority for layout, order and rhythm** — open it before writing the first element, and again when you finish |
-| `design/.extracted/.build/project-inventory.md` | components + real props, theme tokens, TextStyles variants, string namespaces, routes, module groups | what to reuse; read the sections you need |
-| The orchestrator's plan + answered questions | which component covers which node, where the route lands | architecture decisions already made |
+| Input                                           | What it is                                                                                                                                                                             | How to treat it                                                                                                               |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `design/.extracted/.build/<Name>.spec.md`       | element tree, verbatim copy, style table (one row per styleKey — `prop: Token` where the design resolved to a token, `prop: <expr> ⚠<why>` where it did not), assets, drift, behaviour | **the design's authority for values** — read it whole **once**; it is capped at 250 lines                                     |
+| `screens[].screenshot` (PNG)                    | the design's own rendering                                                                                                                                                             | **the design's authority for layout, order and rhythm** — open it before writing the first element, and again when you finish |
+| `design/.extracted/.build/project-inventory.md` | components + real props, theme tokens, TextStyles variants, string namespaces, routes, module groups                                                                                   | what to reuse; read the sections you need                                                                                     |
+| The orchestrator's plan + answered questions    | which component covers which node, where the route lands                                                                                                                               | architecture decisions already made                                                                                           |
 
 **Do not re-read `styles/rn/*.json`, `screens/*.html`, `*.facts.json` or
 `inventory.json`.** A dedicated agent already paid that cost and copied the
@@ -52,7 +52,7 @@ Every element in the spec's tree appears, in the same order, with the same copy,
 the same visual weight, the same spacing rhythm. Nothing dropped, nothing added,
 no invented padding, no reordered rows, no substituted icon or label.
 
-Reuse changes *how* a value is expressed, never *what* renders:
+Reuse changes _how_ a value is expressed, never _what_ renders:
 
 - Off by a hair (15px against `scale(16)`, a near-identical grey) → take the
   token. That is the system working.
@@ -64,22 +64,21 @@ Reuse changes *how* a value is expressed, never *what* renders:
 
 ## Project rules — non-negotiable
 
-| Rule | Means |
-| --- | --- |
-| Colours | `Colors[theme]?.key`, brand tints via `useTheme()`'s `brand` — never a hex |
-| Dimensions | `scale(n)` or a `Metrics.tsx` token — never a raw number |
-| Shadows | `Shadows[theme].key` |
-| Text | `Strings.<Namespace>.<key>` from the spec's copy table, verbatim — never a literal in JSX |
-| Fonts | the spec's `fontFamily`/`fontWeight` matched against a real `TextStyles.ts` variant from the inventory, never eyeballed |
-| Imports | barrels only (`@/components`) |
-| Styles | style factory taking `theme`; array composition, never `StyleSheet.flatten`; no inline styles in JSX |
-| SVGs | wrappers take `width`/`height`, wrap them in `scale()`, spread `...rest` |
-| Forms | `react-hook-form` + `yupResolver` in the hook; keyboard avoidance and the sticky submit button are the **layout's** job — pass `isForm` + `footerComponent` to `AppLayout` (or use `OnboardingLayout`), never a per-screen `KeyboardAvoidingView`; every field still needs ref-based focus chaining |
-| Types | `interface`, never `type`, for object shapes; no `any` |
-| Constants | `Object.freeze` |
-| JSDoc | every exported function/hook/component; inline comments on non-obvious logic |
-| Screen shell | `AppLayout` with the right `headerVariant`/`withTabBar`, or `OnboardingLayout` for auth/onboarding |
-| Boundaries | only `<Name>Screen.tsx` and its hook may navigate, call an API, or touch Redux |
+| Rule         | Means                                                                                                                                                                                                                                                                                               |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Colours      | `Colors[theme]?.key`, brand tints via `useTheme()`'s `brand` — never a hex                                                                                                                                                                                                                          |
+| Dimensions   | `scale(n)` or a `Metrics.tsx` token — never a raw number                                                                                                                                                                                                                                            |
+| Text         | `Strings.<Namespace>.<key>` from the spec's copy table, verbatim — never a literal in JSX                                                                                                                                                                                                           |
+| Fonts        | the spec's `fontFamily`/`fontWeight` matched against a real `TextStyles.ts` variant from the inventory, never eyeballed                                                                                                                                                                             |
+| Imports      | barrels only (`@/components`)                                                                                                                                                                                                                                                                       |
+| Styles       | style factory taking `theme`; array composition, never `StyleSheet.flatten`; no inline styles in JSX                                                                                                                                                                                                |
+| SVGs         | wrappers take `width`/`height`, wrap them in `scale()`, spread `...rest`                                                                                                                                                                                                                            |
+| Forms        | `react-hook-form` + `yupResolver` in the hook; keyboard avoidance and the sticky submit button are the **layout's** job — pass `isForm` + `footerComponent` to `AppLayout` (or use `OnboardingLayout`), never a per-screen `KeyboardAvoidingView`; every field still needs ref-based focus chaining |
+| Types        | `interface`, never `type`, for object shapes; no `any`                                                                                                                                                                                                                                              |
+| Constants    | `Object.freeze`                                                                                                                                                                                                                                                                                     |
+| JSDoc        | every exported function/hook/component; inline comments on non-obvious logic                                                                                                                                                                                                                        |
+| Screen shell | `AppLayout` with the right `headerVariant`/`withTabBar`, or `OnboardingLayout` for auth/onboarding                                                                                                                                                                                                  |
+| Boundaries   | only `<Name>Screen.tsx` and its hook may navigate, call an API, or touch Redux                                                                                                                                                                                                                      |
 
 Two `docs/claude/*.md` files are open to you, and only when the rule is
 genuinely in question for what you are writing: **`forms.md`** before a screen
@@ -113,9 +112,11 @@ Navigate only through `src/utils/NavigatorUtils.ts`.
 `design/.extracted/maps/<Name>.json`:
 
 ```jsonc
-{ "screen": "<Name>Screen",
+{
+  "screen": "<Name>Screen",
   "styleFile": "src/modules/<group>/<screen>/<Name>Styles.ts",
-  "map": [ { "styleKey": "screen", "selector": ".filter-page" } ] }
+  "map": [{ "styleKey": "screen", "selector": ".filter-page" }],
+}
 ```
 
 **Every style key you create appears here**, with the `selector` copied verbatim

@@ -45,3 +45,4 @@ example
 .claude/html-design-to-rn/config.local.json
 design/.extracted/
 .claude/reviews/
+.codegraph/

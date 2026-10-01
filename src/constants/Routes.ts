@@ -12,4 +12,9 @@ export const STACK_ROUTES = {
   home: "/",
   findADoctor: "/find-a-doctor",
   doctorProfile: "/doctor-profile",
+  bookAppointment: "/book-appointment",
+  myAppointments: "/my-appointments",
+  labReportDetail: "/lab-report-detail",
+  medicines: "/medicines",
+  notifications: "/notifications",
 } as const;

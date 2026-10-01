@@ -1,6 +1,6 @@
 // Formatted by hand rather than via Intl: en-IN output differs across ICU versions
 // ("Sept" vs "Sep", "am" vs "AM"), and we want identical output on iOS and Android.
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 type DateInput = Date | string | number;
@@ -21,6 +21,25 @@ export function formatDate(value: DateInput): string {
 /** True when `value` falls on the same calendar day as `now`. */
 export function isToday(value: DateInput, now: Date = new Date()): boolean {
   return toDate(value).toDateString() === now.toDateString();
+}
+
+/** True when `value` falls on the calendar day immediately before `now`. */
+export function isYesterday(value: DateInput, now: Date = new Date()): boolean {
+  const yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  return toDate(value).toDateString() === yesterday.toDateString();
+}
+
+/** True when `value` is not today or yesterday, but within the last 7 calendar days. */
+export function isThisWeek(value: DateInput, now: Date = new Date()): boolean {
+  const date = toDate(value);
+  if (!isValidDate(date) || isToday(date, now) || isYesterday(date, now)) {
+    return false;
+  }
+  const weekAgo = new Date(now);
+  weekAgo.setDate(weekAgo.getDate() - 7);
+  weekAgo.setHours(0, 0, 0, 0);
+  return date.getTime() >= weekAgo.getTime() && date.getTime() <= now.getTime();
 }
 
 /** e.g. "11:30 AM"; returns "" for an invalid date. */

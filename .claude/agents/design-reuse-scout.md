@@ -11,7 +11,7 @@ screen build ever has to sweep `src/` to answer "does a component for this exist
 and what props does it take?".
 
 That sweep is the second-largest token sink in the design→RN flow after the
-design sources, and unlike them it is *identical for every screen*. You pay it
+design sources, and unlike them it is _identical for every screen_. You pay it
 once; every later build reads your file.
 
 ## Output
@@ -29,6 +29,7 @@ lines. One line per item. No prose, no rationale, no code blocks longer than a
 props signature.
 
 ### 1. Components — `src/components/`
+
 For every folder exported from `src/components/index.ts`, one row:
 
 | Component | Import | Props that change what it renders | Notes |
@@ -44,26 +45,29 @@ Mark a component `[has variants]` when its Types file shows a discriminating
 union, and `[wraps SVG]` when it forwards `width`/`height`/`...rest` to an SVG.
 
 ### 2. Theme tokens
+
 - `src/theme/Colors.ts` — every key, grouped as the file groups them, with a
   note on which are brand-derived (`brand.*`, `text.brand`, `icon.brand`,
   `component.*`). Key names only, no hex values: the builder writes
   `Colors[theme]?.key`, never the value.
 - `src/theme/Metrics.tsx` — every exported named dimension token, plus the
   `scale`/guideline facts a builder must respect.
-- `src/theme/Shadows.ts` — the keys.
-- `src/theme/ApplicationStyles.ts` — the shared style keys worth reusing.
+  reusing.
 
 ### 3. Typography — `src/components/text/TextStyles.ts`
+
 Every variant with its **fontFamily / fontSize / fontWeight / lineHeight**, so a
 builder can match the design's compiled `style.fontFamily.expr` /
 `fontWeight` against a real variant instead of eyeballing one. This table is the
 whole point of the file for typography-heavy screens.
 
 ### 4. Strings — `src/constants/Strings.ts` + `src/translations/en.json`
+
 The namespaces that exist and the shape of a key path. Do not list every key;
 list the namespaces and 2–3 example keys each, plus where a new namespace goes.
 
 ### 5. Routes
+
 - `src/constants/NavigationRoutes.ts` — the exported enums/consts and their
   entries (`ROUTES`, `ROUTE_SEGMENTS`, helpers such as `getRouteSegment`).
 - `src/app/` — the route-group tree (`(public)`, `(protected)/(tabs)`, …) as an
@@ -73,10 +77,12 @@ list the namespaces and 2–3 example keys each, plus where a new namespace goes
   signatures. Note that screens navigate only through these.
 
 ### 6. Module groups — `src/modules/`
+
 The existing group folders and one line each on what lives there, so a new
 screen lands in the right group instead of inventing one.
 
 ### 7. Hooks and utils
+
 `src/hooks/` and `src/utils/` — exported names and one-line purpose.
 
 ## Rules

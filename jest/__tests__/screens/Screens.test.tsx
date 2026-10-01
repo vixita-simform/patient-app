@@ -114,12 +114,19 @@ describe("DoctorProfileScreen", () => {
 });
 
 describe("tab placeholder screens", () => {
-  it.each([
-    ["ProfileScreen", ProfileScreen, Strings.ProfileScreen.title],
-    ["RecordsScreen", RecordsScreen, Strings.RecordsScreen.title],
-  ])("%s renders its title", async (_name, Component, title) => {
-    await RenderWrapper(<Component />);
-    expect(screen.getByText(title)).toBeOnTheScreen();
+  it.each([["ProfileScreen", ProfileScreen, Strings.ProfileScreen.title]])(
+    "%s renders its title",
+    async (_name, Component, title) => {
+      await RenderWrapper(<Component />);
+      expect(screen.getByText(title)).toBeOnTheScreen();
+    },
+  );
+});
+
+describe("RecordsScreen", () => {
+  it("renders its header title", async () => {
+    await RenderWrapper(<RecordsScreen />);
+    expect(screen.getByText(Strings.RecordsScreen.headerTitle)).toBeOnTheScreen();
   });
 });
 

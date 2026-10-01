@@ -45,8 +45,9 @@ export default function useDoctorProfileScreen(): UseDoctorProfileScreenReturn {
   const onFavouritePress = useCallback(() => {}, []);
   // TODO: video consult flow not built yet.
   const onVideoPress = useCallback(() => {}, []);
-  // TODO: appointment booking flow not built yet.
-  const onBookPress = useCallback(() => {}, []);
+  const onBookPress = useCallback(() => {
+    router.push({ pathname: STACK_ROUTES.bookAppointment, params: { id } });
+  }, [id]);
 
   return {
     doctor,

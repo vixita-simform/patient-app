@@ -23,6 +23,21 @@ const palette = {
   paleMint: "#CDE6DF",
   bodySlate: "#44525F",
   transparent: "transparent",
+  navyAlpha40: "rgba(20,33,61,0.4)",
+  // Segmented-tabs track background; distinct from `line` (#DDE5E1).
+  segmentTrack: "#DDE7E3",
+  // Records: coral-tone badge text ("1 flag"), pairs with `coralSoft` background.
+  coralInk: "#B63A17",
+  // Records: summary-tile background on the green summary card.
+  whiteAlpha12: "rgba(255,255,255,0.12)",
+  // Lab report detail: alert-card text, no matching token.
+  alertInk: "#8E2E13",
+  // Lab report detail: alert-card border, no matching token.
+  alertBorder: "#F5C8B8",
+  // Lab report detail: range-bar track background, no matching token.
+  rangeTrack: "#E6ECE9",
+  // Lab report detail: range-bar "normal" band background, no matching token.
+  rangeNormalBand: "#BFE0D6",
 } as const;
 
 export type ColorKey = keyof typeof palette;

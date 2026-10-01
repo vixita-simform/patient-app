@@ -5,3 +5,8 @@ export { default as VisitsScreen } from "./visits/VisitsScreen";
 
 export { default as DoctorProfileScreen } from "./doctor-profile/DoctorProfileScreen";
 export { default as FindADoctorScreen } from "./find-a-doctor/FindADoctorScreen";
+export { default as BookAppointmentScreen } from "./book-appointment/BookAppointmentScreen";
+export { default as MyAppointmentsScreen } from "./my-appointments/MyAppointmentsScreen";
+export { default as LabReportDetailScreen } from "./lab-report-detail/LabReportDetailScreen";
+export { default as MedicinesScreen } from "./medicines/MedicinesScreen";
+export { default as NotificationsScreen } from "./notifications/NotificationsScreen";

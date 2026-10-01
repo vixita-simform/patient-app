@@ -82,6 +82,8 @@ src/screens/home/
   ```
 
 - **`use<Name>Screen.ts`**: create it only when the screen has logic. It holds navigation (`router`, `useLocalSearchParams`), onPress and other handlers, `useEffect`, and focus code (`useFocusEffect`). It returns what the screen needs.
+  - It never returns a `renderItem` or JSX-producing function (e.g. a `FlatList` row renderer). That belongs in the screen file, as a plain function or JSX inline in the render, not built with `createElement` in the hook.
+  - Never put a method (a function reference) inside the dependency array of `useCallback`, `useEffect`, or `useFocusEffect`. Depend only on the values that function reads, not on other functions.
 - In the screen, get styles through `useTheme`:
 
   ```tsx
@@ -151,6 +153,25 @@ src/screens/home/
   ```
 - Keys are camelCase and describe the text (`seeAll`, `callAmbulance`). Before adding a key, check whether the same text already exists and reuse it.
 - Dynamic values (names, dates, counts) come from data, not from `Strings`; only the static wording around them goes in `Strings`.
+
+## Constants
+
+- Never hardcode a fixed set of string/number values inline (variants, statuses, modes, keys) as a raw literal or an inline union type. Add it to `src/constants/Constants.ts` as an `as const` object plus its derived type, and import it from `src/constants`:
+  ```ts
+  export const BUTTON_VARIANT = {
+    fill: 'fill',
+    line: 'line',
+  } as const;
+
+  export type ButtonVariant = (typeof BUTTON_VARIANT)[keyof typeof BUTTON_VARIANT];
+  ```
+  ```tsx
+  import { BUTTON_VARIANT } from '../../constants';
+
+  <CustomButton variant={BUTTON_VARIANT.fill} />
+  ```
+- Before adding a new constant object, check whether the same set of values already exists and reuse it.
+- Route names and pathnames are the exception: they live in `src/constants/Routes.ts` (`TAB_ROUTES`, `STACK_ROUTES`), not `Constants.ts`.
 
 ## Icons
 

@@ -18,6 +18,8 @@ const freezeStringsObject = <T extends KeyStringValueMap>(strings: T): T =>
  */
 const Common = freezeStringsObject({
   back: "Back",
+  cancel: "Cancel",
+  done: "Done",
 });
 
 const TabBar = freezeStringsObject({
@@ -94,12 +96,86 @@ const DoctorProfileScreen = freezeStringsObject({
   loadError: "Could not load this doctor. Please try again.",
 });
 
+const BookAppointmentScreen = freezeStringsObject({
+  changeMonth: "Change month",
+  availableSlots: "Available slots",
+  visitType: "Visit type",
+  inPerson: "In-person",
+  atTheHospital: "At the hospital",
+  videoCall: "Video call",
+  fromHome: "From home",
+  reasonForVisit: "Reason for visit",
+  reasonPlaceholder: "Describe your symptoms or reason for the visit",
+  selectATimeSlot: "Select a time slot",
+  confirmBooking: "Confirm booking",
+  notFound: "Doctor not found",
+});
+
+const MyAppointmentsScreen = freezeStringsObject({
+  title: "Appointments",
+  addAppointment: "Add appointment",
+  upcoming: "Upcoming",
+  completed: "Completed",
+  cancelled: "Cancelled",
+  confirmed: "Confirmed",
+  pending: "Pending",
+  reschedule: "Reschedule",
+  getDirections: "Get directions",
+  joinCall: "Join call",
+  inPerson: "In-person",
+  videoCall: "Video call",
+  emptyMessage: "No appointments here yet",
+  errorMessage: "Something went wrong. Please try again.",
+});
+
 const RecordsScreen = freezeStringsObject({
-  title: "Records",
+  headerTitle: "Medical records",
+  search: "Search",
+  labReports: "Lab reports",
+  prescriptions: "Prescriptions",
+  discharges: "Discharges",
 });
 
 const ProfileScreen = freezeStringsObject({
   title: "Profile",
+});
+
+const LabReportDetailScreen = freezeStringsObject({
+  title: "Blood count",
+  share: "Share",
+  sampleCollected: "Sample collected",
+  orderedBy: "Ordered by",
+  reportId: "Report ID",
+  normal: "Normal",
+  low: "Low",
+  borderline: "Borderline",
+  // Prefix for the per-result range line, e.g. "Normal 13.5 – 17.5".
+  normalRangePrefix: "Normal ",
+  downloadPdf: "Download PDF",
+  notFound: "Report not found",
+});
+
+const MedicinesScreen = freezeStringsObject({
+  title: "My medicines",
+  addMedicine: "Add medicine",
+  todaysDoses: "Today's doses",
+  activePrescription: "Active prescription",
+  taken: "Taken",
+  refillSoon: "Refill soon",
+  stockLeft: "Stock left",
+  orderRefill: "Order refill from hospital pharmacy",
+});
+
+const NotificationsScreen = freezeStringsObject({
+  title: "Notifications",
+  markAllRead: "Mark all read",
+  today: "Today",
+  yesterday: "Yesterday",
+  thisWeek: "This Week",
+  past: "Past",
+  unread: "Unread",
+  minAgoSuffix: "min ago",
+  hrAgoSuffix: "hr ago",
 });
 
 export default Object.freeze({
@@ -109,6 +185,11 @@ export default Object.freeze({
   FindADoctorScreen,
   DoctorCard,
   DoctorProfileScreen,
+  BookAppointmentScreen,
+  MyAppointmentsScreen,
   RecordsScreen,
   ProfileScreen,
+  LabReportDetailScreen,
+  MedicinesScreen,
+  NotificationsScreen,
 });

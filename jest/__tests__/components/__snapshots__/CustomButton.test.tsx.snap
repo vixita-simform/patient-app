@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomButton matches the snapshot for the fill variant 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="Confirm booking"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#2F7D6D",
+        "borderRadius": 24,
+        "borderWidth": 0,
+        "flexDirection": "row",
+        "gap": 12,
+        "justifyContent": "center",
+        "paddingHorizontal": 35,
+        "paddingVertical": 24,
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#FFFFFF",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 24,
+          "fontWeight": "700",
+        }
+      }
+    >
+      Confirm booking
+    </Text>
+  </View>
+</KeyboardProvider>
+`;
+
+exports[`CustomButton matches the snapshot for the line variant 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="Cancel"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "#2F7D6D",
+        "borderRadius": 24,
+        "borderWidth": 2,
+        "flexDirection": "row",
+        "gap": 12,
+        "justifyContent": "center",
+        "paddingHorizontal": 35,
+        "paddingVertical": 24,
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#2F7D6D",
+          "fontFamily": "Figtree_700Bold",
+          "fontSize": 24,
+          "fontWeight": "700",
+        }
+      }
+    >
+      Cancel
+    </Text>
+  </View>
+</KeyboardProvider>
+`;

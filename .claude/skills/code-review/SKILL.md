@@ -1,6 +1,8 @@
 ---
 name: code-review
 description: Reviews ONLY the changed code (git diff), or the whole project for a new project / first push, of this React Native project before a push or PR, at any size from 1 to 200+ files, by splitting the diff into batches and running parallel code-reviewer sub-agents, then merging everything into one severity-ranked report. Use this whenever the user says review my code, review my changes, review before push, check my diff, PR review, code audit, pre-push check, or asks whether their changes are ready to push, or asks to review a new/initial project or the full codebase, even if they don't say "skill" or mention the number of files.
+user-invocable: true
+disable-model-invocation: true
 ---
 
 # Code Review Orchestrator (diff-only)
@@ -157,26 +159,32 @@ Use this template exactly:
 ```markdown
 # Code Review — <branch> vs <base>
 
-**Verdict:** ❌ Do not push — <n> critical issues   |   ⚠️ Push after fixing standards   |   ✅ Ready to push
+**Verdict:** ❌ Do not push — <n> critical issues | ⚠️ Push after fixing standards | ✅ Ready to push
 **Mode:** <diff vs <base> | full project>
 **Scope:** <reviewFiles> files, <changedLines> changed lines (full project: total lines), <batches> batches · <skippedFiles> skipped
 
 ## Summary
+
 <One sentence overall assessment>
 
 ## Critical Issues
-- `path:line` — issue → fix  _(category)_
+
+- `path:line` — issue → fix _(category)_
 
 ## Standards Violations
-- `path:line` — issue → fix  _(category)_
+
+- `path:line` — issue → fix _(category)_
 
 ## Minor Issues
-- `path:line` — issue → fix  _(category)_
+
+- `path:line` — issue → fix _(category)_
 
 ## Approved Patterns
+
 - <1–2 genuinely non-obvious good patterns, or omit the section>
 
 ## Not Reviewed
+
 - <files from failed batches, and the skipped list collapsed to a count>
 
 <output of usage-report.js, pasted unchanged>

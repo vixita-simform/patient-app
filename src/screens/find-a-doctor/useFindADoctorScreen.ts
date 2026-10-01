@@ -42,7 +42,8 @@ const EMPTY_LIST: readonly DoctorSummary[] = Object.freeze([]);
  * @returns {UseFindADoctorScreenReturn} chips, list data and render helpers, count label and handlers.
  */
 export default function useFindADoctorScreen(): UseFindADoctorScreenReturn {
-  const [selectedSpecialty, setSelectedSpecialty] = useState<SpecialtyId>("all");
+  const [selectedSpecialty, setSelectedSpecialty] =
+    useState<SpecialtyId>("all");
   const [searchQuery, setSearchQuery] = useState("");
   // Mock request state: the static data never loads or fails.
   const isLoading = false;
@@ -52,7 +53,8 @@ export default function useFindADoctorScreen(): UseFindADoctorScreenReturn {
     const query = searchQuery.trim().toLowerCase();
     return findADoctorDummyData.doctors.filter(
       (doctor) =>
-        (selectedSpecialty === "all" || doctor.specialty === selectedSpecialty) &&
+        (selectedSpecialty === "all" ||
+          doctor.specialty === selectedSpecialty) &&
         (query === "" ||
           doctor.name.toLowerCase().includes(query) ||
           doctor.specialtyLabel.toLowerCase().includes(query)),
@@ -61,7 +63,9 @@ export default function useFindADoctorScreen(): UseFindADoctorScreenReturn {
 
   // Unfiltered shows the API total; any filter shows what the local match found.
   const isFiltered = selectedSpecialty !== "all" || searchQuery.trim() !== "";
-  const count = isFiltered ? doctors.length : findADoctorDummyData.totalAvailableToday;
+  const count = isFiltered
+    ? doctors.length
+    : findADoctorDummyData.totalAvailableToday;
   const countLabel = `${count} ${
     count === 1
       ? Strings.FindADoctorScreen.doctorAvailableToday
