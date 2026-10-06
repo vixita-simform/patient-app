@@ -1,32 +1,41 @@
 ---
 name: code-review
-description: Reviews ONLY the changed code (git diff), or the whole project for a new project / first push, of this React Native project before a push or PR, at any size from 1 to 200+ files, by splitting the diff into batches and running parallel code-reviewer sub-agents, then merging everything into one severity-ranked report. Use this whenever the user says review my code, review my changes, review before push, check my diff, PR review, code audit, pre-push check, or asks whether their changes are ready to push, or asks to review a new/initial project or the full codebase, even if they don't say "skill" or mention the number of files.
+description: Reviews ONLY the changed code (git diff), or the whole project for a new project / first push, of this monorepo (Expo mobile app, Next.js backend, shared packages) before a push or PR, at any size from 1 to 200+ files, reviewing batch by batch in this session with checkpoint files (no sub-agents), then merging everything into one severity-ranked report. Use this whenever the user says review my code, review my changes, review before push, check my diff, PR review, code audit, pre-push check, or asks whether their changes are ready to push, or asks to review a new/initial project or the full codebase, or says "continue the review", even if they don't say "skill" or mention the number of files.
 user-invocable: true
 disable-model-invocation: true
 ---
 
-# Code Review Orchestrator (diff-only)
+# Code Review (single session, diff-only)
 
-You coordinate the review. You do not review files yourself — the `code-reviewer` sub-agent
-does that per batch. Your jobs: plan batches, launch reviewers in parallel, run the checks
-that need the whole diff, and produce one clean report.
+You do the whole review yourself, in this session. **Never launch a sub-agent** (no Agent / Task
+tool) — not the `code-reviewer` agent, not Explore, not general-purpose. Every token the review
+spends must show up in this session.
 
-Why this design: one agent reading 150 files loses focus and misses bugs. Small batches of
-related files get full attention, and running them in parallel keeps it fast.
+How it scales without agents: the diff is split into small batches of related files. You review
+them one at a time, and write each batch's findings to a file the moment it's done. The files are
+the source of truth: if the conversation is compacted or stopped, nothing is lost, and the review
+can be resumed. A script merges the files into the report.
 
-Rules live in `references/conventions.md`. Don't restate or change them here.
+Rules live in files. Don't restate or change them here:
+
+- `.claude/agents/code-reviewer.md` — read only its **Procedure** and **Output format**
+  sections. They are your review procedure and the exact result format. Where it says
+  "orchestrator", that's this skill; where it says "diff command", use `batch-diff.js` output.
+- `references/common.md` — every workspace (TypeScript, shared packages, security, severity guide)
+- `references/mobile.md` + `apps/mobile/CLAUDE.md` — `apps/mobile/`
+- `references/backend.md` — `apps/backend/`
 
 ## Step 0 — Pick the review mode
 
+- **Resume:** the user says "continue the review" / "resume", or you are mid-review after a
+  compaction. Run `plan-batches.js --resume`, skip to Step 3 and do only `pendingBatches`. Re-read
+  the rule files first (Step 2) — they may have been compacted away.
 - **Diff mode (default):** the project already has a base branch (usually after the first push).
   Reviews only changed lines.
 - **Full-project mode (`--all`):** use when the user says initial / new / first push / whole
   project / full review, OR when Step 1 returns an error about no base branch or no commits.
   Every source file is reviewed and all lines count as new. Root-level tool configs
   (babel, metro, jest, .eslintrc) are covered by the foundation check instead.
-
-Full-project mode on a big codebase is much more expensive than a diff review. If it plans more
-than 15 batches, tell the user the batch count first and ask to continue.
 
 ## Step 1 — Plan the batches
 
@@ -42,116 +51,137 @@ node .claude/skills/code-review/scripts/plan-batches.js --all                   
 - Add `--working` when the user has uncommitted changes they want included
   (check with `git status --short`; if there are uncommitted changes and the user didn't say,
   include them — they're about to be pushed too).
-- The script keeps each feature folder (Screen + Styles + Types + hook) in one batch and
-  caps batches at ~12 files / ~800 changed lines. Lockfiles, images, snapshots and build
-  output are skipped automatically.
+- The script keeps each feature folder (Screen + Styles + Types + hook + its tests, or one
+  backend API area) in one batch, never mixes workspaces in a batch, and caps batches at
+  ~12 files / ~800 changed lines. Lockfiles, images, snapshots, build output and pure renames
+  (moved, 0 lines changed) are left out automatically.
+- It writes the full plan to `<runDir>/plan.json` and prints only a summary: `runDir`,
+  `startedAt`, `size`, `workspaces`, `totals`, one line per batch. Don't open `plan.json`
+  yourself — `batch-diff.js` reads it.
 
-Save the `startedAt` value from the output — Step 5 uses it to measure token usage for
-this review only.
+Keep `runDir` and `startedAt` — later steps need them.
 
 If the output has `error` about a missing base branch or common ancestor, switch to `--all`
 and tell the user in one line ("No base branch yet — reviewing the whole project"). For any
-other error, tell the user and stop. If `reviewFiles` is 0, say there's nothing
-to review and stop.
+other error, tell the user and stop. If `reviewFiles` is 0, say there's nothing to review and stop.
+
+**Ask before continuing** (one line with the counts) only when it's a big spend: full-project mode
+with more than 15 batches, or more than 250 files. Up to that, just go.
 
 Tell the user in one line what will happen, e.g.
-"Reviewing 148 changed files (3,920 lines) against origin/main in 13 parallel batches."
+"Reviewing 148 changed files (3,920 lines) against origin/main in 13 batches."
 
 ## Step 1b — Foundation check (always — it's instant and costs no review tokens)
 
 ```bash
-node .claude/skills/code-review/scripts/foundation-check.js
+node .claude/skills/code-review/scripts/foundation-check.js --out <runDir>/foundation.txt
 ```
 
-It checks that the core files the conventions rely on exist (`Strings.ts`, `APIConfig.ts`,
-`Store.ts`, `Metrics`, `Colors`…), that `tsconfig.json` and ESLint actually enforce the rules,
-and that no secrets (`.env`, release keystores) are about to be pushed. In full-project mode keep
-all its FINDINGS for the report. In diff mode keep only its CRITICAL findings (secrets about
-to be pushed), since the rest isn't about the changed code. Pass its `MISSING_CORE` list to every reviewer in Step 3 — this stops reviewers
-from flagging every single usage of something that doesn't exist yet.
+It checks, per workspace, that the core files the rules rely on exist (mobile: `Strings.ts`,
+`Routes.ts`, `Colors.ts`, `Metrics.tsx`…; backend: `next.config.ts` lists the shared packages),
+that the tsconfig files and ESLint actually enforce the rules, and that no secrets (`.env`,
+release keystores) are about to be pushed. `merge-findings.js` picks up its findings (in diff mode
+only the CRITICAL ones — the rest isn't about the changed code). Remember its `MISSING_CORE`
+list: don't flag every usage of something that doesn't exist yet.
 
-## Step 2 — Run static tools (in parallel with Step 3)
+## Step 2 — Static tools (background) and rules (once)
 
-These catch mechanical problems for free, so reviewers can focus on logic. Run them in the
-background while reviewers work; skip any that aren't set up in this project.
+Start lint and typecheck in the background (`run_in_background`) for each workspace that has
+batches; skip any that aren't set up:
 
 ```bash
-npx eslint <all reviewFiles that are .ts/.tsx/.js/.jsx>   # lint rules (inline styles, color literals, etc.)
-npx tsc --noEmit                                          # type errors
+npm run lint --workspace=@patient-app/<name>
+npm run typecheck --workspace=@patient-app/<name>
 ```
 
-Keep only errors on changed files. Type errors and lint errors count as `CRITICAL` and
-`STANDARD` respectively in the final report, tagged `[tool]`.
+Keep only errors on reviewed files. Type errors are `CRITICAL`, lint errors `STANDARD`, tagged `[tool]`.
 
-## Step 3 — Launch reviewers in parallel
+While they run, read the rules **once for the whole review**: the Procedure and Output format
+sections of `.claude/agents/code-reviewer.md`, `references/common.md`, then the rule files of
+only the workspaces in the plan's `workspaces` list (`mobile` → `references/mobile.md` +
+`apps/mobile/CLAUDE.md`; `backend` → `references/backend.md`). Don't re-read them per batch.
 
-For each batch, launch one `code-reviewer` sub-agent. **Send all launches in a single message**
-so they run concurrently — sequential launches defeat the purpose. If there are more than 10
-batches, launch in waves of 10.
+## Step 3 — Review the batches, one at a time
 
-Prompt each reviewer with exactly:
+For each batch id in order (on resume: only `pendingBatches`):
 
+1. Get the batch:
+   ```bash
+   node .claude/skills/code-review/scripts/batch-diff.js <runDir> <id>
+   ```
+   It prints the workspace, the rule files that apply, the files, and the diff (`-U3`). New or
+   untracked files (and every file in full-project mode) are printed whole with line numbers.
+   Any file over 400 printed lines is cut, with a note on what to Read if needed. If the header
+   says the result file already exists, skip the batch.
+2. Review per the Procedure, applying only that batch's workspace rules. Findings only on added
+   or changed lines. Read more of a file only when a hunk can't be judged on its own, and then
+   with `Read` offset/limit around the hunk — never whole files "for context", and never re-read
+   a file already shown in full by `batch-diff.js`. Grep is fine for checking callers.
+3. **Immediately** write the result to `<runDir>/batch-<id>.txt` in the exact Output format
+   (`BATCH`, `FILES_REVIEWED`, `FINDINGS`, `CONTEXT`, `APPROVED`). Write it even if there are no
+   findings (`none`) — a missing file means "not reviewed".
+4. Tell the user one line, e.g. "Batch 7/16 done — 2 critical, 5 standard." Don't repeat the
+   findings in chat. Go to the next batch without waiting for the user.
+
+Don't stop partway to summarize. If the conversation is compacted mid-review, run
+`plan-batches.js --resume` and carry on with `pendingBatches`.
+
+**Small reviews** (`size: "small"`, ≤10 files and ≤600 lines — usually 1–2 batches): same steps.
+Each result file costs one short write and keeps the report path identical for every size.
+
+## Step 4 — Merge and cross-file checks
+
+```bash
+node .claude/skills/code-review/scripts/merge-findings.js <runDir>
 ```
-Review batch <id>.
-Diff command: <diffCommand with this batch's files substituted for <files>>
-Files:
-<one path per line>
-Untracked files in this batch (read whole file, all lines are new):
-<paths, or "none">
-Review mode: <diff | full-project>
-Missing project foundation (don't flag each usage; one foundation finding already covers it):
-<MISSING_CORE list, or "none">
-Follow your procedure and return output in your exact format.
-```
 
-Single-batch runs (`mode: "single"`) still go through one `code-reviewer` so the output
-format stays identical.
+It prints `COUNTS`, ready-made `## Critical Issues` / `## Standards Violations` /
+`## Minor Issues` / `## Approved Patterns` sections (deduped, sorted, same issue across >3 files
+collapsed into one bullet), the merged `CONTEXT` facts, `NOT_REVIEWED` batches and `UNPARSED`
+lines. If `NOT_REVIEWED` is not `none`, review those batches now (Step 3), then merge again. Fix
+or drop any `UNPARSED` line.
 
-If a reviewer fails or returns malformed output, re-run that batch once. If it fails again,
-list its files under "Not reviewed" in the report — never silently drop files.
+Then use the `CONTEXT` lines plus Grep over the repo for the checks no single batch can do:
 
-## Step 4 — Cross-file checks (only you can do these)
+1. **Routes (mobile)** — every `NEW_ROUTE` has all three: a key in `STACK_ROUTES` / `TAB_ROUTES`
+   (`apps/mobile/src/constants/Routes.ts`), a route file under `apps/mobile/src/app/`, and a
+   screen exported from `apps/mobile/src/screens/index.ts`. Missing one → STANDARD.
+2. **Strings (mobile)** — every `NEW_STRING_KEY` exists in `apps/mobile/src/constants/Strings.ts`
+   and its block is in the default export. Same text already under another key → MINOR (reuse it).
+3. **Tests** — every `NEW_COMPONENT` has a test in `apps/mobile/jest/__tests__/`; every `NEW_HOOK`
+   with logic has tests for its handlers and states. Every `NEW_ENDPOINT` has route tests.
+   Missing → STANDARD.
+4. **Changed exports** — for each `CHANGED_EXPORT`, Grep all callers across the whole repo,
+   including other workspaces (a changed `@patient-app/shared-types` type affects mobile and
+   backend). A caller not updated for the new shape → CRITICAL.
+5. **API contract** — every `API_CALL` from mobile matches a backend route (`apps/backend/src/app/api/<path>/route.ts`
+   exporting that method) or is clearly marked as not built yet. Every `NEW_ENDPOINT` returns a
+   type from `@patient-app/shared-types`. Mismatched method/path → CRITICAL.
+6. **Shared types** — each `NEW_SHARED_TYPE` is exported from the package `index.ts` and is not
+   a duplicate of a type still defined inside an app. Duplicate → STANDARD (move callers to the shared one).
+7. **Barrels** — each `NEW_FOLDER` with `index.ts: no` → STANDARD.
 
-Reviewers only see their own batch. Use their CONTEXT lines plus Grep over the repo:
+Tag these findings `[cross-file]` and add them, plus the `[tool]` errors from Step 2, to the
+merged sections in the right severity.
 
-1. **Routes** — every `NEW_ROUTE` exists in the `ROUTES` enum, in `RootStackParamList`
-   (`AppNavigation.tsx`), and in `getLinkConfiguration()` if it's deep-linkable.
-2. **Reducers** — every `NEW_REDUCER` is in `combineReducers` in `Store.ts`; if it holds data
-   that should survive restart, flag whether `persistConfig` whitelists it (MINOR, as a question).
-3. **Strings** — every `NEW_STRING_KEY` exists in both `en.json` and `Strings.ts`.
-4. **Tests** — every `NEW_COMPONENT` has at least a test in `jest/__tests__/`; every `NEW_HOOK`
-   with business logic has success/error/loading tests. Missing → STANDARD.
-5. **Changed exports** — for each `CHANGED_EXPORT`, Grep all callers across the repo
-   (including unchanged files). A caller not updated for the new signature → CRITICAL.
-6. **Thunk actions** — no two `NEW_THUNK_ACTION` strings (or an existing one in
-   `ToolkitAction.ts`) are identical → CRITICAL if duplicated.
-7. **Endpoints** — each `NEW_ENDPOINT` is defined in `APIConst.ts` and actually used.
-8. **Barrels** — each `NEW_FOLDER` with `index.ts: no` → STANDARD.
+In full-project mode also check the project as a whole: mobile screens that skip the
+`Screen / ScreenStyles / use<Name>Screen` pattern, duplicated components that should be one
+shared component in `apps/mobile/src/components/`, types defined in both an app and
+`packages/shared-types`, and whether each workspace has tests at all.
 
-Tag these findings `[cross-file]`. Add the foundation-check FINDINGS here too (already tagged
-`[foundation]`).
+## Step 5 — Write the report
 
-In full-project mode also check the project as a whole: features that skip the
-`Screen / Styles / Types / use<Name> / index.ts` pattern, duplicated components that should be
-one shared component in `app/components/`, and whether any tests exist at all.
-
-## Step 5 — Merge and write the report
-
-1. Parse all FINDINGS lines. Deduplicate: same path + line + category → keep the clearest one.
-   If the same issue repeats in many files (e.g. hardcoded strings in 20 files), group them
-   into one bullet listing the files, so the report stays readable.
-2. Sort: CRITICAL → STANDARD → MINOR; inside each, by file path then line.
-3. Measure usage for this review:
+1. Measure usage for this review:
    ```bash
    node .claude/skills/code-review/scripts/usage-report.js --since <startedAt>
    ```
    It reads Claude Code's local session logs and prints a ready-made `## Session Usage`
-   Markdown section (total tokens, cache, API calls, time, and a per-batch table). Paste its
-   output into the report unchanged — never estimate or invent token numbers. If it prints
+   section. Paste its output unchanged — never estimate or invent token numbers. If it prints
    "not available", keep that note as-is.
-4. Write the full report to `.claude/reviews/review-<branch>-<YYYY-MM-DD-HHmm>.md`
-   (create the folder; suggest adding `.claude/reviews/` to `.gitignore` the first time).
-5. In chat, show the verdict, the counts, all Critical Issues, and the one-line **Total** from
+2. Write the full report to `<runDir>/report.md` (this marks the run finished, so `--resume`
+   skips it) and copy it to `.claude/reviews/review-<branch>-<YYYY-MM-DD-HHmm>.md`
+   (`.claude/reviews/` is gitignored).
+3. In chat, show the verdict, the counts, all Critical Issues, and the one-line **Total** from
    Session Usage. Point to the file for the rest.
 
 Use this template exactly:
@@ -161,7 +191,7 @@ Use this template exactly:
 
 **Verdict:** ❌ Do not push — <n> critical issues | ⚠️ Push after fixing standards | ✅ Ready to push
 **Mode:** <diff vs <base> | full project>
-**Scope:** <reviewFiles> files, <changedLines> changed lines (full project: total lines), <batches> batches · <skippedFiles> skipped
+**Scope:** <reviewFiles> files, <changedLines> changed lines (full project: total lines), <batches> batches · <skippedFiles> skipped · <renamedOnly> moved without changes
 
 ## Summary
 
@@ -185,7 +215,7 @@ Use this template exactly:
 
 ## Not Reviewed
 
-- <files from failed batches, and the skipped list collapsed to a count>
+- <files from batches still missing a result, and the skipped list collapsed to a count>
 
 <output of usage-report.js, pasted unchanged>
 ```

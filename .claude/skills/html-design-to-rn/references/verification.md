@@ -16,8 +16,8 @@ known-traps.md's "The gates" section).
 
 ```bash
 node ${CLAUDE_PLUGIN_ROOT}/skills/html-design-to-rn/scripts/audit-styles.mjs \
-  --map design/.extracted/maps/<Screen>.json \
-  --extract design/.extracted \
+  --map apps/mobile/design/.extracted/maps/<Screen>.json \
+  --extract apps/mobile/design/.extracted \
   --theme light \
   --colors <config.json project.colorsFile>
 ```
@@ -89,7 +89,7 @@ theoretical.
    it needs real HTTP, not `file://`:
    ```bash
    node ${CLAUDE_PLUGIN_ROOT}/skills/html-design-to-rn/scripts/capture-design.mjs serve \
-     --extract design/.extracted --port 4173
+     --extract apps/mobile/design/.extracted --port 4173
    ```
 2. **Launch a Chromium browser with a debug port**, pointed at the served
    `index.html`, using a throwaway profile so it doesn't reuse an

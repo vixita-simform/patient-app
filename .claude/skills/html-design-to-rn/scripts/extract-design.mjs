@@ -658,7 +658,7 @@ function readCompanions(htmlPath, classified) {
 
   const companions = [];
 
-  const dtcgPath = ['design-tokens.json', 'tokens.json', 'design/design-tokens.json']
+  const dtcgPath = ['design-tokens.json', 'tokens.json', 'apps/mobile/design/design-tokens.json']
     .map((f) => join(dir, f))
     .find((p) => existsSync(p));
   let tiers = null;
@@ -1502,7 +1502,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const i = process.argv.indexOf(flag);
     return i === -1 ? fallback : process.argv[i + 1];
   };
-  const outDir = arg('--out', 'design/.extracted');
+  const outDir = arg('--out', 'apps/mobile/design/.extracted');
   const minScreensArg = arg('--component-min-screens', undefined);
   const inv = await extract(htmlPath, outDir, {
     screenSelector: arg('--screen-selector', undefined),

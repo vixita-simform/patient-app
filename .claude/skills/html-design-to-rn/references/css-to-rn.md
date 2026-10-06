@@ -54,7 +54,7 @@ vendor-prefixed property, `animation`/`animation-*`, `visibility` (RN has no
 
 ## Selector grammar the map file must use
 
-`design/.extracted/maps/<Screen>.json`'s `map[].selector` is read by
+`apps/mobile/design/.extracted/maps/<Screen>.json`'s `map[].selector` is read by
 `audit-styles.mjs`, not just by a human reviewing the file — it has to parse.
 Three forms:
 

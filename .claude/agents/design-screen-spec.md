@@ -19,7 +19,7 @@ once, inside your context, and leaves as a file of **250 lines or fewer**.
 The dispatching command hands you: the screen's `id`, `name`, and the resolved
 `file` / `factsFile` / `styleFile` / `screenshot` / `role` / `parent` / `tab` /
 `flow` / `title` / `subtitle` / `dynamic` / `staticMarkup` / `renderStatus`
-fields from `design/.extracted/inventory.json`, plus the output path.
+fields from `apps/mobile/design/.extracted/inventory.json`, plus the output path.
 
 If any of those is missing from your prompt, `python3`-query
 `inventory.json` for that one field. Never `Read` `inventory.json` whole.
@@ -36,8 +36,8 @@ If any of those is missing from your prompt, `python3`-query
 | `styles/rn/_global.json`, `styles/tokens.json`, `styles/typography.json` | grep for the one token, don't read whole |
 | `scripts/app.js` | **grep only**, for the functions in `renderFns` |
 
-Never: `design/*.html` (the 908 KB root), `styles/app.css`, `inventory.json`
-whole, `vendor/*`, anything under `src/` (that is the reuse scout's job — you
+Never: `apps/mobile/design/*.html` (the 908 KB root), `styles/app.css`, `inventory.json`
+whole, `vendor/*`, anything under `apps/mobile/src/` (that is the reuse scout's job — you
 describe the design, not the project). A `design-guard` hook blocks the
 expensive reads; if it fires, take the alternative it names.
 
@@ -68,7 +68,7 @@ trust your file rather than re-open 76 KB of JSON.
 ## Output — write the spec file, return only its Digest
 
 Write the file to the given path (default
-`design/.extracted/.build/<Name>.spec.md`), in exactly these sections and this
+`apps/mobile/design/.extracted/.build/<Name>.spec.md`), in exactly these sections and this
 order. Section 0 exists so the orchestrator can `sed -n '1,60p'` the file and
 plan without loading the rest.
 
@@ -145,7 +145,7 @@ Gate 0 block, or a value with no token behind it.
 The finished spec must be **≤ 250 lines**. Check it before you report:
 
 ```bash
-wc -l design/.extracted/.build/<Name>.spec.md
+wc -l apps/mobile/design/.extracted/.build/<Name>.spec.md
 ```
 
 Over the cap, compress *inside your context* — that is the whole point of this
@@ -175,8 +175,8 @@ tokens this agent exists to remove.
 - `expr` values copied verbatim, never re-derived; token names copied verbatim,
   never inferred
 - Spec ≤ 250 lines, verified with `wc -l` before you report
-- Never read the root HTML, `app.css`, or anything under `src/`
+- Never read the root HTML, `app.css`, or anything under `apps/mobile/src/`
 - Never plan the React Native implementation — no component names from
-  `src/components`, no `scale()` you computed, no file layout. You describe the
+  `apps/mobile/src/components`, no `scale()` you computed, no file layout. You describe the
   design; the plan is someone else's job
 - Flag, never fix, a value that looks wrong

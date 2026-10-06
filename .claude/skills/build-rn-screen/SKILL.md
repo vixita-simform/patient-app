@@ -1,7 +1,7 @@
 ---
 name: build-rn-screen
 description: Build React Native screens from specs that /generate-spec already wrote, using the design-screen-builder agent. Never generates or edits a spec. Run /generate-spec first.
-argument-hint: "<screen-id> [<screen-id> ...] — required; one or more ids or names from design/.extracted/inventory.json (e.g. medicines, billing-and-payments, BillingAndPayments)"
+argument-hint: "<screen-id> [<screen-id> ...] — required; one or more ids or names from apps/mobile/design/.extracted/inventory.json (e.g. medicines, billing-and-payments, BillingAndPayments)"
 allowed-tools:
   - Read
   - Write
@@ -33,11 +33,11 @@ written by `/generate-spec`. This skill only plans, dispatches
 ## Budget rules
 
 - **You never read** `screens/*.html`, `*.facts.json`, `styles/rn/*.json`,
-  `styles/app.css`, `inventory.json` whole, `design/*.html`, a whole
+  `styles/app.css`, `inventory.json` whole, `apps/mobile/design/*.html`, a whole
   `*.spec.md`, or `project-inventory.md` whole.
 - From a spec, read the **Digest only**:
-  `sed -n '/^## 0\. Digest/,/^## 1\./p' design/.extracted/.build/<Name>.spec.md`
-- Take reuse candidates by **grepping** `design/.extracted/.build/project-inventory.md`.
+  `sed -n '/^## 0\. Digest/,/^## 1\./p' apps/mobile/design/.extracted/.build/<Name>.spec.md`
+- Take reuse candidates by **grepping** `apps/mobile/design/.extracted/.build/project-inventory.md`.
 - Pass paths to the builder, not contents. Never ask it to paste back a file.
 - Do not restate these rules to the user.
 
@@ -59,7 +59,7 @@ Otherwise resolve every token in one call:
 ```bash
 python3 -c "
 import json,sys
-d=json.load(open('design/.extracted/inventory.json'))
+d=json.load(open('apps/mobile/design/.extracted/inventory.json'))
 for q in sys.argv[1:]:
     k=q.strip().lower().removeprefix('p-')
     m=[s for s in d['screens'] if k in (s['id'].lower(), s['name'].lower())] \
@@ -97,19 +97,19 @@ If no screen survives, report the skips and stop.
 
 For each ready screen, decide where it lands, following this repo's layout:
 
-- Folder: `src/screens/<id>/`, e.g. `src/screens/billing-and-payments/`. A tab
+- Folder: `apps/mobile/src/screens/<id>/`, e.g. `apps/mobile/src/screens/billing-and-payments/`. A tab
   destination uses the existing tab folder (`home`, `visits`, `records`,
   `profile`).
-- Route: a stack screen is a one-line file `src/app/<id>.tsx`
+- Route: a stack screen is a one-line file `apps/mobile/src/app/<id>.tsx`
   (`export { <Name>Screen as default } from '../screens';`), plus a
-  `STACK_ROUTES` entry in `src/constants/Routes.ts`. The root `Stack` picks it
+  `STACK_ROUTES` entry in `apps/mobile/src/constants/Routes.ts`. The root `Stack` picks it
   up with no `_layout` registration. A tab screen re-exports from
-  `src/app/(tabs)/<tab>.tsx`.
+  `apps/mobile/src/app/(tabs)/<tab>.tsx`.
 - **If the folder already exists**, say so, and ask whether to rebuild over it.
 
 Post a short plan per screen: the layout tree in one block, which existing
 components/tokens cover it (grep the inventory), what must be created (screen
-component vs shared `src/components/` piece), the route, and every open question.
+component vs shared `apps/mobile/src/components/` piece), the route, and every open question.
 
 **Ask every BLOCKING question and every "rebuild over it?" for all screens
 together, in one round trip.** An unanswered BLOCKING question stops that
@@ -119,7 +119,7 @@ screen only. The others go ahead.
 
 Dispatch `design-screen-builder` **sequentially**: wait for one to return before
 starting the next. Screens share `Strings.ts`, `Routes.ts`, `Constants.ts`,
-`src/screens/index.ts` and `src/assets/icons/index.ts`, and parallel writes
+`apps/mobile/src/screens/index.ts` and `apps/mobile/src/assets/icons/index.ts`, and parallel writes
 clobber each other.
 
 Prompt for each builder. Paste the overrides block verbatim, because the agent's
@@ -127,34 +127,34 @@ built-in rules table describes a different project:
 
 ```
 Build <Name> (<id>).
-Spec: design/.extracted/.build/<Name>.spec.md
-Screenshot: design/.extracted/<screenshot>
-Inventory: design/.extracted/.build/project-inventory.md
+Spec: apps/mobile/design/.extracted/.build/<Name>.spec.md
+Screenshot: apps/mobile/design/.extracted/<screenshot>
+Inventory: apps/mobile/design/.extracted/.build/project-inventory.md
 <if inventory stale:> The inventory predates <path>. `ls` that one path before deciding reuse.
 Plan: <the plan for this screen>
 Answers: <answers to its questions>
 
 ## Project overrides: these WIN over your built-in "Project rules" and "What you write" sections
-Read /CLAUDE.md "Screens", "Imports", "Styling rules", "Strings", "Constants", "Icons" once, then follow it. Summary:
-- Files: src/screens/<id>/<Name>Screen.tsx (UI only, ≤300 lines), <Name>ScreenStyles.ts
+Read apps/mobile/CLAUDE.md "Screens", "Imports", "Styling rules", "Strings", "Constants", "Icons" once, then follow it. Summary:
+- Files: apps/mobile/src/screens/<id>/<Name>Screen.tsx (UI only, ≤300 lines), <Name>ScreenStyles.ts
   (`const styles = (theme: ThemeMode) => StyleSheet.create({...}); export default styles;`),
   use<Name>Screen.ts (navigation, handlers, effects; never returns renderItem/JSX),
-  <Name>ScreenTypes.ts if needed. Pieces split out go in src/screens/<id>/components/<kebab>/
+  <Name>ScreenTypes.ts if needed. Pieces split out go in apps/mobile/src/screens/<id>/components/<kebab>/
   (<Name>.tsx, <Name>Styles.ts, <Name>Types.ts) with a components/index.ts barrel; a piece two
-  screens need goes in src/components/<kebab>/.
+  screens need goes in apps/mobile/src/components/<kebab>/.
 - Screen gets styles via `const { styles } = useTheme(<Name>ScreenStyles)`; wrap in `Screen`; text via `AppText`.
-- Export the screen from src/screens/index.ts; route file per the plan; route names only in
-  src/constants/Routes.ts (STACK_ROUTES/TAB_ROUTES); navigate with `router` from expo-router inside the hook.
+- Export the screen from apps/mobile/src/screens/index.ts; route file per the plan; route names only in
+  apps/mobile/src/constants/Routes.ts (STACK_ROUTES/TAB_ROUTES); navigate with `router` from expo-router inside the hook.
 - Relative imports through a folder's index.ts only (`../../theme`, `../../components`).
-  NO `@/` alias, NO src/modules, NO NavigatorUtils, NO AppLayout, NO TextStyles, NO react-hook-form unless the plan says so.
+  NO `@/` alias, NO apps/mobile/src/modules, NO NavigatorUtils, NO AppLayout, NO TextStyles, NO react-hook-form unless the plan says so.
 - Colors[theme].<key> in style files; scale() for every margin/padding; Fonts.size.<key> / Fonts.weight.<key>.
-- All copy in src/constants/Strings.ts as a `freezeStringsObject({...})` block named after the screen,
-  added to the default export; reuse existing keys. Fixed value sets in src/constants/Constants.ts
+- All copy in apps/mobile/src/constants/Strings.ts as a `freezeStringsObject({...})` block named after the screen,
+  added to the default export; reuse existing keys. Fixed value sets in apps/mobile/src/constants/Constants.ts
   (`as const` + derived type).
-- Icons: react-native-svg components in src/assets/icons/ (size, color, strokeWidth + SvgProps,
+- Icons: react-native-svg components in apps/mobile/src/assets/icons/ (size, color, strokeWidth + SvgProps,
   24×24 viewBox, default color from theme.colors), exported from its index.ts. No vector-icons/PNG.
 - Never put a function reference in a useCallback/useEffect/useFocusEffect dependency array.
-- Still write design/.extracted/maps/<Name>.json, with styleFile = src/screens/<id>/<Name>ScreenStyles.ts.
+- Still write apps/mobile/design/.extracted/maps/<Name>.json, with styleFile = apps/mobile/src/screens/<id>/<Name>ScreenStyles.ts.
 Do not run tsc, lint or the audit. Report as your instructions say.
 ```
 
@@ -165,14 +165,14 @@ Filter at the shell. Read only counts and surviving lines.
 ```bash
 N=<Name>; T=$(mktemp -d)
 node .claude/skills/html-design-to-rn/scripts/audit-styles.mjs \
-  --map design/.extracted/maps/$N.json --extract design/.extracted \
-  --theme light --colors src/theme/Colors.ts > $T/audit.txt 2>&1; echo "AUDIT EXIT: $?"
+  --map apps/mobile/design/.extracted/maps/$N.json --extract apps/mobile/design/.extracted \
+  --theme light --colors apps/mobile/src/theme/Colors.ts > $T/audit.txt 2>&1; echo "AUDIT EXIT: $?"
 echo "AUDIT: $(grep -c '  ✗' $T/audit.txt) failures"
 grep '  ✗' $T/audit.txt \
   | grep -vE 'fontWeight: expected .*got undefined|got (undefined|0)$|borderRadius: expected 50%, got 9999' | head -40
 npx tsc --noEmit > $T/tsc.txt 2>&1; echo "TSC: $(grep -c 'error TS' $T/tsc.txt) total"
 grep 'error TS' $T/tsc.txt | grep -E 'screens/<id>/|app/.*<id>|constants/|components/' || echo "none in touched files"
-npx expo lint src/screens/<id> src/app > $T/lint.txt 2>&1; echo "LINT EXIT: $?"; grep -E 'error|warning' $T/lint.txt | head -20
+npx expo lint apps/mobile/src/screens/<id> apps/mobile/src/app > $T/lint.txt 2>&1; echo "LINT EXIT: $?"; grep -E 'error|warning' $T/lint.txt | head -20
 ```
 
 - **Audit exit 2 means "not run"** (it needs a `jest.config.js` the repo
@@ -180,7 +180,7 @@ npx expo lint src/screens/<id> src/app > $T/lint.txt 2>&1; echo "LINT EXIT: $?";
 - Fix small issues yourself. Otherwise dispatch `design-screen-builder` in
   **repair mode** with the findings list. **One repair pass per screen**, then
   hand over what's left along with what was tried.
-- Walk the builder's file list against CLAUDE.md's rules (Strings, scale,
+- Walk the builder's file list against apps/mobile/CLAUDE.md's rules (Strings, scale,
   barrels, the 300-line limit) yourself.
 
 ### Handoff: the last thing you write

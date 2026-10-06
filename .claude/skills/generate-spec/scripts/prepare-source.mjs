@@ -6,7 +6,7 @@
  * 1. It rejects external `<link>` tags (the Google Fonts lines) as "linked-css".
  * 2. It needs an `id` on every `div.phone`, and the design has none.
  *
- * This writes `design/<basename>.src.html` with the external links removed and
+ * This writes `apps/mobile/design/<basename>.src.html` with the external links removed and
  * an id on every phone, slugged from the `.frame-label` just before it
  * ("Billing &amp; payments" → `billing-and-payments`). Then it points
  * `.claude/html-design-to-rn/config.local.json` at both files.

@@ -51,7 +51,7 @@ process.stdin.on('end', () => {
   // has run 500+ KB too. Either way, reading it will not tell you anything and
   // will crowd out your context — the extractor exists to turn it into files
   // you can read cheaply. Gated on actual size, not just the path: a small
-  // companion file that happens to sit in design/ (a token preview page, a
+  // companion file that happens to sit in apps/mobile/design/ (a token preview page, a
   // README-ish doc) is not the token sink this guards against, and blocking it
   // anyway just forces a pointless detour through an extractor that doesn't
   // even apply to it.
@@ -69,8 +69,8 @@ process.stdin.on('end', () => {
         `BLOCKED: ${target} is ${(bytes / 1024).toFixed(0)} KB — the packed design bundle.\n` +
           `Reading it will not tell you anything and will crowd out your context.\n\n` +
           `Run phase 0 instead, then read what it produced:\n` +
-          `  node ${SKILL_SCRIPTS}/extract-design.mjs "${target}" --out design/.extracted\n` +
-          `  design/.extracted/inventory.json   <- the index; start here\n`
+          `  node ${SKILL_SCRIPTS}/extract-design.mjs "${target}" --out apps/mobile/design/.extracted\n` +
+          `  apps/mobile/design/.extracted/inventory.json   <- the index; start here\n`
       );
     }
   }
@@ -90,7 +90,7 @@ process.stdin.on('end', () => {
       if (bytes === null || bytes > RAW_DESIGN_THRESHOLD) {
         block(
           `BLOCKED: that pipes the packed design bundle into your context.\n\n` +
-            `Extract it once, then work from design/.extracted/. If you must inspect the\n` +
+            `Extract it once, then work from apps/mobile/design/.extracted/. If you must inspect the\n` +
             `raw file, derive the answer in code and print only the result:\n` +
             `  node -e "…" | head -20\n`
         );
@@ -109,8 +109,8 @@ process.stdin.on('end', () => {
       `BLOCKED: app.css is already compiled to React Native.\n\n` +
         `Read your screen's slice instead — it has the RN property, the expression\n` +
         `to paste, the CSS it came from and the theme token it references:\n` +
-        `  design/.extracted/styles/rn/<NN-Screen>.json   (inventory.screens[].styleFile)\n` +
-        `  design/.extracted/styles/rn/_global.json       (element-level resets)\n\n` +
+        `  apps/mobile/design/.extracted/styles/rn/<NN-Screen>.json   (inventory.screens[].styleFile)\n` +
+        `  apps/mobile/design/.extracted/styles/rn/_global.json       (element-level resets)\n\n` +
         `If a compiled value is wrong, fix scripts/lib/css-model.mjs and re-run phase 0.\n` +
         `Do not hand-translate around it.\n`
     );
@@ -119,7 +119,7 @@ process.stdin.on('end', () => {
   // Same rule, via the shell.
   if (/^Bash$/.test(tool) && /\.extracted\/styles\/app\.css/.test(command) && /\b(cat|head|tail|less|more)\b/.test(command)) {
     block(
-      `BLOCKED: app.css is already compiled — read design/.extracted/styles/rn/<NN-Screen>.json.\n`
+      `BLOCKED: app.css is already compiled — read apps/mobile/design/.extracted/styles/rn/<NN-Screen>.json.\n`
     );
   }
 
@@ -191,9 +191,9 @@ process.stdin.on('end', () => {
     /src\/theme\/(Colors|Gradients|Shadows)\.ts$/.test(target)
   ) {
     process.stderr.write(
-      `NOTE: ${target.split('/').pop()} is generated from design/.extracted/inventory.json.\n` +
+      `NOTE: ${target.split('/').pop()} is generated from apps/mobile/design/.extracted/inventory.json.\n` +
         `Hand edits are lost on the next run. Change gen-theme.mjs and re-run:\n` +
-        `  node ${SKILL_SCRIPTS}/gen-theme.mjs --extract design/.extracted --out src/theme\n`
+        `  node ${SKILL_SCRIPTS}/gen-theme.mjs --extract apps/mobile/design/.extracted --out apps/mobile/src/theme\n`
     );
     process.exit(0); // Warn, do not block — a deliberate edit is sometimes right.
   }

@@ -1,7 +1,8 @@
 # Code Review with Claude Code — Team Guide
 
 Every team member can run an AI code review before pushing. It checks your changes against
-our project rules (`.claude/skills/code-review/references/conventions.md`) and gives you a
+our project rules (`.claude/skills/code-review/references/`: `common.md` for every workspace,
+`mobile.md` for `apps/mobile`, `backend.md` for `apps/backend`) and gives you a
 report with a clear verdict: ❌ don't push, ⚠️ fix first, or ✅ ready.
 
 **Not sure how to use it?** Open Claude Code in the project and ask:
@@ -21,9 +22,9 @@ _"How do I use the code review?"_ — it will explain using this guide.
    cd path/to/project
    claude
    ```
-4. Check it's installed: type `/agents` → you should see **code-reviewer**.
+4. Check it's installed: type `/code-review` — it should appear in the command list.
 
-Nothing else to install. Node.js is already needed for React Native, and that's all the scripts use.
+Nothing else to install. Node.js is already needed for the apps, and that's all the scripts use.
 
 ---
 
@@ -92,8 +93,11 @@ _(Edit this section if the team decides differently.)_
   ```
 - **Don't ask for a whole-project review** unless it's the very first push. After the first push,
   every review is automatically "changes only".
-- If you hit your Claude usage limit mid-review, unfinished files are listed under **Not Reviewed**.
-  Run the review again later.
+- The review runs entirely in your own session — no hidden sub-agents — so the **Session Usage**
+  total is the full cost.
+- Big reviews (100–200 files) save each batch's findings as they go. If you hit your usage limit
+  or close Claude Code mid-review, say **"continue the review"** later — it picks up at the first
+  unfinished batch instead of starting over.
 
 ---
 
@@ -112,8 +116,14 @@ The AI can be wrong. If a rule itself is wrong or outdated, change it (see below
 one-off false alarm, ignore it and mention it in the PR.
 
 **How do I change or add a review rule?**
-Edit `.claude/skills/code-review/references/conventions.md` and open a PR for it, so the whole team
-agrees. That one file is the only place rules live — every review uses it.
+Edit the rule file for the workspace it applies to and open a PR for it, so the whole team agrees:
+
+- every workspace → `.claude/skills/code-review/references/common.md`
+- mobile coding rules (structure, styling, strings, icons) → `apps/mobile/CLAUDE.md`
+- mobile review-only checks (performance, accessibility, security) → `references/mobile.md`
+- backend → `references/backend.md`
+
+Each rule lives in one file only. Reviewers of mobile files never see backend rules, and the other way round.
 
 **Is my code sent anywhere?**
 The review runs through Claude Code, the same as any other Claude Code task. Follow our company's
@@ -125,19 +135,27 @@ policy for Claude Code usage.
 
 ```
 .claude/
-├── agents/code-reviewer.md            # reviews one batch of files
+├── agents/code-reviewer.md            # review procedure + result format (the skill reads it; not launched)
 └── skills/code-review/
-    ├── SKILL.md                       # orchestrator: plans batches, runs reviewers, writes report
-    ├── references/conventions.md      # ⭐ the team's review rules — edit this one
+    ├── SKILL.md                       # reviews batch by batch in your session, writes report
+    ├── references/
+    │   ├── common.md                  # ⭐ rules for every workspace + severity guide
+    │   ├── mobile.md                  # ⭐ apps/mobile review checks (also reads apps/mobile/CLAUDE.md)
+    │   └── backend.md                 # ⭐ apps/backend rules
     └── scripts/
-        ├── plan-batches.js            # finds changed files, splits into batches
+        ├── plan-batches.js            # finds changed files, splits into batches → .claude/reviews/.runs/<time>/plan.json
+        ├── batch-diff.js              # prints one batch's diff for review
+        ├── merge-findings.js          # merges batch-<id>.txt results into report sections
         ├── foundation-check.js        # checks core files, tsconfig, ESLint, secrets
         └── usage-report.js            # token usage for the report
-docs/CODE_REVIEW.md                    # this guide
+.claude/doc/CODE_REVIEW.md             # this guide
 ```
 
 Run the scripts by hand to debug:
 ```bash
 node .claude/skills/code-review/scripts/plan-batches.js --working   # what would be reviewed
+node .claude/skills/code-review/scripts/plan-batches.js --resume    # unfinished batches of the last run
+node .claude/skills/code-review/scripts/batch-diff.js <runDir> 1    # what batch 1 looks like
+node .claude/skills/code-review/scripts/merge-findings.js <runDir>  # merged findings so far
 node .claude/skills/code-review/scripts/foundation-check.js         # project setup check
 ```

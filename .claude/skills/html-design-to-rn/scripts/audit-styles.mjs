@@ -1,6 +1,6 @@
 /**
  * Phase 4, Gate A — structural audit.
- * Diffs a screen/component's map file (design/.extracted/maps/<Name>.json)
+ * Diffs a screen/component's map file (apps/mobile/design/.extracted/maps/<Name>.json)
  * against the *real, theme-resolved* RN values produced by its generated
  * style file(s), following the property table in references/css-to-rn.md.
  *
@@ -359,7 +359,7 @@ function scanDriftAnnotations(sourceText, styleKey) {
 
 function evaluateStyleFiles(absFiles, theme, projectRoot, metricsFile) {
   const uuid = randomUUID();
-  const tmpDir = path.join(projectRoot, 'design/.extracted/.audit-tmp');
+  const tmpDir = path.join(projectRoot, 'apps/mobile/design/.extracted/.audit-tmp');
   fs.mkdirSync(tmpDir, { recursive: true });
   const testFile = path.join(tmpDir, `audit-${uuid}.test.js`);
   const outFile = path.join(tmpDir, `audit-${uuid}.out.json`);
@@ -461,7 +461,7 @@ function main() {
 
   const entries = map.map;
   const uniqueFiles = [...new Set(entries.map((e) => path.resolve(projectRoot, e.file ?? map.styleFile)))];
-  const metricsFile = path.resolve(projectRoot, args.metrics ?? 'src/theme/Metrics.tsx');
+  const metricsFile = path.resolve(projectRoot, args.metrics ?? 'apps/mobile/src/theme/Metrics.tsx');
   const results = evaluateStyleFiles(uniqueFiles, args.theme, projectRoot, metricsFile);
   // Derived from the running theme's own scale() so the audit stays correct
   // regardless of what Jest's Dimensions mock reports on this machine.

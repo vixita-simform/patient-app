@@ -24,7 +24,7 @@
  *     [--region <id>] [--region-fn <name-or-call>] [--region-prepare <js>] \
  *     [--no-screens] [--no-regions] [--force] [--scale-fn <name>] [--no-screenshot]
  *
- * Rewrites design/.extracted/screens/<file> in place for every screen and
+ * Rewrites apps/mobile/design/.extracted/screens/<file> in place for every screen and
  * region it resolves, adds `renderStatus`/`renderFn`/`screenshot` to that
  * screen's/region's entry in inventory.json / dynamic-regions.json, and
  * leaves everything else untouched. Animations and interactive edge-case

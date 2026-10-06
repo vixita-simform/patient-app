@@ -39,10 +39,13 @@ yarn-error.*
 example
 
 # generated native folders
-/ios
-/android
+/apps/mobile/ios
+/apps/mobile/android
 
 .claude/html-design-to-rn/config.local.json
-design/.extracted/
+apps/mobile/design/.extracted/
 .claude/reviews/
 .codegraph/
+# Next.js (apps/backend)
+.next/
+next-env.d.ts

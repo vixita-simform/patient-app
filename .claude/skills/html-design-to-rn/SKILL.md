@@ -26,7 +26,7 @@ alternative — take that, do not work around it.
 Cost here is invisible: reading too much still "works", it just spends ten times
 the tokens and crowds out the context you need to be accurate. The one rule that
 matters most: never read `inventory.json` for anything but the index, never read
-`app.css` or a `screens/*.jsx` file whole, never read `CLAUDE.md` past its
+`app.css` or a `screens/*.jsx` file whole, never read `apps/mobile/CLAUDE.md` past its
 `## The Golden Rules` section. Full table, rationale and grep recipes are in
 `references/reading-budget.md` — read it once per session, not once per screen.
 
@@ -567,7 +567,7 @@ limits and lets a failed screen be retried without redoing the others.
    Gate A resolves them without hand-authoring.
 4. The structural audit runs inline so a mistake surfaces on the screen that
    caused it.
-5. Before reporting the screen done, walk `CLAUDE.md`'s `## Post-Implementation
+5. Before reporting the screen done, walk `apps/mobile/CLAUDE.md`'s `## Post-Implementation
    Checklist` — SVGs, accessibility, theming/brand colors, fonts vs. the
    design, naming convention, JSDoc, keyboard-controller + focus chaining (if
    the screen has inputs — see `docs/claude/forms.md`), and Atomic Design

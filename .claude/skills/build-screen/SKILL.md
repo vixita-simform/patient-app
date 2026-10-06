@@ -1,7 +1,7 @@
 ---
 name: build-screen
 description: Convert one extracted HTML design screen into a production-ready React Native module + route, orchestrated across three subagents so the heavy design sources are read once, off the main thread.
-argument-hint: "<screen> — an id or name from design/.extracted/inventory.json screens[] (e.g. p-twofa, Twofa, twofa)"
+argument-hint: "<screen> — an id or name from apps/mobile/design/.extracted/inventory.json screens[] (e.g. p-twofa, Twofa, twofa)"
 allowed-tools:
   - Read
   - Write
@@ -24,7 +24,7 @@ away afterwards.
 | Stage | Agent                   | Model         | Reads (expensive)                                          | Returns to you (cheap)                    |
 | ----- | ----------------------- | ------------- | ---------------------------------------------------------- | ----------------------------------------- |
 | 1     | `design-screen-spec`    | opus/high     | screenshot + markup + facts + compiled RN styles (~130 KB) | a ≤40-line Digest + a spec file on disk   |
-| 1′    | `design-reuse-scout`    | sonnet/medium | `src/components`, `src/theme`, routes, strings             | a path + counts (cached; usually skipped) |
+| 1′    | `design-reuse-scout`    | sonnet/medium | `apps/mobile/src/components`, `apps/mobile/src/theme`, routes, strings             | a path + counts (cached; usually skipped) |
 | 2     | _you_                   | —             | the Digest only                                            | the plan                                  |
 | 3     | `design-screen-builder` | sonnet/medium | the spec file + inventory + screenshot                     | files written, reuse decisions            |
 | 4     | _you_                   | —             | filtered audit + tsc output                                | the verdict + handoff                     |
@@ -46,14 +46,14 @@ load-bearing**: the user can only check what you tell them to look at.
 
 - **You never read** `screens/*.html`, `*.facts.json`, `styles/rn/*.json`,
   `inventory.json` whole, `styles/app.css`, or
-  `design/sofia-mobile-app-v2-standalone.html`. Delegating a file and then
+  `apps/mobile/design/sofia-mobile-app-v2-standalone.html`. Delegating a file and then
   reading it yourself costs more than not delegating at all.
 - From the spec file you read **section 0 (Digest) only**:
-  `sed -n '/^## 0\. Digest/,/^## 1\./p' design/.extracted/.build/<Name>.spec.md`.
+  `sed -n '/^## 0\. Digest/,/^## 1\./p' apps/mobile/design/.extracted/.build/<Name>.spec.md`.
   The spec is capped at 250 lines; a Digest ending in `over cap:` means the spec
   agent judged the screen too dense to fit. Pass that line through to the user —
   it is the earliest signal that a screen is bigger than the pipeline assumes.
-- Never read a `docs/claude/*.md` or `src/theme/*` file "for context". The
+- Never read a `docs/claude/*.md` or `apps/mobile/src/theme/*` file "for context". The
   agents open the one rule they need.
 - Don't ask an agent to paste back what it wrote to disk. Pass paths, not
   contents — that is the whole mechanism.
@@ -67,13 +67,13 @@ Resolve the target (cheap, in-thread):
 python3 -c "
 import json
 q='$ARGUMENTS'.strip().lower().removeprefix('p-')
-d=json.load(open('design/.extracted/inventory.json'))
+d=json.load(open('apps/mobile/design/.extracted/inventory.json'))
 m=[s for s in d['screens'] if q in (s['id'].lower(), s['name'].lower())] \
   or [s for s in d['screens'] if q in s['id'].lower()]
 print(json.dumps([{k:s.get(k) for k in ('id','name','file','factsFile','styleFile',
   'screenshot','role','parent','tab','flow','title','subtitle','dynamic',
   'staticMarkup','renderStatus','renderFns')} for s in m], indent=1))"
-mkdir -p design/.extracted/.build design/.extracted/maps
+mkdir -p apps/mobile/design/.extracted/.build apps/mobile/design/.extracted/maps
 ```
 
 No match → _Screen not in the extract_, below.
@@ -86,7 +86,7 @@ disk. If none of them has changed since it was written, regenerating it buys
 nothing and costs the most expensive agent in the pipeline:
 
 ```bash
-SPEC=design/.extracted/.build/<Name>.spec.md
+SPEC=apps/mobile/design/.extracted/.build/<Name>.spec.md
 [ -f "$SPEC" ] && find <file> <factsFile> <styleFile> -newer "$SPEC" -print -quit \
   || echo STALE
 ```
@@ -102,9 +102,9 @@ agent as usual. Never patch an out-of-date spec by hand; regenerate it.
 **Is the project inventory stale?**
 
 ```bash
-INV=design/.extracted/.build/project-inventory.md
-[ -f "$INV" ] && { find src/components -mindepth 1 -maxdepth 1 -type d -newer "$INV" -print -quit; \
-  find src/app src/constants/NavigationRoutes.ts src/theme -newer "$INV" -print -quit; } \
+INV=apps/mobile/design/.extracted/.build/project-inventory.md
+[ -f "$INV" ] && { find apps/mobile/src/components -mindepth 1 -maxdepth 1 -type d -newer "$INV" -print -quit; \
+  find apps/mobile/src/app apps/mobile/src/constants/NavigationRoutes.ts apps/mobile/src/theme -newer "$INV" -print -quit; } \
   || echo STALE
 ```
 
@@ -118,7 +118,7 @@ concurrently, and do not narrate while you wait:
 
 - `design-screen-spec` — only if the spec check said so. Pass every resolved
   field verbatim plus the output path
-  `design/.extracted/.build/<Name>.spec.md`.
+  `apps/mobile/design/.extracted/.build/<Name>.spec.md`.
 - `design-reuse-scout` — only if the inventory check printed something. An
   unchanged design system means the cached inventory is still correct, and this
   is the stage you skip on most screens.
@@ -135,7 +135,7 @@ screen — stop and either render it:
 
 ```bash
 node .claude/skills/html-design-to-rn/scripts/render-dynamic-screens.mjs \
-  --extract design/.extracted --cdp-port <port> --config .claude/html-design-to-rn/config.json
+  --extract apps/mobile/design/.extracted --cdp-port <port> --config .claude/html-design-to-rn/config.json
 ```
 
 This has three prerequisites, and it fails in confusing ways without them.
@@ -153,7 +153,7 @@ command hoping for a different result.
 
 With no Chromium target available, tell the user, and proceed only after
 they accept a source you name explicitly (the `renderFns` body in
-`design/.extracted/scripts/app.js`, grepped — never read whole). Never let a
+`apps/mobile/design/.extracted/scripts/app.js`, grepped — never read whole). Never let a
 built screen imply a fidelity its source could not support.
 
 ## Stage 2 — plan (you, from the Digest)
@@ -167,12 +167,12 @@ read it whole.
 together, in one round trip — never one at a time.
 
 An overlay does **not** raise a library question. This project ships
-`@lodev09/react-native-true-sheet`, wrapped by `src/components/custom-bottom-sheet/`
-(`CustomBottomSheet`) and `src/components/side-panel/` (`SidePanel`); the
+`@lodev09/react-native-true-sheet`, wrapped by `apps/mobile/src/components/custom-bottom-sheet/`
+(`CustomBottomSheet`) and `apps/mobile/src/components/side-panel/` (`SidePanel`); the
 `true-sheet` skill covers the library itself. Reuse those. The only overlay
 question worth a round trip is **project-level or module-level** — a sheet used
 by one screen lives in that module's `components/`, one used by several is
-promoted to `src/components/`. If the answer is obvious from the plan, decide it
+promoted to `apps/mobile/src/components/`. If the answer is obvious from the plan, decide it
 and say which you chose.
 
 ## Stage 3 — build
@@ -180,7 +180,7 @@ and say which you chose.
 Dispatch `design-screen-builder` with: the spec path, the screenshot path, the
 inventory path, your plan, the answers to every question, and the target module
 group + route. It writes the module, the route, the registrations, the strings,
-and `design/.extracted/maps/<Name>.json`.
+and `apps/mobile/design/.extracted/maps/<Name>.json`.
 
 ## Stage 4 — check, then hand off
 
@@ -191,8 +191,8 @@ that survive the known-structural filter, and read only those.
 ```bash
 N=<Name>
 node .claude/skills/html-design-to-rn/scripts/audit-styles.mjs \
-  --map design/.extracted/maps/$N.json --extract design/.extracted \
-  --theme light --colors src/theme/Colors.ts > /tmp/audit-$N.txt 2>&1
+  --map apps/mobile/design/.extracted/maps/$N.json --extract apps/mobile/design/.extracted \
+  --theme light --colors apps/mobile/src/theme/Colors.ts > /tmp/audit-$N.txt 2>&1
 echo "TOTAL: $(grep -c '  ✗' /tmp/audit-$N.txt) failures"
 grep '  ✗' /tmp/audit-$N.txt \
   | grep -vE 'fontWeight: expected .*got undefined|got (undefined|0)$|borderRadius: expected 50%, got 9999' \
@@ -217,7 +217,7 @@ echo "TSC: $(grep -c 'error TS' /tmp/tsc-$N.txt) total"
 grep 'error TS' /tmp/tsc-$N.txt | grep -E 'modules/<module>|app/.*<route>' || echo "none in new files"
 ```
 
-A `TS2345` in `src/app/(protected)/(tabs)/_layout.tsx` right after adding a
+A `TS2345` in `apps/mobile/src/app/(protected)/(tabs)/_layout.tsx` right after adding a
 `ROUTES` value is the known Metro `router.d.ts` lag, not a defect — name it as
 such and move on.
 
@@ -225,7 +225,7 @@ Fix anything that survives if it is a small edit; dispatch
 `design-screen-builder` in repair mode if it is not. **One repair pass**, then
 hand what is left to the user with what was tried.
 
-Then walk `CLAUDE.md`'s Post-Implementation Checklist against the builder's file
+Then walk `apps/mobile/CLAUDE.md`'s Post-Implementation Checklist against the builder's file
 list yourself.
 
 ### The handoff — the last thing you write
@@ -279,13 +279,13 @@ opener function, or a dynamic region the extractor never captured as its own
 
    ```bash
    # find the entry-point id and its opener handler
-   grep -n '<entry-id>' design/.extracted/scripts/app.js | head -20
+   grep -n '<entry-id>' apps/mobile/design/.extracted/scripts/app.js | head -20
    # follow the handler to the markup it emits
-   grep -n '<handler-fn>' design/.extracted/scripts/app.js | head -40
+   grep -n '<handler-fn>' apps/mobile/design/.extracted/scripts/app.js | head -40
    ```
 
-   Cross-check `design/.extracted/dynamic-regions.json` and
-   `design/.extracted/styles/rn/_global.json` / `styles/tokens.json` for compiled
+   Cross-check `apps/mobile/design/.extracted/dynamic-regions.json` and
+   `apps/mobile/design/.extracted/styles/rn/_global.json` / `styles/tokens.json` for compiled
    token values. Collect the markup, class names, and resolved tokens inline; then
    dispatch `design-screen-spec` with that extracted content as `staticMarkup`
    (and `styleFile` pointing at `styles/rn/_global.json`) so Stage 1 processes
@@ -307,9 +307,9 @@ in this order and records which source it used — stop at the first answer, nev
 guess while a source is unread:
 
 1. Another extracted screen with the same pattern (grep the class across
-   `design/.extracted/screens/*.facts.json`).
+   `apps/mobile/design/.extracted/screens/*.facts.json`).
 2. The matched region of the root HTML (grep, never read).
-3. An existing RN implementation in `src/components/` or `src/modules/`.
+3. An existing RN implementation in `apps/mobile/src/components/` or `apps/mobile/src/modules/`.
 4. Only then decide — and say what was decided and why.
 
 ## Fallback

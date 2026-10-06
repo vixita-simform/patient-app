@@ -1,16 +1,16 @@
 {
   "source": {
-    "extractDir": "design/.extracted",
+    "extractDir": "apps/mobile/design/.extracted",
     "screenSelector": "div.phone"
   },
   "project": {
     "router": "expo-router",
-    "routesDir": "src/app",
-    "screensDir": "src/screens",
-    "componentsDir": "src/components",
-    "iconsDir": "src/assets/icons",
-    "themeDir": "src/theme",
-    "colorsFile": "src/theme/colors.ts",
+    "routesDir": "apps/mobile/src/app",
+    "screensDir": "apps/mobile/src/screens",
+    "componentsDir": "apps/mobile/src/components",
+    "iconsDir": "apps/mobile/src/assets/icons",
+    "themeDir": "apps/mobile/src/theme",
+    "colorsFile": "apps/mobile/src/theme/colors.ts",
     "scaleFn": "scale",
     "themeHook": "useTheme",
     "textComponent": "AppText",

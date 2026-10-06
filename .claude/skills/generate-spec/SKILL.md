@@ -14,7 +14,7 @@ Generate design specs for `$ARGUMENTS`.
 
 **You are the orchestrator.** Scripts decide what changed and agents read the
 design. You never open the heavy sources yourself. This skill writes specs and
-the project inventory only. It never writes or edits anything under `src/`, and
+the project inventory only. It never writes or edits anything under `apps/mobile/src/`, and
 it never touches the `build-screen` skill.
 
 Scripts live in `.claude/skills/generate-spec/scripts/`. Below, `$GS` stands for
@@ -22,7 +22,7 @@ that path and `$X` for `.claude/skills/html-design-to-rn/scripts/extract-design.
 
 ## Budget rules
 
-- **Never read** `design/*.html`, `screens/*.html`, `*.facts.json`,
+- **Never read** `apps/mobile/design/*.html`, `screens/*.html`, `*.facts.json`,
   `styles/rn/*.json`, `styles/app.css`, `inventory.json` whole, or a whole
   `*.spec.md`. Delegating a read and then doing it yourself costs more than not
   delegating.
@@ -45,7 +45,7 @@ straight through to `spec-plan.mjs`.
 node $GS/prepare-source.mjs <html>
 ```
 
-This writes `design/<basename>.src.html` with the external `<link>`s removed and
+This writes `apps/mobile/design/<basename>.src.html` with the external `<link>`s removed and
 an `id` on every `div.phone` (slugged from its `.frame-label`), and points
 `.claude/html-design-to-rn/config.local.json` at it. It prints `id ← label` for
 every screen.
@@ -59,14 +59,14 @@ every screen.
 ## Step 3: extract incrementally
 
 ```bash
-node $X design/<basename>.src.html --out design/.extracted --screen-selector div.phone --scale-fn scale 2>&1 \
+node $X apps/mobile/design/<basename>.src.html --out apps/mobile/design/.extracted --screen-selector div.phone --scale-fn scale 2>&1 \
   | grep -E 'Incremental extraction|Error|error' || true
 ```
 
 Keep only that one summary line, never the full stdout. The extractor compares
 every screen's markup hash with the last run and writes the diff to the top of
-`design/.extracted/CHANGELOG.md`. Read only the newest entry, if you need it:
-`awk '/^## /{n++} n==1' design/.extracted/CHANGELOG.md`.
+`apps/mobile/design/.extracted/CHANGELOG.md`. Read only the newest entry, if you need it:
+`awk '/^## /{n++} n==1' apps/mobile/design/.extracted/CHANGELOG.md`.
 
 If the summary says app.css/app.js changed, every screen's files were rewritten.
 That is expected. Step 5 compares content, so unchanged screens are still
@@ -86,9 +86,9 @@ report as "no screenshot". Never report a skipped screenshot as done.
 ## Step 5: plan
 
 ```bash
-node $GS/spec-plan.mjs [--only …] [--force] > design/.extracted/.build/.spec-plan.json
+node $GS/spec-plan.mjs [--only …] [--force] > apps/mobile/design/.extracted/.build/.spec-plan.json
 python3 -c "
-import json; p=json.load(open('design/.extracted/.build/.spec-plan.json'))
+import json; p=json.load(open('apps/mobile/design/.extracted/.build/.spec-plan.json'))
 for k in ('new','changed'): [print(k, e['id'], e['name'], '|', e['reason'], '|', '; '.join(e.get('flags',[]))) for e in p[k]]
 print('unchanged:', ', '.join(p['unchanged']) or '-')
 print('removed:', ', '.join(r['id'] or r['spec'] for r in p['removed']) or '-')
@@ -97,7 +97,7 @@ for n in p['notes']: print('note:', n)"
 ```
 
 `spec-plan.mjs` decides by **content hash** of each screen's markup, facts and
-compiled styles, stored in `design/.extracted/.build/spec-manifest.json`. Specs
+compiled styles, stored in `apps/mobile/design/.extracted/.build/spec-manifest.json`. Specs
 written before the manifest existed are judged by mtime once, then recorded.
 
 Show the user this plan as a short table: `screen | new/changed | reason | flags`.
@@ -119,7 +119,7 @@ with `python3`, one entry at a time):
 ```
 Write the screen spec for <name> (<id>).
 Output path: <outPath>
-Resolved inventory fields (paths are relative to design/.extracted/):
+Resolved inventory fields (paths are relative to apps/mobile/design/.extracted/):
   file=<file> factsFile=<factsFile> styleFile=<styleFile> screenshot=<screenshot>
   role=<role> parent=<parent> tab=<tab> flow=<flow> title=<title> subtitle=<subtitle>
   dynamic=<dynamic> staticMarkup=<staticMarkup> renderStatus=<renderStatus> renderFns=<renderFns>
@@ -128,7 +128,7 @@ Other spec agents run in parallel. Write only your own output path.
 Return the Digest and the path only.
 ```
 
-For `design-reuse-scout`: `Write the project inventory to design/.extracted/.build/project-inventory.md. Return the path, the counts per section, and any gaps.`
+For `design-reuse-scout`: `Write the project inventory to apps/mobile/design/.extracted/.build/project-inventory.md. Return the path, the counts per section, and any gaps.`
 
 After **each wave** returns, record the screens whose spec was written:
 
@@ -150,9 +150,9 @@ If `removed` is non-empty:
 node $GS/spec-plan.mjs --archive-removed
 ```
 
-This moves those specs to `design/.extracted/.build/_removed/`. **Never delete
-code.** For each removed screen, check whether `src/screens/<feature>/` or a
-route in `src/app/` still exists for it (`ls`/`grep` by its id or name), and
+This moves those specs to `apps/mobile/design/.extracted/.build/_removed/`. **Never delete
+code.** For each removed screen, check whether `apps/mobile/src/screens/<feature>/` or a
+route in `apps/mobile/src/app/` still exists for it (`ls`/`grep` by its id or name), and
 list what you find for the user to decide on.
 
 ## Step 8: report, the last thing you write

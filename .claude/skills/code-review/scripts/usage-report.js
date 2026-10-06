@@ -9,7 +9,8 @@
  *   --since   Only count API calls at/after this time (use `startedAt` from plan-batches.js).
  *   --json    Print JSON instead of the Markdown section.
  *
- * Counts the main session plus every sub-agent, split per review batch when possible.
+ * The review runs in the main session, so that row is the whole cost. Sub-agent rows only
+ * appear if something else launched agents in this repo during the review.
  * Numbers are exact token counts from the API responses Claude Code logged. Calls made after
  * this script runs (e.g. writing the final chat message) are not included.
  */
@@ -157,7 +158,7 @@ const out = [
   '',
   '| Part | Calls | Input | Output | Time |',
   '|---|---:|---:|---:|---:|',
-  `| Orchestrator (main session) | ${main.calls} | ${k(allIn(main))} | ${k(main.output)} | — |`,
+  `| Review session | ${main.calls} | ${k(allIn(main))} | ${k(main.output)} | — |`,
   ...agentRows.map((a) => `| ${a.label || 'Other sub-agent'} | ${a.usage.calls} | ${k(allIn(a.usage))} | ${k(a.usage.output)} | ${dur(a.last - a.first)} |`),
   '',
   '_Input includes cached tokens. Exact counts from Claude Code logs; the final chat message is not included. For cost or plan limits run `/cost` or `/usage`._',

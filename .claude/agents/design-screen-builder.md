@@ -14,9 +14,9 @@ inventory** listing what exists to reuse. Build from those.
 
 | Input                                           | What it is                                                                                                                                                                             | How to treat it                                                                                                               |
 | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `design/.extracted/.build/<Name>.spec.md`       | element tree, verbatim copy, style table (one row per styleKey — `prop: Token` where the design resolved to a token, `prop: <expr> ⚠<why>` where it did not), assets, drift, behaviour | **the design's authority for values** — read it whole **once**; it is capped at 250 lines                                     |
+| `apps/mobile/design/.extracted/.build/<Name>.spec.md`       | element tree, verbatim copy, style table (one row per styleKey — `prop: Token` where the design resolved to a token, `prop: <expr> ⚠<why>` where it did not), assets, drift, behaviour | **the design's authority for values** — read it whole **once**; it is capped at 250 lines                                     |
 | `screens[].screenshot` (PNG)                    | the design's own rendering                                                                                                                                                             | **the design's authority for layout, order and rhythm** — open it before writing the first element, and again when you finish |
-| `design/.extracted/.build/project-inventory.md` | components + real props, theme tokens, TextStyles variants, string namespaces, routes, module groups                                                                                   | what to reuse; read the sections you need                                                                                     |
+| `apps/mobile/design/.extracted/.build/project-inventory.md` | components + real props, theme tokens, TextStyles variants, string namespaces, routes, module groups                                                                                   | what to reuse; read the sections you need                                                                                     |
 | The orchestrator's plan + answered questions    | which component covers which node, where the route lands                                                                                                                               | architecture decisions already made                                                                                           |
 
 **Do not re-read `styles/rn/*.json`, `screens/*.html`, `*.facts.json` or
@@ -97,24 +97,24 @@ local state and mock data — no thunks, no endpoints, unless the plan says so.
 
 ## What you write
 
-Under `src/modules/<group>/<screen>/` (groups today: `auth`, `onboarding`,
+Under `apps/mobile/src/modules/<group>/<screen>/` (groups today: `auth`, `onboarding`,
 `dashboard`, `calendar`, `canvas`, `more`, `profile` — add one only if none
 fits): `<Name>Screen.tsx`, `<Name>Styles.ts`, `<Name>Types.ts`, `use<Name>.ts`,
 `index.ts`, plus a `<name>-form/` sub-folder for forms.
 
-Then: the route file under `src/app/` in the group the plan named, the
+Then: the route file under `apps/mobile/src/app/` in the group the plan named, the
 `NavigationRoutes.ts` entry, the `_layout.tsx` registration, the strings, and
 the barrel updates. Route files stay thin — they re-export the module screen.
-Navigate only through `src/utils/NavigatorUtils.ts`.
+Navigate only through `apps/mobile/src/utils/NavigatorUtils.ts`.
 
 ### The map file — part of the job
 
-`design/.extracted/maps/<Name>.json`:
+`apps/mobile/design/.extracted/maps/<Name>.json`:
 
 ```jsonc
 {
   "screen": "<Name>Screen",
-  "styleFile": "src/modules/<group>/<screen>/<Name>Styles.ts",
+  "styleFile": "apps/mobile/src/modules/<group>/<screen>/<Name>Styles.ts",
   "map": [{ "styleKey": "screen", "selector": ".filter-page" }],
 }
 ```
@@ -179,7 +179,7 @@ into a silent decision.
   a native rebuild follows. **Never install anything yourself.**
 - An overlay whose scope (project-level vs module-level) the plan left open. The
   library is not in question: build it on `CustomBottomSheet`
-  (`src/components/custom-bottom-sheet/`, wrapping
+  (`apps/mobile/src/components/custom-bottom-sheet/`, wrapping
   `@lodev09/react-native-true-sheet`) or `SidePanel` for a side overlay. Never
   reach for `@gorhom/bottom-sheet` or a bare `Modal` — neither is in this
   project. The `true-sheet` skill documents the underlying props.

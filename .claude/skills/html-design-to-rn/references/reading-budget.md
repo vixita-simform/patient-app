@@ -19,7 +19,7 @@ avoid tripping it in the first place.
 | Source | Read | Never |
 | --- | --- | --- |
 | `screens/<NN-Screen>.png` | **always, before the markup** — one image, and the only source produced by running the design rather than parsing it | skipping it because the text sources "look consistent" — when the markup is stale they are consistently wrong |
-| `design/.extracted/inventory.json` | whole — always first, it is the index | — |
+| `apps/mobile/design/.extracted/inventory.json` | whole — always first, it is the index | — |
 | `screens/INDEX.md` | whole — the screen tree, cheaper than `ls` plus guesswork | — |
 | `styles/rn/<NN-Screen>.json` | whole, for **your** screen — this is the CSS, already translated | another screen's slice |
 | `screens/<NN-Screen>.facts.json` | whole, for your screen | all of them |
@@ -33,9 +33,9 @@ avoid tripping it in the first place.
 | `screens/*.html` (inline-style export) | whole — phase 0 already split it to one screen | — |
 | `scripts/app.js` (inline-style export) | only the functions named by your screen's `renderFns` (inventory) or `handlers` (facts) | whole (a real one runs ~3000 lines) |
 | `config.json`, `config.local.json` | whole — both are small | — |
-| `CLAUDE.md` | only the `## The Golden Rules` section (grep the heading, read to the next `##`) | whole — everything past that section is unrelated to this flow |
+| `apps/mobile/CLAUDE.md` | only the `## The Golden Rules` section (grep the heading, read to the next `##`) | whole — everything past that section is unrelated to this flow |
 | existing components barrel + the 2-3 you might reuse | whole | every component in the project |
-| `design/*.html` (the raw design source), `vendor/*` | never, once it's over ~200 KB — `design-guard` gates on actual size, not just the path, so a small companion file (a token-preview page) isn't blocked | always, above that size |
+| `apps/mobile/design/*.html` (the raw design source), `vendor/*` | never, once it's over ~200 KB — `design-guard` gates on actual size, not just the path, so a small companion file (a token-preview page) isn't blocked | always, above that size |
 
 ## The stylesheet is not a source any more
 
@@ -52,9 +52,9 @@ not patch around it per screen.
 ## Finding a range instead of reading for one
 
 ```bash
-grep -n 'const WelcomeScreen' design/.extracted/screens/10-*.jsx
-grep -n '^## The Golden Rules' CLAUDE.md
-grep -n 'function renderJoblist' design/.extracted/scripts/app.js   # from screens[].renderFns
+grep -n 'const WelcomeScreen' apps/mobile/design/.extracted/screens/10-*.jsx
+grep -n '^## The Golden Rules' apps/mobile/CLAUDE.md
+grep -n 'function renderJoblist' apps/mobile/design/.extracted/scripts/app.js   # from screens[].renderFns
 ```
 
 Then `Read` with `offset`/`limit`. `inventory.json` `screens[].components` tells

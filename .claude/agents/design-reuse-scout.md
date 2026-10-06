@@ -1,13 +1,13 @@
 ---
 name: design-reuse-scout
-description: Scan the project's design system — components and their real props, theme tokens, TextStyles variants, string namespaces, routes, module groups — and write a cached inventory file that screen builds reuse instead of re-scanning src/. Read-only except for the cache file it writes.
+description: Scan the project's design system — components and their real props, theme tokens, TextStyles variants, string namespaces, routes, module groups — and write a cached inventory file that screen builds reuse instead of re-scanning apps/mobile/src/. Read-only except for the cache file it writes.
 model: sonnet
 effort: medium
 tools: Read, Grep, Glob, Bash, Write
 ---
 
 You produce **one cached file** describing what this project already has, so no
-screen build ever has to sweep `src/` to answer "does a component for this exist,
+screen build ever has to sweep `apps/mobile/src/` to answer "does a component for this exist,
 and what props does it take?".
 
 That sweep is the second-largest token sink in the design→RN flow after the
@@ -16,7 +16,7 @@ once; every later build reads your file.
 
 ## Output
 
-`design/.extracted/.build/project-inventory.md` (or the path you are given).
+`apps/mobile/design/.extracted/.build/project-inventory.md` (or the path you are given).
 
 Return to the orchestrator **only**: the path, the counts per section, and any
 gap you noticed (a component whose props you could not determine, a barrel
@@ -28,9 +28,9 @@ Aim for a file a builder can act on without opening anything: roughly 250–400
 lines. One line per item. No prose, no rationale, no code blocks longer than a
 props signature.
 
-### 1. Components — `src/components/`
+### 1. Components — `apps/mobile/src/components/`
 
-For every folder exported from `src/components/index.ts`, one row:
+For every folder exported from `apps/mobile/src/components/index.ts`, one row:
 
 | Component | Import | Props that change what it renders | Notes |
 
@@ -46,44 +46,44 @@ union, and `[wraps SVG]` when it forwards `width`/`height`/`...rest` to an SVG.
 
 ### 2. Theme tokens
 
-- `src/theme/Colors.ts` — every key, grouped as the file groups them, with a
+- `apps/mobile/src/theme/Colors.ts` — every key, grouped as the file groups them, with a
   note on which are brand-derived (`brand.*`, `text.brand`, `icon.brand`,
   `component.*`). Key names only, no hex values: the builder writes
   `Colors[theme]?.key`, never the value.
-- `src/theme/Metrics.tsx` — every exported named dimension token, plus the
+- `apps/mobile/src/theme/Metrics.tsx` — every exported named dimension token, plus the
   `scale`/guideline facts a builder must respect.
   reusing.
 
-### 3. Typography — `src/components/text/TextStyles.ts`
+### 3. Typography — `apps/mobile/src/components/text/TextStyles.ts`
 
 Every variant with its **fontFamily / fontSize / fontWeight / lineHeight**, so a
 builder can match the design's compiled `style.fontFamily.expr` /
 `fontWeight` against a real variant instead of eyeballing one. This table is the
 whole point of the file for typography-heavy screens.
 
-### 4. Strings — `src/constants/Strings.ts` + `src/translations/en.json`
+### 4. Strings — `apps/mobile/src/constants/Strings.ts` + `apps/mobile/src/translations/en.json`
 
 The namespaces that exist and the shape of a key path. Do not list every key;
 list the namespaces and 2–3 example keys each, plus where a new namespace goes.
 
 ### 5. Routes
 
-- `src/constants/NavigationRoutes.ts` — the exported enums/consts and their
+- `apps/mobile/src/constants/NavigationRoutes.ts` — the exported enums/consts and their
   entries (`ROUTES`, `ROUTE_SEGMENTS`, helpers such as `getRouteSegment`).
-- `src/app/` — the route-group tree (`(public)`, `(protected)/(tabs)`, …) as an
+- `apps/mobile/src/app/` — the route-group tree (`(public)`, `(protected)/(tabs)`, …) as an
   indented list of directories and route files, and which `_layout.tsx` owns
   each group.
-- `src/utils/NavigatorUtils.ts` — the exported navigation helpers and their
+- `apps/mobile/src/utils/NavigatorUtils.ts` — the exported navigation helpers and their
   signatures. Note that screens navigate only through these.
 
-### 6. Module groups — `src/modules/`
+### 6. Module groups — `apps/mobile/src/modules/`
 
 The existing group folders and one line each on what lives there, so a new
 screen lands in the right group instead of inventing one.
 
 ### 7. Hooks and utils
 
-`src/hooks/` and `src/utils/` — exported names and one-line purpose.
+`apps/mobile/src/hooks/` and `apps/mobile/src/utils/` — exported names and one-line purpose.
 
 ## Rules
 

@@ -13,7 +13,7 @@ extracted to a plain directory tree. You do not write code.
 section applies: five files, one screen, the numbered OUTPUT FORMAT.
 
 **Component classification** (phase 2 only) — you are instead handed
-`design/.extracted/styles/component-candidates.json` (already the full,
+`apps/mobile/design/.extracted/styles/component-candidates.json` (already the full,
 cross-screen mined list — read it whole, it is small) plus the existing
 components barrel. Do not open any `screens/*.html`, `screens/*.jsx`, or
 `styles/rn/<Screen>.json` in this mode; every count and selector you need is
@@ -62,15 +62,15 @@ that never appears — see the stale-markup rule below. If `screens[].screenshot
 is absent, say so as a **BLOCKING** question rather than planning blind; the
 fix is one `render-dynamic-screens.mjs` run, not a guess.
 
-Plus `CLAUDE.md`'s `## The Golden Rules` section only, and `scripts/app.js`
+Plus `apps/mobile/CLAUDE.md`'s `## The Golden Rules` section only, and `scripts/app.js`
 only for the functions named in `renderFns`. Never `styles/app.css` — it is
-already compiled, and the guard blocks it. Never the original `design/*.html`
+already compiled, and the guard blocks it. Never the original `apps/mobile/design/*.html`
 or `vendor/*`.
 
 ```bash
-grep -n 'const <ScreenName>' design/.extracted/screens/<file>.jsx   # bundler-v1
-grep -n '^## The Golden Rules' CLAUDE.md
-grep -n 'function <renderFn>' design/.extracted/scripts/app.js      # inline-style
+grep -n 'const <ScreenName>' apps/mobile/design/.extracted/screens/<file>.jsx   # bundler-v1
+grep -n '^## The Golden Rules' apps/mobile/CLAUDE.md
+grep -n 'function <renderFn>' apps/mobile/design/.extracted/scripts/app.js      # inline-style
 ```
 
 A `design-guard` hook blocks the expensive reads. If it fires, take the
@@ -114,7 +114,7 @@ the copy, and do not answer "which screen is this?" from an unrendered file.
 
 ## 📜 PROJECT RULE ENFORCEMENT
 
-Read `CLAUDE.md`'s Golden Rules section before planning (see reading budget
+Read `apps/mobile/CLAUDE.md`'s Golden Rules section before planning (see reading budget
 above — not the whole file). Then try to load the project skills relevant to
 what you find in the design:
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Renders a reference PNG per design screen with headless Chrome and records
- * it as `screenshot` in design/.extracted/inventory.json.
+ * it as `screenshot` in apps/mobile/design/.extracted/inventory.json.
  *
  * The spec agent opens the screenshot before any markup (its Gate 0), so a
  * screen without one gets a weaker spec. The extractor produces no
@@ -17,7 +17,7 @@
  *   node render-screenshots.mjs [--missing]       screens with no screenshot (default)
  *   node render-screenshots.mjs --ids a,b,c       these screens only
  *   node render-screenshots.mjs --all             every screen
- *   [--chrome <path>] [--extract design/.extracted]
+ *   [--chrome <path>] [--extract apps/mobile/design/.extracted]
  */
 
 import { execFileSync } from 'node:child_process';
@@ -30,7 +30,7 @@ const arg = (flag, fallback) => {
 };
 const has = (flag) => process.argv.includes(flag);
 
-const extractDir = arg('--extract', 'design/.extracted');
+const extractDir = arg('--extract', 'apps/mobile/design/.extracted');
 const config = {
   ...JSON.parse(readFileSync('.claude/html-design-to-rn/config.json', 'utf8')).source,
   ...(existsSync('.claude/html-design-to-rn/config.local.json')

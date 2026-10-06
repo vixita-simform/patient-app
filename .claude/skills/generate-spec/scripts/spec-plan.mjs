@@ -17,7 +17,7 @@
  *   node spec-plan.mjs [--only id,...] [--force]   print the plan as JSON
  *   node spec-plan.mjs --record id,...             hash inputs after a spec run
  *   node spec-plan.mjs --archive-removed           move specs of removed screens to .build/_removed/
- *   [--extract design/.extracted]
+ *   [--extract apps/mobile/design/.extracted]
  */
 
 import { createHash } from 'node:crypto';
@@ -33,9 +33,9 @@ const SPEC_FIELDS = [
 // What the project inventory describes. A new entry here (not an edit inside an
 // existing component) is what makes the cached inventory wrong.
 const INVENTORY_WATCH = {
-  componentDirs: ['src/components', 'src/screens'],
-  trees: ['src/app', 'src/theme', 'src/assets/icons'],
-  files: ['src/constants/Routes.ts', 'src/constants/Constants.ts', 'src/constants/Strings.ts']
+  componentDirs: ['apps/mobile/src/components', 'apps/mobile/src/screens'],
+  trees: ['apps/mobile/src/app', 'apps/mobile/src/theme', 'apps/mobile/src/assets/icons'],
+  files: ['apps/mobile/src/constants/Routes.ts', 'apps/mobile/src/constants/Constants.ts', 'apps/mobile/src/constants/Strings.ts']
 };
 
 const arg = (flag, fallback) => {
@@ -45,7 +45,7 @@ const arg = (flag, fallback) => {
 const has = (flag) => process.argv.includes(flag);
 const list = (flag) => (arg(flag) ? arg(flag).split(',').map((s) => s.trim()).filter(Boolean) : null);
 
-const extractDir = arg('--extract', 'design/.extracted');
+const extractDir = arg('--extract', 'apps/mobile/design/.extracted');
 const buildDir = join(extractDir, '.build');
 const manifestPath = join(buildDir, 'spec-manifest.json');
 const inventoryMd = join(buildDir, 'project-inventory.md');

@@ -246,7 +246,7 @@ already-shipped `Colors.ts` against one is a deliberate, scoped decision (it
 renames keys real components already reference) — surface it and ask, don't
 silently rename mid-flight.
 
-**`scale()`'s guideline vs the design's canvas.** `src/theme/Metrics.tsx` derives
+**`scale()`'s guideline vs the design's canvas.** `apps/mobile/src/theme/Metrics.tsx` derives
 from a **375×812** guideline; this design is authored at **393×852**. A design
 pixel is therefore *not* a guideline pixel, and every ported value inflates —
 about 4.9% even on a 393×852 device, 7.4% on a 402×874 one. Content overflows on
@@ -291,7 +291,7 @@ into; only the config differs.
 **A style key gets a comment only when it's a real `design-drift[...]`
 annotation.** A `/** \`.selector\`. */` note documenting where a style key
 came from showed up unprompted on the first run after this rule was added —
-`design/.extracted/maps/<Screen>.json` already carries that fact for the
+`apps/mobile/design/.extracted/maps/<Screen>.json` already carries that fact for the
 auditor, so a comment repeating it in source is a second, silently-stale copy.
 Delete it on sight rather than treating it as harmless.
 

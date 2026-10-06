@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
- * foundation-check.js — checks the project foundation that conventions.md depends on.
+ * foundation-check.js — checks the monorepo foundation the review rules (references/*.md) depend on.
  * Meant for a NEW project / first full review, but safe to run anytime. Read-only.
  *
- * Usage: node .claude/skills/code-review/scripts/foundation-check.js
+ * Usage: node .claude/skills/code-review/scripts/foundation-check.js [--out <file>]
+ *   --out   Also write the output to this file (e.g. <runDir>/foundation.txt for merge-findings.js).
  *
- * Output (same line format as code-reviewer findings, so the orchestrator can merge it):
+ * Output (same line format as the review findings, so merge-findings.js can merge it):
  *   FINDINGS
  *   <SEVERITY> | <category> | <path> | <issue> | <fix>
  *   MISSING_CORE
@@ -33,69 +34,81 @@ const all = [];
 })('.');
 const findByName = (name) => all.filter((p) => path.basename(p) === name);
 
-// ---- 1. Core files the conventions rely on --------------------------------------------
+// ---- 1. Core files the rules rely on, per workspace ------------------------------------
+const M = 'apps/mobile/';
+const B = 'apps/backend/';
 const core = [
-  // [display name, exact path or null, basename to search, why]
-  ['useRedux.ts', 'app/redux/useRedux.ts', null, 'useAppDispatch / useAppSelector'],
-  ['APIConfig.ts', 'app/configs/APIConfig.ts', null, 'createAsyncThunkWithCancelToken, authorizedAPI, unauthorizedAPI'],
-  ['APIConst.ts', 'app/constants/APIConst.ts', null, 'API endpoint strings'],
-  ['ToolkitAction.ts', 'app/constants/ToolkitAction.ts', null, 'thunk action names'],
-  ['Strings.ts', 'app/constants/Strings.ts', null, 'user-facing strings'],
-  ['NavigationRoutes.ts', 'app/constants/NavigationRoutes.ts', null, 'ROUTES enum'],
-  ['NavigatorUtils.ts', null, 'NavigatorUtils.ts', 'imperative navigation + deep links'],
-  ['AppNavigation.tsx', null, 'AppNavigation.tsx', 'RootStackParamList'],
-  ['Store.ts', null, 'Store.ts', 'combineReducers + persistConfig'],
-  ['en.json', null, 'en.json', 'i18n keys'],
-  ['Metrics', null, /^Metrics\.(ts|tsx|js)$/, 'scale()'],
-  ['Colors', null, /^Colors\.(ts|tsx|js)$/, 'Colors[theme]'],
-  ['ApplicationStyles', null, /^ApplicationStyles\.(ts|tsx|js)$/, 'shared styles'],
-  ['jest/Wrapper.tsx', 'jest/Wrapper.tsx', null, 'RenderWrapper / RenderWrapperForHooks'],
+  // [workspace, path, why]
+  ['mobile', `${M}src/constants/Strings.ts`, 'user-facing strings'],
+  ['mobile', `${M}src/constants/Routes.ts`, 'STACK_ROUTES / TAB_ROUTES'],
+  ['mobile', `${M}src/constants/Constants.ts`, 'fixed value sets (variants, statuses)'],
+  ['mobile', `${M}src/theme/Colors.ts`, 'Colors[theme]'],
+  ['mobile', `${M}src/theme/Metrics.tsx`, 'scale()'],
+  ['mobile', `${M}src/theme/Fonts.ts`, 'Fonts.size / Fonts.weight'],
+  ['mobile', `${M}src/hooks/useTheme.ts`, 'useTheme(styles)'],
+  ['mobile', `${M}src/utils/authStorage.ts`, 'secure token storage'],
+  ['mobile', `${M}jest/Wrapper.tsx`, 'RenderWrapper / RenderWrapperForHooks'],
+  ['backend', `${B}next.config.ts`, 'transpilePackages for shared packages'],
+  ['shared', 'packages/shared-types/src/index.ts', 'shared API types barrel'],
 ];
-for (const [name, exact, search, why] of core) {
-  let found = false;
-  if (exact && fs.existsSync(exact)) found = true;
-  else if (search) found = all.some((p) => (search instanceof RegExp ? search.test(path.basename(p)) : path.basename(p) === search));
-  if (!found) {
-    missingCore.push(name);
-    f('STANDARD', 'structure', exact || name, `Core file missing — conventions need it for ${why}`,
-      `Create ${exact || name} before building features on top of it`);
+for (const [ws, p, why] of core) {
+  if (!fs.existsSync(path.dirname(p).split('/').slice(0, 2).join('/'))) continue; // workspace not created yet
+  if (!fs.existsSync(p)) {
+    missingCore.push(`${ws}: ${p}`);
+    f('STANDARD', 'structure', p, `Core file missing — ${ws} rules need it for ${why}`, `Create ${p} before building features on top of it`);
   }
 }
-if (!fs.existsSync('jest/__tests__')) f('STANDARD', 'tests', 'jest/__tests__/', 'Test folder missing', 'Create jest/__tests__/ and add a first snapshot test');
-if (!fs.existsSync('jest/__mock__')) f('MINOR', 'tests', 'jest/__mock__/', 'Mock folder missing', 'Create jest/__mock__/ for native module mocks');
+if (!fs.existsSync(`${M}jest/__tests__`)) f('STANDARD', 'tests', `${M}jest/__tests__/`, 'Test folder missing', `Create ${M}jest/__tests__/ and add a first test`);
+if (!fs.existsSync(`${M}jest/__mock__`)) f('MINOR', 'tests', `${M}jest/__mock__/`, 'Mock folder missing', `Create ${M}jest/__mock__/ for native module mocks`);
 
-// ---- 2. tsconfig flags the conventions assume -----------------------------------------
-const ts = read('tsconfig.json');
-if (!ts) f('CRITICAL', 'typescript', 'tsconfig.json', 'tsconfig.json missing', 'Add tsconfig.json with strict mode');
-else {
-  const hasExtends = /"extends"\s*:/.test(ts);
+const nextConfig = read(`${B}next.config.ts`);
+const sharedPackages = fs.existsSync('packages')
+  ? fs.readdirSync('packages').map((d) => read(`packages/${d}/package.json`)).filter(Boolean).map((t) => JSON.parse(t).name)
+  : [];
+if (nextConfig) {
+  for (const name of sharedPackages) {
+    if (!nextConfig.includes(name)) f('STANDARD', 'shared', `${B}next.config.ts`, `${name} not in transpilePackages`, `Add "${name}" to transpilePackages`);
+  }
+}
+
+// ---- 2. tsconfig flags the rules assume (follows "extends" to the root base) ------------
+const stripJsonComments = (t) => t.replace(/\/\*[\s\S]*?\*\/|(^|[^:])\/\/.*$/gm, '$1');
+const tsFlags = (file, seen = new Set()) => {
+  const text = read(file);
+  if (!text || seen.has(file)) return {};
+  seen.add(file);
+  let cfg;
+  try { cfg = JSON.parse(stripJsonComments(text)); } catch { return {}; }
+  const parents = [].concat(cfg.extends || []).filter((e) => e.startsWith('.'));
+  const inherited = parents.reduce((acc, e) => ({ ...acc, ...tsFlags(path.join(path.dirname(file), e), seen) }), {});
+  return { ...inherited, ...(cfg.compilerOptions || {}) };
+};
+const tsconfigs = ['apps/mobile/tsconfig.json', 'apps/backend/tsconfig.json',
+  ...(fs.existsSync('packages') ? fs.readdirSync('packages').map((d) => `packages/${d}/tsconfig.json`) : [])]
+  .filter((p) => fs.existsSync(path.dirname(p)));
+for (const file of tsconfigs) {
+  if (!fs.existsSync(file)) { f('CRITICAL', 'typescript', file, 'tsconfig.json missing', 'Add one that extends ../../tsconfig.base.json'); continue; }
+  const flags = tsFlags(file);
   for (const flagName of ['strict', 'noUnusedLocals', 'noUnusedParameters']) {
-    if (!new RegExp(`"${flagName}"\\s*:\\s*true`).test(ts)) {
-      f(hasExtends && flagName === 'strict' ? 'MINOR' : 'STANDARD', 'typescript', 'tsconfig.json',
-        `"${flagName}": true not set${hasExtends ? ' here (may come from "extends" — verify)' : ''}`,
-        `Add "${flagName}": true to compilerOptions`);
-    }
+    if (flags[flagName] !== true) f('STANDARD', 'typescript', file, `"${flagName}": true not set (directly or via extends)`, 'Extend ../../tsconfig.base.json');
   }
 }
 
-// ---- 3. ESLint rules the conventions call ERROR -----------------------------------------
-const eslintFiles = ['.eslintrc.js', '.eslintrc.cjs', '.eslintrc.json', '.eslintrc', '.eslintrc.yml', 'eslint.config.js', 'eslint.config.mjs', 'eslint.config.cjs'];
-const eslintFile = eslintFiles.find((p) => fs.existsSync(p));
-let eslintText = eslintFile ? read(eslintFile) : null;
-if (!eslintText) {
-  const pkg = read('package.json');
-  if (pkg && /"eslintConfig"\s*:/.test(pkg)) eslintText = pkg;
-}
-if (!eslintText) f('STANDARD', 'structure', '.eslintrc.js', 'No ESLint config — lint rules in conventions are not enforced automatically', 'Add ESLint with eslint-plugin-react-native and @typescript-eslint');
+// ---- 3. ESLint rules the mobile rules call ERROR; backend has a config at all ---------------
+const eslintNames = ['eslint.config.js', 'eslint.config.mjs', 'eslint.config.cjs', '.eslintrc.js', '.eslintrc.json'];
+const findEslint = (dir) => eslintNames.map((n) => dir + n).find((p) => fs.existsSync(p));
+const mobileEslint = findEslint(M);
+if (!mobileEslint) f('STANDARD', 'structure', `${M}eslint.config.js`, 'No ESLint config — mobile lint rules are not enforced automatically', 'Add eslint-config-expo with eslint-plugin-react-native');
 else {
+  const eslintText = read(mobileEslint);
   const rules = [
     'react-native/no-inline-styles', 'react-native/no-color-literals', 'react-native/no-unused-styles',
     'react-native/no-raw-text', '@typescript-eslint/consistent-type-definitions', 'react/jsx-sort-props',
   ];
   const missing = rules.filter((r) => !eslintText.includes(r));
-  if (missing.length) f('STANDARD', 'structure', eslintFile || 'package.json',
-    `ESLint rules not configured: ${missing.join(', ')}`, 'Add them as "error" so tooling catches them before review');
+  if (missing.length) f('STANDARD', 'structure', mobileEslint, `ESLint rules not configured: ${missing.join(', ')}`, 'Add them as "error" so tooling catches them before review');
 }
+if (fs.existsSync(B) && !findEslint(B)) f('STANDARD', 'structure', `${B}eslint.config.mjs`, 'No ESLint config for backend', 'Add eslint-config-next');
 
 // ---- 4. Secrets / files that must never be pushed ------------------------------------------
 let tracked = [];
@@ -122,11 +135,14 @@ if (!/node_modules/.test(gi)) f('CRITICAL', 'structure', '.gitignore', 'node_mod
 if (!/\.claude\/reviews/.test(gi)) f('MINOR', 'structure', '.gitignore', 'Review reports folder not ignored', 'Add `.claude/reviews/`');
 
 // ---- Output ------------------------------------------------------------------------------
-process.stdout.write([
+const output = [
   'FINDINGS',
   ...(findings.length ? findings : ['none']),
   '',
   'MISSING_CORE',
   ...(missingCore.length ? missingCore : ['none']),
   '',
-].join('\n'));
+].join('\n');
+const outIdx = process.argv.indexOf('--out');
+if (outIdx > 0 && process.argv[outIdx + 1]) fs.writeFileSync(process.argv[outIdx + 1], output);
+process.stdout.write(output);
