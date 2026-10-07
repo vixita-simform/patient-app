@@ -1,11 +1,14 @@
-import { useFocusEffect } from "expo-router";
-import { useCallback, useMemo, useState } from "react";
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useMemo, useState } from 'react';
 
-import { getNotificationsDummyData, STACK_ROUTES } from "../../constants";
-import type { NotificationItem } from "../../types";
-import { goBackOr } from "../../utils";
-import type { NotificationGroupViewData, UseNotificationsScreenReturn } from "./NotificationsScreenTypes";
-import { groupNotificationsByRecency, toTimeLabel } from "./NotificationsScreenUtils";
+import { getNotificationsDummyData, STACK_ROUTES } from '../../constants';
+import type { NotificationItem } from '../../types';
+import { goBackOr } from '../../utils';
+import type {
+  NotificationGroupViewData,
+  UseNotificationsScreenReturn
+} from './NotificationsScreenTypes';
+import { groupNotificationsByRecency, toTimeLabel } from './NotificationsScreenUtils';
 
 /**
  * Notifications screen state: buckets the flat dummy notification list into
@@ -16,9 +19,8 @@ import { groupNotificationsByRecency, toTimeLabel } from "./NotificationsScreenU
  */
 const useNotificationsScreen = (): UseNotificationsScreenReturn => {
   // Lazy initializer: timestamps are generated relative to when the screen mounts.
-  const [notifications, setNotifications] = useState<readonly NotificationItem[]>(
-    getNotificationsDummyData,
-  );
+  const [notifications, setNotifications] =
+    useState<readonly NotificationItem[]>(getNotificationsDummyData);
   // Reference "now" for bucketing and relative labels; refreshed on every focus so
   // returning to the screen does not show stale "2 min ago" labels.
   const [now, setNow] = useState(() => new Date());
@@ -26,7 +28,7 @@ const useNotificationsScreen = (): UseNotificationsScreenReturn => {
   useFocusEffect(
     useCallback(() => {
       setNow(new Date());
-    }, []),
+    }, [])
   );
 
   const onPressBack = useCallback(() => {
@@ -35,15 +37,15 @@ const useNotificationsScreen = (): UseNotificationsScreenReturn => {
 
   const onPressMarkAllRead = useCallback(() => {
     setNotifications((current) =>
-      current.map((notification) => ({ ...notification, unread: false })),
+      current.map((notification) => ({ ...notification, unread: false }))
     );
   }, []);
 
   const onPressNotification = useCallback((id: string) => {
     setNotifications((current) =>
       current.map((notification) =>
-        notification.id === id ? { ...notification, unread: false } : notification,
-      ),
+        notification.id === id ? { ...notification, unread: false } : notification
+      )
     );
   }, []);
 
@@ -54,18 +56,18 @@ const useNotificationsScreen = (): UseNotificationsScreenReturn => {
         label: group.label,
         notifications: group.notifications.map((notification) => ({
           ...notification,
-          timeLabel: toTimeLabel(notification, now),
+          timeLabel: toTimeLabel(notification, now)
         })),
-        onPressNotification,
+        onPressNotification
       })),
     // `onPressNotification` is stable (useCallback with no deps), so it never re-runs this memo.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [notifications, now],
+    [notifications, now]
   );
 
   const hasUnread = useMemo(
     () => notifications.some((notification) => notification.unread),
-    [notifications],
+    [notifications]
   );
 
   const markAllReadAccessibilityState = useMemo(() => ({ disabled: !hasUnread }), [hasUnread]);
@@ -76,7 +78,7 @@ const useNotificationsScreen = (): UseNotificationsScreenReturn => {
     markAllReadAccessibilityState,
     onPressBack,
     onPressMarkAllRead,
-    onPressNotification,
+    onPressNotification
   };
 };
 

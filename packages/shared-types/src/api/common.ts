@@ -1,7 +1,7 @@
 /** Error body returned by every backend endpoint on failure. */
 export interface ApiErrorResponse {
   error: {
-    /** Stable code the apps can branch on, e.g. "UNAUTHORIZED". */
+    /** Stable machine-readable code the apps can branch on (e.g. "invalid_credentials"). */
     code: string;
     /** Message safe to show to the user. */
     message: string;
@@ -11,5 +11,5 @@ export interface ApiErrorResponse {
 
 /** API response shape for the health check (GET /api/health). */
 export interface HealthResponse {
-  status: "ok";
+  status: 'ok';
 }

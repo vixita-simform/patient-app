@@ -1,4 +1,4 @@
-import type { DoseStatus, MedicineTint, StatusBadgeTone } from "../../constants";
+import type { DoseStatus, MedicineTint, StatusBadgeTone } from '../../constants';
 
 /** One chip in the "Today's doses" strip. */
 export interface DoseEntry {

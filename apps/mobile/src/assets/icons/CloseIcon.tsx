@@ -1,9 +1,9 @@
-import type { ReactElement } from "react";
-import Svg, { Path, type SvgProps } from "react-native-svg";
+import type { ReactElement } from 'react';
+import Svg, { Path, type SvgProps } from 'react-native-svg';
 
-import { theme } from "../../theme";
+import { theme } from '../../theme';
 
-interface CloseIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
+interface CloseIconProps extends Omit<SvgProps, 'width' | 'height' | 'color'> {
   size?: number;
   color?: string;
   strokeWidth?: number;

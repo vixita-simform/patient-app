@@ -1,6 +1,6 @@
-import type { AppointmentTab } from "../../constants";
-import type { AppointmentCardProps } from "./components";
-import type { SegmentedTabItem } from "../../components";
+import type { AppointmentTab } from '../../constants';
+import type { AppointmentCardProps } from './components';
+import type { SegmentedTabItem } from '../../components';
 
 /** One row for the appointments FlatList. */
 export type AppointmentListItem = AppointmentCardProps & { id: string };

@@ -1,6 +1,8 @@
-import type { ComponentType } from "react";
+import type { ComponentType } from 'react';
 
-export type VitalTone = "coral" | "blue" | "amber";
+import type { VitalTone } from '../../../../constants';
+
+export type { VitalTone };
 
 export interface VitalTileProps {
   Icon: ComponentType<{ size?: number; color?: string }>;

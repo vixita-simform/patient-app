@@ -1,11 +1,11 @@
-import type { ScaledSize } from "react-native";
-import { Dimensions, Platform } from "react-native";
+import type { ScaledSize } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 /**
  * Get the width and height of the device screen.
  * @returns {ScaledSize} - the width and height of the device screen.
  */
-let { width, height }: ScaledSize = Dimensions.get("window");
+let { width, height }: ScaledSize = Dimensions.get('window');
 
 if (width > height) {
   [width, height] = [height, width];
@@ -24,7 +24,7 @@ const baseHeight: number = height / guidelineBaseHeight;
 let baseSize: number = (baseWidth + baseHeight) / 2;
 
 // Consider 1.2 as a threshold for identifying tablets based on analyzing multiple devices.
-const isTablet: boolean = (Platform.OS === "ios" && Platform.isPad) || baseSize > 1.2;
+const isTablet: boolean = (Platform.OS === 'ios' && Platform.isPad) || baseSize > 1.2;
 
 // Adjust the base size based on whether the device is identified as a tablet or not.
 baseSize = (baseWidth + baseHeight) * (isTablet ? 0.4 : 0.5);
@@ -54,11 +54,11 @@ interface GlobalMetricsType {
  * @type {GlobalMetricsType}
  */
 const globalMetrics: GlobalMetricsType = {
-  isAndroid: Platform.OS === "android",
-  isIos: Platform.OS === "ios",
-  isPad: Platform.OS === "ios" && Platform.isPad,
+  isAndroid: Platform.OS === 'android',
+  isIos: Platform.OS === 'ios',
+  isPad: Platform.OS === 'ios' && Platform.isPad,
   isTV: Platform.isTV,
-  isWeb: Platform.OS === "web",
+  isWeb: Platform.OS === 'web'
 };
 
 export { globalMetrics, height, scale, width };

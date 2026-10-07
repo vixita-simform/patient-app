@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
-import type { ScreenHeaderVariant } from "../../constants";
+import type { ScreenHeaderVariant } from '../../constants';
 
 export interface ScreenHeaderProps {
   title: string;

@@ -1,4 +1,4 @@
-/** e.g. "Dr. Rohan Mehta" -> "RM"; ignores honorifics like "Dr." */
+/** e.g. "Dr. Test Test" -> "TT"; ignores honorifics like "Dr." */
 export function getInitials(name: string): string {
   return name
     .split(/\s+/)

@@ -7,9 +7,9 @@ exports[`CustomButton matches the snapshot for the fill variant 1`] = `
     accessibilityRole="button"
     accessibilityState={
       {
-        "busy": undefined,
+        "busy": false,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }
@@ -72,9 +72,9 @@ exports[`CustomButton matches the snapshot for the line variant 1`] = `
     accessibilityRole="button"
     accessibilityState={
       {
-        "busy": undefined,
+        "busy": false,
         "checked": undefined,
-        "disabled": undefined,
+        "disabled": false,
         "expanded": undefined,
         "selected": undefined,
       }

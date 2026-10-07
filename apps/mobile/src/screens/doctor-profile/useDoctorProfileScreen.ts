@@ -1,11 +1,11 @@
-import { router, useLocalSearchParams } from "expo-router";
-import { useCallback, useMemo } from "react";
-import type { ViewStyle } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { router, useLocalSearchParams } from 'expo-router';
+import { useCallback, useMemo } from 'react';
+import type { ViewStyle } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { findADoctorDummyData, getDoctorProfileDetails, STACK_ROUTES } from "../../constants";
-import { scale } from "../../theme";
-import type { DoctorProfileData, UseDoctorProfileScreenReturn } from "./DoctorProfileScreenTypes";
+import { findADoctorDummyData, getDoctorProfileDetails, STACK_ROUTES } from '../../constants';
+import { scale } from '../../theme';
+import type { DoctorProfileData, UseDoctorProfileScreenReturn } from './DoctorProfileScreenTypes';
 
 /** Footer padding kept above the bottom safe-area inset. */
 const FOOTER_BOTTOM_BASE = 12;
@@ -30,7 +30,7 @@ export default function useDoctorProfileScreen(): UseDoctorProfileScreenReturn {
 
   const footerInsetStyle = useMemo<ViewStyle>(
     () => ({ paddingBottom: scale(FOOTER_BOTTOM_BASE) + bottom }),
-    [bottom],
+    [bottom]
   );
 
   const onBackPress = useCallback(() => {
@@ -41,13 +41,16 @@ export default function useDoctorProfileScreen(): UseDoctorProfileScreenReturn {
     }
   }, []);
 
-  // TODO: favourites flow not built yet.
+  // TODO: favourite flow not built yet.
   const onFavouritePress = useCallback(() => {}, []);
   // TODO: video consult flow not built yet.
   const onVideoPress = useCallback(() => {}, []);
   const onBookPress = useCallback(() => {
+    if (!id || !doctor) {
+      return;
+    }
     router.push({ pathname: STACK_ROUTES.bookAppointment, params: { id } });
-  }, [id]);
+  }, [id, doctor]);
 
   return {
     doctor,
@@ -58,6 +61,6 @@ export default function useDoctorProfileScreen(): UseDoctorProfileScreenReturn {
     onBackPress,
     onFavouritePress,
     onVideoPress,
-    onBookPress,
+    onBookPress
   };
 }

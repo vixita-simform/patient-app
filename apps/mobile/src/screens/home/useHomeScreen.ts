@@ -1,17 +1,36 @@
-import { router } from "expo-router";
-import { useCallback, useMemo } from "react";
-import { Linking } from "react-native";
+import { router } from 'expo-router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Linking } from 'react-native';
 
 import {
   EMERGENCY_AMBULANCE_NUMBER,
-  homeScreenDummyData,
   LATEST_LAB_REPORT_ID,
   STACK_ROUTES,
-  Strings,
-} from "../../constants";
-import type { HomeDashboardResponse } from "../../types";
-import { formatDate, formatTime, getInitials, isToday } from "../../utils";
-import type { HomeViewData, UseHomeScreenReturn } from "./HomeScreenTypes";
+  Strings
+} from '../../constants';
+import { usePatient } from '../../context';
+import { getHomeDashboard } from '../../services';
+import type { HomeDashboardResponse, PatientSummary } from '../../types';
+import { formatDate, formatTime, getAuthToken, getInitials, isToday } from '../../utils';
+import type { HomeViewData, HomeVital, UseHomeScreenReturn } from './HomeScreenTypes';
+
+/** Shown blank until the stored patient is restored. */
+const SIGNED_OUT_PATIENT: PatientSummary = Object.freeze({ id: '', firstName: '', lastName: '' });
+
+/** Shown for a vital the patient has no reading for yet. */
+const NO_VITAL: HomeVital = Object.freeze({ value: Strings.HomeScreen.noVital });
+
+/** What Home shows before (or without) a dashboard: no token, appointment or readings. */
+const EMPTY_DASHBOARD: Omit<HomeDashboardResponse, 'patient'> = Object.freeze({
+  opdToken: null,
+  nextAppointment: null,
+  vitals: Object.freeze({
+    heartRate: null,
+    bloodPressure: null,
+    bloodSugar: null,
+    recordedAt: null
+  })
+});
 
 /**
  * Maps the dashboard API response to the props the Home screen renders.
@@ -22,57 +41,89 @@ export const toHomeViewData = ({
   patient,
   opdToken,
   nextAppointment,
-  vitals,
+  vitals
 }: HomeDashboardResponse): HomeViewData => {
   const fullName = `${patient.firstName} ${patient.lastName}`;
 
   return {
     user: { initials: getInitials(fullName), name: fullName },
-    token: {
-      department: opdToken.department,
-      tokenNumber: opdToken.tokenNumber,
-      servingNumber: opdToken.nowServing,
-      patientsAhead: opdToken.patientsAhead,
-      waitMinutes: opdToken.estimatedWaitMinutes,
-      progress: opdToken.queueProgress,
-    },
+    token: opdToken
+      ? {
+          department: opdToken.department,
+          tokenNumber: opdToken.tokenNumber,
+          servingNumber: opdToken.nowServing,
+          patientsAhead: opdToken.patientsAhead,
+          waitMinutes: opdToken.estimatedWaitMinutes,
+          progress: opdToken.queueProgress
+        }
+      : null,
     appointment: nextAppointment
       ? {
           initials: getInitials(nextAppointment.doctor.name),
           doctorName: nextAppointment.doctor.name,
-          detail: `${nextAppointment.doctor.specialty} · ${nextAppointment.room}`,
-          badgeLabel: isToday(nextAppointment.scheduledAt)
-            ? Strings.Common.today
-            : undefined,
+          detail: `${nextAppointment.doctor.specialty}${Strings.Common.dotSeparator}${nextAppointment.room}`,
+          badgeLabel: isToday(nextAppointment.scheduledAt) ? Strings.Common.today : undefined,
           date: formatDate(nextAppointment.scheduledAt),
-          time: formatTime(nextAppointment.scheduledAt),
+          time: formatTime(nextAppointment.scheduledAt)
         }
       : null,
     vitals: {
-      heart: {
-        value: String(vitals.heartRate.value),
-        unit: vitals.heartRate.unit,
-      },
+      heart: vitals.heartRate
+        ? { value: String(vitals.heartRate.value), unit: vitals.heartRate.unit }
+        : NO_VITAL,
       // The design shows blood pressure without its unit
-      bloodPressure: {
-        value: `${vitals.bloodPressure.systolic}/${vitals.bloodPressure.diastolic}`,
-        unit: undefined,
-      },
-      sugar: {
-        value: String(vitals.bloodSugar.value),
-        unit: vitals.bloodSugar.unit,
-      },
-    },
+      bloodPressure: vitals.bloodPressure
+        ? {
+            value: `${vitals.bloodPressure.systolic}/${vitals.bloodPressure.diastolic}`,
+            unit: undefined
+          }
+        : NO_VITAL,
+      sugar: vitals.bloodSugar
+        ? { value: String(vitals.bloodSugar.value), unit: vitals.bloodSugar.unit }
+        : NO_VITAL
+    }
   };
 };
 
 /**
- * Handlers and data for the Home screen. Data comes from the dummy dashboard
- * response until the API is wired up.
+ * Handlers and data for the Home screen. The patient comes from the sign-in response;
+ * the token, next appointment and vitals are loaded from the dashboard endpoint.
  * @returns {UseHomeScreenReturn} Screen data and press handlers.
  */
 const useHomeScreen = (): UseHomeScreenReturn => {
-  const data = useMemo(() => toHomeViewData(homeScreenDummyData), []);
+  const { patient } = usePatient();
+  const [dashboard, setDashboard] = useState<HomeDashboardResponse | null>(null);
+
+  useEffect(() => {
+    let isActive = true;
+    const load = async (): Promise<void> => {
+      try {
+        const token = await getAuthToken();
+        if (!token) {
+          return;
+        }
+        const response = await getHomeDashboard(token);
+        if (isActive) {
+          setDashboard(response);
+        }
+      } catch {
+        // Keep showing the empty state; the next visit to Home tries again.
+      }
+    };
+    load();
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  const data = useMemo(
+    () =>
+      toHomeViewData({
+        ...(dashboard ?? EMPTY_DASHBOARD),
+        patient: patient ?? dashboard?.patient ?? SIGNED_OUT_PATIENT
+      }),
+    [dashboard, patient]
+  );
 
   const onPressBookVisit = useCallback(() => {
     router.push(STACK_ROUTES.findADoctor);
@@ -90,7 +141,7 @@ const useHomeScreen = (): UseHomeScreenReturn => {
   const onPressLabReports = useCallback(() => {
     router.push({
       pathname: STACK_ROUTES.labReportDetail,
-      params: { id: LATEST_LAB_REPORT_ID },
+      params: { id: LATEST_LAB_REPORT_ID }
     });
   }, []);
   const onPressMedicines = useCallback(() => {
@@ -113,7 +164,7 @@ const useHomeScreen = (): UseHomeScreenReturn => {
     onPressCallAmbulance,
     onPressSeeAll,
     onPressHistory,
-    onPressAppointment,
+    onPressAppointment
   };
 };
 

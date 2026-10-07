@@ -1,2 +1,2 @@
-export { default as NotificationGroupCard } from "./NotificationGroupCard";
-export type { NotificationGroupCardProps } from "./NotificationGroupCardTypes";
+export { default as NotificationGroupCard } from './NotificationGroupCard';
+export type { NotificationGroupCardProps } from './NotificationGroupCardTypes';

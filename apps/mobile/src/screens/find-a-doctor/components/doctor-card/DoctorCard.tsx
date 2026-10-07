@@ -1,17 +1,17 @@
-import { type ReactElement, useCallback } from "react";
-import { Pressable, View } from "react-native";
+import { type ReactElement, useCallback } from 'react';
+import { Pressable, View } from 'react-native';
 
-import { StarIcon } from "../../../../assets/icons";
-import { Avatar, CustomText } from "../../../../components";
-import { Strings } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import DoctorCardStyles from "./DoctorCardStyles";
-import type { DoctorCardProps } from "./DoctorCardTypes";
+import { StarIcon } from '../../../../assets/icons';
+import { Avatar, CustomText } from '../../../../components';
+import { Strings } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import DoctorCardStyles from './DoctorCardStyles';
+import type { DoctorCardProps } from './DoctorCardTypes';
 
 /**
  * Doctor list card: avatar, name, specialty, rating and next slot with a Book button.
- * The card body and the Book button are sibling pressables, so screen readers reach both.
+ * The card body and the Book button are sibling pressable, so screen readers reach both.
  * @param {DoctorCardProps} props - doctor details and press handlers.
  * @returns {ReactElement} A React Element.
  */
@@ -27,7 +27,7 @@ const DoctorCard = ({
   nextSlot,
   availableToday,
   onPress,
-  onBookPress,
+  onBookPress
 }: DoctorCardProps): ReactElement => {
   const { styles, theme } = useTheme(DoctorCardStyles);
   const handlePress = useCallback(() => onPress(id), [id, onPress]);
@@ -75,9 +75,7 @@ const DoctorCard = ({
           style={availableToday ? styles.btnPrimary : styles.btnOutline}
           onPress={handleBookPress}
         >
-          <CustomText
-            style={availableToday ? styles.btnTextPrimary : styles.btnTextOutline}
-          >
+          <CustomText style={availableToday ? styles.btnTextPrimary : styles.btnTextOutline}>
             {Strings.DoctorCard.book}
           </CustomText>
         </Pressable>

@@ -1,12 +1,12 @@
-import type { ReactElement } from "react";
-import { Fragment } from "react";
-import { View } from "react-native";
+import type { ReactElement } from 'react';
+import { Fragment } from 'react';
+import { View } from 'react-native';
 
-import { CustomText } from "../../../../components";
-import { useTheme } from "../../../../hooks";
-import { NotificationRow } from "../notification-row";
-import NotificationGroupCardStyles from "./NotificationGroupCardStyles";
-import type { NotificationGroupCardProps } from "./NotificationGroupCardTypes";
+import { CustomText } from '../../../../components';
+import { useTheme } from '../../../../hooks';
+import { NotificationRow } from '../notification-row';
+import NotificationGroupCardStyles from './NotificationGroupCardStyles';
+import type { NotificationGroupCardProps } from './NotificationGroupCardTypes';
 
 /**
  * One recency group: its heading over a card of notification rows split by dividers.
@@ -16,7 +16,7 @@ import type { NotificationGroupCardProps } from "./NotificationGroupCardTypes";
 const NotificationGroupCard = ({
   label,
   notifications,
-  onPressNotification,
+  onPressNotification
 }: NotificationGroupCardProps): ReactElement => {
   const { styles } = useTheme(NotificationGroupCardStyles);
 

@@ -1,4 +1,4 @@
-import type { CountryCode } from "../../../../constants";
+import type { CountryCode } from '../../../../constants';
 
 export interface CountryCodePickerProps {
   countries: readonly CountryCode[];

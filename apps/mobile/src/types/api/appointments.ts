@@ -1,4 +1,4 @@
-import type { AppointmentStatus, AppointmentTab, VisitMode } from "../../constants";
+import type { AppointmentStatus, AppointmentTab, VisitMode } from '../../constants';
 
 /** One appointment row as rendered on My Appointments. */
 export interface AppointmentSummary {

@@ -1,15 +1,22 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
-import { ScrollView, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
+import { ScrollView, View } from 'react-native';
 
-import { CalendarIcon } from "../../assets/icons";
-import { CalendarModal, CustomButton, FormField, Screen, ScreenHeader, TextField } from "../../components";
-import { Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import { ChipGroup, EditableAvatar, TagList } from "./components";
-import PersonalAndMedicalInfoScreenStyles from "./PersonalAndMedicalInfoScreenStyles";
-import usePersonalAndMedicalInfoScreen from "./usePersonalAndMedicalInfoScreen";
+import { CalendarIcon } from '../../assets/icons';
+import {
+  CalendarModal,
+  CustomButton,
+  FormField,
+  Screen,
+  ScreenHeader,
+  TextField
+} from '../../components';
+import { Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { ChipGroup, EditableAvatar, TagList } from './components';
+import PersonalAndMedicalInfoScreenStyles from './PersonalAndMedicalInfoScreenStyles';
+import usePersonalAndMedicalInfoScreen from './usePersonalAndMedicalInfoScreen';
 
 const COPY = Strings.PersonalAndMedicalInfoScreen;
 
@@ -24,7 +31,7 @@ export default function PersonalAndMedicalInfoScreen(): ReactElement {
   const form = usePersonalAndMedicalInfoScreen();
   const calendarIcon = useMemo(
     () => <CalendarIcon color={Colors[theme].muted} size={scale(20)} />,
-    [theme],
+    [theme]
   );
 
   return (

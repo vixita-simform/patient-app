@@ -1,19 +1,19 @@
-import type { ReactElement } from "react";
-import { StyleSheet, View } from "react-native";
+import type { ReactElement } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { CheckIcon, ClockIcon } from "../../../../assets/icons";
-import { CustomText } from "../../../../components";
-import { DOSE_STATUS } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import DoseTimelineStyles from "./DoseTimelineStyles";
-import type { DoseTimelineProps } from "./DoseTimelineTypes";
+import { CheckIcon, ClockIcon } from '../../../../assets/icons';
+import { CustomText } from '../../../../components';
+import { DOSE_STATUS } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import DoseTimelineStyles from './DoseTimelineStyles';
+import type { DoseTimelineProps } from './DoseTimelineTypes';
 
 /** Maps a dose status to its chip/text style keys. */
 const DOSE_STYLE_KEY = Object.freeze({
-  [DOSE_STATUS.done]: { chip: "doseDone", text: "doseTimeDone" },
-  [DOSE_STATUS.next]: { chip: "doseNext", text: "doseTimeNext" },
-  [DOSE_STATUS.pending]: { chip: undefined, text: undefined },
+  [DOSE_STATUS.done]: { chip: 'doseDone', text: 'doseTimeDone' },
+  [DOSE_STATUS.next]: { chip: 'doseNext', text: 'doseTimeNext' },
+  [DOSE_STATUS.pending]: { chip: undefined, text: undefined }
 } as const);
 
 /**
@@ -44,7 +44,7 @@ const DoseTimeline = ({ doses }: DoseTimelineProps): ReactElement => {
             key={dose.id}
             style={StyleSheet.flatten([
               styles.dose,
-              styleKey.chip ? styles[styleKey.chip] : undefined,
+              styleKey.chip ? styles[styleKey.chip] : undefined
             ])}
           >
             {isDone ? (
@@ -55,7 +55,7 @@ const DoseTimeline = ({ doses }: DoseTimelineProps): ReactElement => {
             <CustomText
               style={StyleSheet.flatten([
                 styles.doseTime,
-                styleKey.text ? styles[styleKey.text] : undefined,
+                styleKey.text ? styles[styleKey.text] : undefined
               ])}
             >
               {dose.timeLabel}

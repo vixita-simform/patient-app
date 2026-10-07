@@ -1,5 +1,5 @@
-export { default as AppointmentCard } from "./appointment-card/AppointmentCard";
+export { default as AppointmentCard } from './appointment-card/AppointmentCard';
 export type {
   AppointmentActionItem,
-  AppointmentCardProps,
-} from "./appointment-card/AppointmentCardTypes";
+  AppointmentCardProps
+} from './appointment-card/AppointmentCardTypes';

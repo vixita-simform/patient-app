@@ -1,14 +1,14 @@
-import type { ReactElement } from "react";
-import { ScrollView, View } from "react-native";
+import type { ReactElement } from 'react';
+import { ScrollView, View } from 'react-native';
 
-import { SearchIcon } from "../../assets/icons";
-import { CustomText, IconButton, Screen, ScreenHeader } from "../../components";
-import { SCREEN_HEADER_VARIANT, Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import { RecordGroupCard, RecordSummaryCard } from "./components";
-import RecordsScreenStyles from "./RecordsScreenStyles";
-import useRecordsScreen from "./useRecordsScreen";
+import { SearchIcon } from '../../assets/icons';
+import { CustomText, IconButton, Screen, ScreenHeader } from '../../components';
+import { SCREEN_HEADER_VARIANT, Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { RecordGroupCard, RecordSummaryCard } from './components';
+import RecordsScreenStyles from './RecordsScreenStyles';
+import useRecordsScreen from './useRecordsScreen';
 
 /**
  * Medical Records tab: header, a green summary

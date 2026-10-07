@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, scale, type ThemeMode } from "../../theme";
+import { Colors, scale, type ThemeMode } from '../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
@@ -10,20 +10,20 @@ const styles = (theme: ThemeMode) =>
       backgroundColor: Colors[theme].card,
       borderWidth: scale(1),
       borderColor: Colors[theme].line,
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: scale(12),
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: scale(12)
     },
     iconBtnFill: {
       backgroundColor: Colors[theme].green,
-      borderColor: Colors[theme].green,
+      borderColor: Colors[theme].green
     },
     pressed: {
-      opacity: 0.7,
+      opacity: 0.7
     },
     disabled: {
-      opacity: 0.5,
-    },
+      opacity: 0.5
+    }
   });
 
 export default styles;

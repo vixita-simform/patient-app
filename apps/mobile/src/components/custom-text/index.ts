@@ -1,2 +1,2 @@
-export { default as CustomText } from "./CustomText";
-export type { CustomTextType } from "./CustomTextTypes";
+export { default as CustomText } from './CustomText';
+export type { CustomTextType } from './CustomTextTypes';

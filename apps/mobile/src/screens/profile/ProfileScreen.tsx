@@ -1,14 +1,14 @@
-import type { ReactElement } from "react";
-import { ScrollView, View } from "react-native";
+import type { ReactElement } from 'react';
+import { ScrollView, View } from 'react-native';
 
-import { LogoutIcon, SettingsIcon } from "../../assets/icons";
-import { CustomButton, IconButton, Screen, ScreenHeader } from "../../components";
-import { SCREEN_HEADER_VARIANT, Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import { ProfileIdentityCard, ProfileMenuRow, ProfileStatsStrip } from "./components";
-import ProfileScreenStyles from "./ProfileScreenStyles";
-import useProfileScreen from "./useProfileScreen";
+import { LogoutIcon, SettingsIcon } from '../../assets/icons';
+import { CustomButton, IconButton, Screen, ScreenHeader } from '../../components';
+import { SCREEN_HEADER_VARIANT, Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { ProfileIdentityCard, ProfileMenuRow, ProfileStatsStrip } from './components';
+import ProfileScreenStyles from './ProfileScreenStyles';
+import useProfileScreen from './useProfileScreen';
 
 /**
  * Profile tab: header with settings button, identity card, vitals strip,
@@ -18,8 +18,15 @@ import useProfileScreen from "./useProfileScreen";
  */
 export default function ProfileScreen(): ReactElement {
   const { styles, theme } = useTheme(ProfileScreenStyles);
-  const { profile, stats, menuItems, onSettingsPress, onEditPress, onMenuItemPress, onLogoutPress } =
-    useProfileScreen();
+  const {
+    profile,
+    stats,
+    menuItems,
+    onSettingsPress,
+    onEditPress,
+    onMenuItemPress,
+    onLogoutPress
+  } = useProfileScreen();
 
   return (
     <Screen>

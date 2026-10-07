@@ -1,38 +1,38 @@
-import { screen, userEvent } from "@testing-library/react-native";
-import { StyleSheet } from "react-native";
-import type { ReactTestRendererJSON } from "react-test-renderer";
+import { screen, userEvent } from '@testing-library/react-native';
+import { StyleSheet } from 'react-native';
+import type { ReactTestRendererJSON } from 'react-test-renderer';
 
-import { RECORD_TRAILING_KIND, RECORD_TYPE, STATUS_BADGE_TONE } from "../../../../src/constants";
-import { RecordGroupCard } from "../../../../src/screens/records/components";
-import type { RecordRowData } from "../../../../src/screens/records/components";
-import { RenderWrapper } from "../../../Wrapper";
+import { RECORD_TRAILING_KIND, RECORD_TYPE, STATUS_BADGE_TONE } from '../../../../src/constants';
+import { RecordGroupCard } from '../../../../src/screens/records/components';
+import type { RecordRowData } from '../../../../src/screens/records/components';
+import { RenderWrapper } from '../../../Wrapper';
 
 /** Shared record rows: one per type, mixing badge and chevron trailing items. */
 const LAB_REPORT: RecordRowData = {
-  id: "rec_lab",
+  id: 'rec_lab',
   type: RECORD_TYPE.labReport,
-  title: "Lipid profile",
-  subtitle: "Pathology lab · 12 Sep",
-  trailing: { kind: RECORD_TRAILING_KIND.badge, label: "Normal", tone: STATUS_BADGE_TONE.green },
-  pressable: true,
+  title: 'Lipid profile',
+  subtitle: 'Pathology lab · 12 Sep',
+  trailing: { kind: RECORD_TRAILING_KIND.badge, label: 'Normal', tone: STATUS_BADGE_TONE.green },
+  pressable: true
 };
 
 const SCAN: RecordRowData = {
-  id: "rec_scan",
+  id: 'rec_scan',
   type: RECORD_TYPE.scan,
-  title: "ECG report",
-  subtitle: "Cardiology · 10 Sep",
+  title: 'ECG report',
+  subtitle: 'Cardiology · 10 Sep',
   trailing: { kind: RECORD_TRAILING_KIND.chevron },
-  pressable: false,
+  pressable: false
 };
 
 const PRESCRIPTION: RecordRowData = {
-  id: "rec_rx",
+  id: 'rec_rx',
   type: RECORD_TYPE.prescription,
-  title: "Prescription",
-  subtitle: "Dr. Rohan Mehta · 9 Sep",
+  title: 'Prescription',
+  subtitle: 'Dr. Rohan Mehta · 9 Sep',
   trailing: { kind: RECORD_TRAILING_KIND.chevron },
-  pressable: false,
+  pressable: false
 };
 
 /** Direct children of the card View (the first bordered node below the test providers). */
@@ -45,8 +45,8 @@ const cardChildren = (): ReactTestRendererJSON[] => {
   return (node?.children ?? []) as ReactTestRendererJSON[];
 };
 
-describe("RecordGroupCard", () => {
-  it("places a divider between rows only", async () => {
+describe('RecordGroupCard', () => {
+  it('places a divider between rows only', async () => {
     await RenderWrapper(<RecordGroupCard records={[LAB_REPORT, SCAN, PRESCRIPTION]} />);
     const children = cardChildren();
 
@@ -57,24 +57,24 @@ describe("RecordGroupCard", () => {
       true,
       false,
       true,
-      false,
+      false
     ]);
   });
 
-  it("renders a single row without a divider", async () => {
+  it('renders a single row without a divider', async () => {
     await RenderWrapper(<RecordGroupCard records={[SCAN]} />);
     expect(cardChildren()).toHaveLength(1);
   });
 
-  it("passes onRecordPress through to lab-report rows", async () => {
+  it('passes onRecordPress through to lab-report rows', async () => {
     const onRecordPress = jest.fn();
     const user = userEvent.setup();
     await RenderWrapper(
-      <RecordGroupCard records={[LAB_REPORT, SCAN]} onRecordPress={onRecordPress} />,
+      <RecordGroupCard records={[LAB_REPORT, SCAN]} onRecordPress={onRecordPress} />
     );
-    expect(screen.getAllByRole("button")).toHaveLength(1);
+    expect(screen.getAllByRole('button')).toHaveLength(1);
 
-    await user.press(screen.getByRole("button", { name: LAB_REPORT.title }));
+    await user.press(screen.getByRole('button', { name: LAB_REPORT.title }));
     expect(onRecordPress).toHaveBeenCalledWith(LAB_REPORT.id);
   });
 });

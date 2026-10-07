@@ -1,14 +1,14 @@
-import type { ReactElement } from "react";
-import { useCallback, useMemo } from "react";
-import type { PressableStateCallbackType, StyleProp, ViewStyle } from "react-native";
-import { Pressable, StyleSheet, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useCallback, useMemo } from 'react';
+import type { PressableStateCallbackType, StyleProp, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import { ChevronRightIcon } from "../../../../assets/icons";
-import { CustomText, IconBox } from "../../../../components";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import ProfileMenuRowStyles from "./ProfileMenuRowStyles";
-import type { ProfileMenuRowProps } from "./ProfileMenuRowTypes";
+import { ChevronRightIcon } from '../../../../assets/icons';
+import { CustomText, IconBox } from '../../../../components';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import ProfileMenuRowStyles from './ProfileMenuRowStyles';
+import type { ProfileMenuRowProps } from './ProfileMenuRowTypes';
 
 /**
  * Menu row: tinted icon box, title, optional count badge and a chevron.
@@ -23,7 +23,7 @@ const ProfileMenuRow = ({
   badge,
   isDivided,
   isEnabled = true,
-  onPress,
+  onPress
 }: ProfileMenuRowProps): ReactElement => {
   const { styles, theme } = useTheme(ProfileMenuRowStyles);
   const isDisabled = !isEnabled || !onPress;
@@ -36,9 +36,9 @@ const ProfileMenuRow = ({
         styles.menuItem,
         isDivided && styles.menuItemDivider,
         pressed && styles.pressed,
-        isDisabled && styles.disabled,
+        isDisabled && styles.disabled
       ]),
-    [styles, isDivided, isDisabled],
+    [styles, isDivided, isDisabled]
   );
 
   const handlePress = useCallback((): void => {

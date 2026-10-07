@@ -1,16 +1,16 @@
-import type { ReactElement } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { FlatList, Modal, Pressable, StyleSheet, View } from "react-native";
-import type { ListRenderItem } from "react-native";
+import type { ReactElement } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { FlatList, Modal, Pressable, StyleSheet, View } from 'react-native';
+import type { ListRenderItem } from 'react-native';
 
-import { ChevronDownIcon, CheckIcon, CloseIcon } from "../../../../assets/icons";
-import { CustomText } from "../../../../components";
-import { Strings } from "../../../../constants";
-import type { CountryCode } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import CountryCodePickerStyles from "./CountryCodePickerStyles";
-import type { CountryCodePickerProps } from "./CountryCodePickerTypes";
+import { ChevronDownIcon, CheckIcon, CloseIcon } from '../../../../assets/icons';
+import { CustomText } from '../../../../components';
+import { Strings } from '../../../../constants';
+import type { CountryCode } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import CountryCodePickerStyles from './CountryCodePickerStyles';
+import type { CountryCodePickerProps } from './CountryCodePickerTypes';
 
 const COPY = Strings.SignInScreen;
 
@@ -24,7 +24,7 @@ const keyExtractor = (item: CountryCode): string => item.code;
 const CountryCodePicker = ({
   countries,
   selected,
-  onSelect,
+  onSelect
 }: CountryCodePickerProps): ReactElement => {
   const { styles, theme } = useTheme(CountryCodePickerStyles);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,7 +59,7 @@ const CountryCodePicker = ({
         </Pressable>
       );
     },
-    [selectedCode, styles, theme],
+    [selectedCode, styles, theme]
   );
 
   return (

@@ -1,13 +1,13 @@
-import type { ReactElement } from "react";
-import { useCallback, useMemo, useState } from "react";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 
-import { useTheme } from "../../hooks";
-import { Colors } from "../../theme";
-import { CustomText } from "../custom-text";
-import { FormField } from "../form-field";
-import TextFieldStyles from "./TextFieldStyles";
-import type { TextFieldProps } from "./TextFieldTypes";
+import { useTheme } from '../../hooks';
+import { Colors } from '../../theme';
+import { CustomText } from '../custom-text';
+import { FormField } from '../form-field';
+import TextFieldStyles from './TextFieldStyles';
+import type { TextFieldProps } from './TextFieldTypes';
 
 /**
  * Labelled single-line text field with focus/error borders, optional leading content
@@ -26,12 +26,14 @@ const TextField = ({
   maxLength,
   keyboardType,
   autoCapitalize,
+  autoComplete,
+  secureTextEntry,
   error,
   leading,
   trailingIcon,
   trailingText,
   onBlur,
-  onSubmitEditing,
+  onSubmitEditing
 }: TextFieldProps): ReactElement => {
   const { styles, theme } = useTheme(TextFieldStyles);
   const [isFocused, setIsFocused] = useState(false);
@@ -39,12 +41,20 @@ const TextField = ({
   const hasError = Boolean(error);
   // Error border wins over focus: it is listed last.
   const inputStyle = useMemo(
-    () => StyleSheet.flatten([styles.input, isFocused && styles.inputFocus, hasError && styles.inputError]),
-    [styles, isFocused, hasError],
+    () =>
+      StyleSheet.flatten([
+        styles.input,
+        isFocused && styles.inputFocus,
+        hasError && styles.inputError
+      ]),
+    [styles, isFocused, hasError]
   );
   const textInputStyle = useMemo(
-    () => (isPressable ? StyleSheet.flatten([styles.textInput, styles.noPointerEvents]) : styles.textInput),
-    [styles, isPressable],
+    () =>
+      isPressable
+        ? StyleSheet.flatten([styles.textInput, styles.noPointerEvents])
+        : styles.textInput,
+    [styles, isPressable]
   );
   const accessibilityValue = useMemo(() => ({ text: value }), [value]);
 
@@ -64,14 +74,16 @@ const TextField = ({
         accessibilityLabel={isPressable ? undefined : accessibilityLabel}
         accessible={!isPressable}
         autoCapitalize={autoCapitalize}
+        autoComplete={autoComplete}
         autoCorrect={false}
         editable={!isPressable}
-        importantForAccessibility={isPressable ? "no-hide-descendants" : "auto"}
+        importantForAccessibility={isPressable ? 'no-hide-descendants' : 'auto'}
         keyboardType={keyboardType}
         maxLength={maxLength}
         placeholder={placeholder}
         placeholderTextColor={Colors[theme].muted}
         returnKeyType="done"
+        secureTextEntry={secureTextEntry}
         style={textInputStyle}
         value={value}
         onBlur={handleBlur}

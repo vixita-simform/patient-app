@@ -1,13 +1,13 @@
-import type { ReactElement } from "react";
-import { View } from "react-native";
+import type { ReactElement } from 'react';
+import { View } from 'react-native';
 
-import { EditIcon } from "../../../../assets/icons";
-import { Avatar, CustomText, IconButton } from "../../../../components";
-import { AVATAR_SIZE, AVATAR_TONE, Strings } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import ProfileIdentityCardStyles from "./ProfileIdentityCardStyles";
-import type { ProfileIdentityCardProps } from "./ProfileIdentityCardTypes";
+import { EditIcon } from '../../../../assets/icons';
+import { Avatar, CustomText, IconButton } from '../../../../components';
+import { AVATAR_SIZE, AVATAR_TONE, Strings } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import ProfileIdentityCardStyles from './ProfileIdentityCardStyles';
+import type { ProfileIdentityCardProps } from './ProfileIdentityCardTypes';
 
 /**
  * Card with the patient's initials avatar, name, UHID, phone and an edit button.
@@ -19,7 +19,7 @@ const ProfileIdentityCard = ({
   name,
   uhid,
   phone,
-  onEditPress,
+  onEditPress
 }: ProfileIdentityCardProps): ReactElement => {
   const { styles, theme } = useTheme(ProfileIdentityCardStyles);
 
@@ -28,7 +28,11 @@ const ProfileIdentityCard = ({
       <Avatar initials={initials} size={AVATAR_SIZE.large} tone={AVATAR_TONE.navy} />
       <View style={styles.col}>
         <CustomText style={styles.profileName}>{name}</CustomText>
-        <CustomText style={styles.tSub}>{`${Strings.ProfileScreen.uhidPrefix}${uhid}`}</CustomText>
+        {uhid ? (
+          <CustomText
+            style={styles.tSub}
+          >{`${Strings.ProfileScreen.uhidPrefix}${uhid}`}</CustomText>
+        ) : null}
         <CustomText style={styles.tSub}>{phone}</CustomText>
       </View>
       <IconButton

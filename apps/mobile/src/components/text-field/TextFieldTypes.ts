@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import type { KeyboardTypeOptions, TextInputProps } from "react-native";
+import type { ReactNode } from 'react';
+import type { KeyboardTypeOptions, TextInputProps } from 'react-native';
 
 export interface TextFieldProps {
   label: string;
@@ -12,7 +12,11 @@ export interface TextFieldProps {
   placeholder?: string;
   maxLength?: number;
   keyboardType?: KeyboardTypeOptions;
-  autoCapitalize?: TextInputProps["autoCapitalize"];
+  autoCapitalize?: TextInputProps['autoCapitalize'];
+  /** Autofill hint, e.g. "current-password". */
+  autoComplete?: TextInputProps['autoComplete'];
+  /** Masks the input (passwords). */
+  secureTextEntry?: boolean;
   /** Validation message; also switches the field to its error border. */
   error?: string;
   /** Rendered before the input inside the border (e.g. a country-code picker). */

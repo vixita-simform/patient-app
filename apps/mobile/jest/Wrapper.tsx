@@ -1,7 +1,9 @@
-import { render, renderHook, type RenderHookOptions } from "@testing-library/react-native";
-import type { ReactElement, ReactNode } from "react";
-import { KeyboardProvider } from "react-native-keyboard-controller";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { render, renderHook, type RenderHookOptions } from '@testing-library/react-native';
+import type { ReactElement, ReactNode } from 'react';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { PatientProvider } from '../src/context';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -13,9 +15,11 @@ interface AppProvidersProps {
  * @returns {ReactElement} The wrapped tree.
  */
 const AppProviders = ({ children }: AppProvidersProps): ReactElement => (
-  <SafeAreaProvider>
-    <KeyboardProvider>{children}</KeyboardProvider>
-  </SafeAreaProvider>
+  <PatientProvider>
+    <SafeAreaProvider>
+      <KeyboardProvider>{children}</KeyboardProvider>
+    </SafeAreaProvider>
+  </PatientProvider>
 );
 
 /**
@@ -33,5 +37,5 @@ export const RenderWrapper = (ui: ReactElement) => render(ui, { wrapper: AppProv
  */
 export const RenderWrapperForHooks = <Result, Props>(
   hook: (props: Props) => Result,
-  options?: Omit<RenderHookOptions<Props>, "wrapper">,
+  options?: Omit<RenderHookOptions<Props>, 'wrapper'>
 ) => renderHook(hook, { ...options, wrapper: AppProviders });

@@ -1,4 +1,4 @@
-import type { RecordSummaryTileId } from "../../../../constants";
+import type { RecordSummaryTileId } from '../../../../constants';
 
 /** One stat tile in the summary strip: a count plus its label. */
 export interface RecordSummaryTileData {

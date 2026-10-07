@@ -1,6 +1,6 @@
-import type { ComponentType } from "react";
+import type { ComponentType } from 'react';
 
-import type { VisitMode } from "../../../../constants";
+import type { VisitMode } from '../../../../constants';
 
 export interface VisitTypeCardProps {
   /** Visit mode this card selects, passed back to `onPress`. */

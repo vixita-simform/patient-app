@@ -1,6 +1,6 @@
-import type { ViewStyle } from "react-native";
+import type { ViewStyle } from 'react-native';
 
-import type { DoctorProfileDetails, DoctorSummary } from "../../types";
+import type { DoctorProfileDetails, DoctorSummary } from '../../types';
 
 /** Summary from the list joined with the profile-only details. */
 export interface DoctorProfileData {

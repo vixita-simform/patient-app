@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../../../theme';
 
 // design-drift[width]: spec's `calc(33.33% - 7px)` has no RN equivalent (percentage
 // widths can't subtract a fixed gap); '31%' + the row's `gap: scale(10)` reproduces
 // the 3-column wrap visually without a guessed container-width constant.
-const SLOT_WIDTH_PERCENT = "31%";
+const SLOT_WIDTH_PERCENT = '31%';
 
 /**
  * Styles for a single time-slot chip (available / selected / taken).
@@ -20,40 +20,40 @@ const styles = (theme: ThemeMode) =>
       backgroundColor: Colors[theme].card,
       borderWidth: scale(1),
       borderColor: Colors[theme].line,
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: scale(12),
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: scale(12)
     },
     slotActive: {
       backgroundColor: Colors[theme].navy,
-      borderColor: Colors[theme].navy,
+      borderColor: Colors[theme].navy
     },
     slotTaken: {
       backgroundColor: Colors[theme].line,
-      borderColor: Colors[theme].line,
+      borderColor: Colors[theme].line
     },
     slotPast: {
       backgroundColor: Colors[theme].line,
       borderColor: Colors[theme].line,
-      opacity: 0.6,
+      opacity: 0.6
     },
     slotLabel: {
       fontFamily: Fonts.family.semiBold,
       fontSize: Fonts.size.f14,
       fontWeight: Fonts.weight.semi,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     slotActiveLabel: {
-      color: Colors[theme].white,
+      color: Colors[theme].white
     },
     // design-drift[text-decoration]: RN Text has no strikethrough token; textDecorationLine covers the taken state visually
     slotTakenLabel: {
       color: Colors[theme].tabInactive,
-      textDecorationLine: "line-through",
+      textDecorationLine: 'line-through'
     },
     slotPastLabel: {
-      color: Colors[theme].tabInactive,
-    },
+      color: Colors[theme].tabInactive
+    }
   });
 
 export default styles;

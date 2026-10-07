@@ -1,11 +1,11 @@
-import type { ReactElement } from "react";
-import { View } from "react-native";
+import type { ReactElement } from 'react';
+import { View } from 'react-native';
 
-import { CustomText, ProgressBar } from "../../../../components";
-import { Strings } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import OpdTokenCardStyles from "./OpdTokenCardStyles";
-import type { OpdTokenCardProps } from "./OpdTokenCardTypes";
+import { CustomText, ProgressBar } from '../../../../components';
+import { Strings } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import OpdTokenCardStyles from './OpdTokenCardStyles';
+import type { OpdTokenCardProps } from './OpdTokenCardTypes';
 
 /**
  * Navy card showing the patient's OPD token, the token being served and queue progress.
@@ -18,7 +18,7 @@ const OpdTokenCard = ({
   servingNumber,
   patientsAhead,
   waitMinutes,
-  progress,
+  progress
 }: OpdTokenCardProps): ReactElement => {
   const { styles } = useTheme(OpdTokenCardStyles);
 
@@ -32,9 +32,7 @@ const OpdTokenCard = ({
           <CustomText style={styles.tokenNumber}>{tokenNumber}</CustomText>
         </View>
         <View style={styles.colGap4End}>
-          <CustomText style={styles.tokenLabel}>
-            {Strings.HomeScreen.nowServing}
-          </CustomText>
+          <CustomText style={styles.tokenLabel}>{Strings.HomeScreen.nowServing}</CustomText>
           <CustomText style={styles.tokenServing}>{servingNumber}</CustomText>
         </View>
       </View>

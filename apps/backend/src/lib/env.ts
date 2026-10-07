@@ -7,8 +7,16 @@ export const env = {
   get authTokenSecret(): string {
     const value = process.env.AUTH_TOKEN_SECRET;
     if (!value || value.length < 32) {
-      throw new Error("AUTH_TOKEN_SECRET is missing or shorter than 32 characters");
+      throw new Error('AUTH_TOKEN_SECRET is missing or shorter than 32 characters');
     }
     return value;
   },
+  /** PostgreSQL connection string, e.g. `postgresql://user:pass@host:5432/db`. */
+  get postgresConnectionString(): string {
+    const value = process.env.POSTGRES_CONNECTION_STRING;
+    if (!value) {
+      throw new Error('POSTGRES_CONNECTION_STRING is missing');
+    }
+    return value;
+  }
 };

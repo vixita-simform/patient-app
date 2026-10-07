@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, scale, type ThemeMode } from "../../../../theme";
+import { Colors, scale, type ThemeMode } from '../../../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
@@ -10,13 +10,13 @@ const styles = (theme: ThemeMode) =>
       borderColor: Colors[theme].line,
       padding: scale(16),
       borderRadius: scale(18),
-      flexDirection: "column",
-      gap: scale(16),
+      flexDirection: 'column',
+      gap: scale(16)
     },
     divider: {
       height: scale(1),
-      backgroundColor: Colors[theme].line,
-    },
+      backgroundColor: Colors[theme].line
+    }
   });
 
 export default styles;

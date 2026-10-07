@@ -1,4 +1,4 @@
-import type { LabReportDetail, LabResultDetail } from "../../types";
+import type { LabReportDetail, LabResultDetail } from '../../types';
 
 /** One result row plus its derived range-bar geometry. */
 export interface LabResultRowData extends LabResultDetail {

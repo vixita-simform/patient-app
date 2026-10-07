@@ -1,36 +1,36 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
     card: {
-      flexDirection: "row",
-      alignItems: "center",
+      flexDirection: 'row',
+      alignItems: 'center',
       gap: scale(16),
       backgroundColor: Colors[theme].card,
       borderWidth: scale(1),
       borderColor: Colors[theme].line,
       padding: scale(16),
-      borderRadius: scale(18),
+      borderRadius: scale(18)
     },
     col: {
       flex: 1,
       minWidth: 0,
-      flexDirection: "column",
-      gap: scale(4),
+      flexDirection: 'column',
+      gap: scale(4)
     },
     profileName: {
       fontFamily: Fonts.family.extraBold,
       fontSize: Fonts.size.header,
       fontWeight: Fonts.weight.extraBold,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     tSub: {
       fontFamily: Fonts.family.regular,
       fontSize: Fonts.size.h4,
-      color: Colors[theme].muted,
-    },
+      color: Colors[theme].muted
+    }
   });
 
 export default styles;

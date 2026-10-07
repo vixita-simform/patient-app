@@ -1,15 +1,15 @@
-import type { ReactElement } from "react";
-import { useCallback } from "react";
-import { Pressable, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useCallback } from 'react';
+import { Pressable, View } from 'react-native';
 
-import { ChevronRightIcon } from "../../../../assets/icons";
-import { CustomText, IconBox, StatusBadge } from "../../../../components";
-import { RECORD_TRAILING_KIND } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import { RECORD_TYPE_META } from "./RecordRowConstants";
-import RecordRowStyles from "./RecordRowStyles";
-import type { RecordRowProps } from "./RecordRowTypes";
+import { ChevronRightIcon } from '../../../../assets/icons';
+import { CustomText, IconBox, StatusBadge } from '../../../../components';
+import { RECORD_TRAILING_KIND } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import { RECORD_TYPE_META } from './RecordRowConstants';
+import RecordRowStyles from './RecordRowStyles';
+import type { RecordRowProps } from './RecordRowTypes';
 
 /**
  * One record row: tinted icon box, title/subtitle, and a trailing status badge, or a

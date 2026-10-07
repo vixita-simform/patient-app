@@ -8,16 +8,21 @@
     "start": "next start --port 3000",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "pretty": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "spelling": "cspell lint \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "@patient-app/shared-types": "*",
+    "bcryptjs": "^3.0.3",
     "next": "16.3.8",
+    "pg": "^8.23.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@types/node": "^22.20.5",
+    "@types/pg": "^8.23.1",
     "@types/react": "~19.2.2",
     "eslint": "^9.0.0",
     "eslint-config-next": "16.3.8",

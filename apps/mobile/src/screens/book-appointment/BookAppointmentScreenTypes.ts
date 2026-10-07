@@ -1,9 +1,9 @@
-import type { RefObject } from "react";
-import type { LayoutChangeEvent, TextInput, ViewStyle } from "react-native";
+import type { RefObject } from 'react';
+import type { LayoutChangeEvent, TextInput, ViewStyle } from 'react-native';
 
-import type { VisitMode } from "../../constants";
-import type { DoctorProfileDetails, DoctorSummary, TimeSlot } from "../../types";
-import type { DateStripDay } from "../../utils";
+import type { VisitMode } from '../../constants';
+import type { DoctorProfileDetails, DoctorSummary, TimeSlot } from '../../types';
+import type { DateStripDay } from '../../utils';
 
 /** Summary from the list joined with the profile-only fee, same shape as doctor-profile. */
 export interface BookAppointmentDoctorData {

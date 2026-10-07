@@ -3,6 +3,7 @@
 exports[`SegmentedTabs matches the snapshot 1`] = `
 <KeyboardProvider>
   <View
+    accessibilityRole="tablist"
     style={
       {
         "backgroundColor": "#DDE7E3",

@@ -1,6 +1,6 @@
-import type { ReactElement } from "react";
-import { useCallback } from "react";
-import { Pressable, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useCallback } from 'react';
+import { Pressable, View } from 'react-native';
 
 import {
   BellIcon,
@@ -8,14 +8,14 @@ import {
   CardIcon,
   FileIcon,
   FlaskIcon,
-  PillIcon,
-} from "../../../../assets/icons";
-import { CustomText, IconBox } from "../../../../components";
-import { ICON_TONE, NOTIFICATION_TYPE, Strings } from "../../../../constants";
-import type { NotificationType } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import NotificationRowStyles from "./NotificationRowStyles";
-import type { NotificationRowProps, NotificationTypeMeta } from "./NotificationRowTypes";
+  PillIcon
+} from '../../../../assets/icons';
+import { CustomText, IconBox } from '../../../../components';
+import { ICON_TONE, NOTIFICATION_TYPE, Strings } from '../../../../constants';
+import type { NotificationType } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import NotificationRowStyles from './NotificationRowStyles';
+import type { NotificationRowProps, NotificationTypeMeta } from './NotificationRowTypes';
 
 /** Maps each notification type to its icon and icon-box tone. */
 const NOTIFICATION_TYPE_META: Record<NotificationType, NotificationTypeMeta> = Object.freeze({
@@ -24,7 +24,7 @@ const NOTIFICATION_TYPE_META: Record<NotificationType, NotificationTypeMeta> = O
   [NOTIFICATION_TYPE.medicine]: { Icon: PillIcon, tone: ICON_TONE.amber },
   [NOTIFICATION_TYPE.appointment]: { Icon: CalendarIcon, tone: ICON_TONE.green },
   [NOTIFICATION_TYPE.billing]: { Icon: CardIcon, tone: ICON_TONE.coral },
-  [NOTIFICATION_TYPE.insurance]: { Icon: FileIcon, tone: ICON_TONE.blue },
+  [NOTIFICATION_TYPE.insurance]: { Icon: FileIcon, tone: ICON_TONE.blue }
 });
 
 /**
@@ -35,7 +35,9 @@ const NOTIFICATION_TYPE_META: Record<NotificationType, NotificationTypeMeta> = O
  */
 const NotificationRow = ({ notification, onPress }: NotificationRowProps): ReactElement => {
   const { styles } = useTheme(NotificationRowStyles);
-  const meta = NOTIFICATION_TYPE_META[notification.type] ?? NOTIFICATION_TYPE_META[NOTIFICATION_TYPE.queueUpdate];
+  const meta =
+    NOTIFICATION_TYPE_META[notification.type] ??
+    NOTIFICATION_TYPE_META[NOTIFICATION_TYPE.queueUpdate];
   const accessibilityLabel = notification.unread
     ? `${notification.title}, ${Strings.NotificationsScreen.unread}`
     : notification.title;

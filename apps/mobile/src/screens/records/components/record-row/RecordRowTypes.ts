@@ -1,7 +1,7 @@
-import type { ComponentType } from "react";
+import type { ComponentType } from 'react';
 
-import type { IconTone } from "../../../../constants";
-import type { RecordSummary } from "../../../../types";
+import type { IconTone } from '../../../../constants';
+import type { RecordSummary } from '../../../../types';
 
 /** A record row with its navigability already decided by the screen hook. */
 export interface RecordRowData extends RecordSummary {

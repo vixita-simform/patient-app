@@ -1,5 +1,5 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
 import {
   ActivityIndicator,
   Platform,
@@ -7,33 +7,28 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
-  View,
-} from "react-native";
-import {
-  KeyboardAwareScrollView,
-  KeyboardStickyView,
-} from "react-native-keyboard-controller";
+  View
+} from 'react-native';
+import { KeyboardAwareScrollView, KeyboardStickyView } from 'react-native-keyboard-controller';
 
-import { ClockIcon, HomeIcon, VideoIcon } from "../../assets/icons";
+import { ClockIcon, HomeIcon, VideoIcon } from '../../assets/icons';
 import {
   Avatar,
   CalendarModal,
   CustomButton,
   CustomText,
   Screen,
-  ScreenHeader,
-} from "../../components";
-import {
-  AVATAR_TONE,
-  BUTTON_VARIANT,
-  Strings,
-  VISIT_MODE,
-} from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import BookAppointmentScreenStyles from "./BookAppointmentScreenStyles";
-import { DateChip, TimeSlotChip, VisitTypeCard } from "./components";
-import useBookAppointmentScreen from "./useBookAppointmentScreen";
+  ScreenHeader
+} from '../../components';
+import { AVATAR_TONE, BUTTON_VARIANT, Strings, VISIT_MODE } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import BookAppointmentScreenStyles from './BookAppointmentScreenStyles';
+import { DateChip, TimeSlotChip, VisitTypeCard } from './components';
+import useBookAppointmentScreen from './useBookAppointmentScreen';
+
+/** Longest reason for visit the patient can type. */
+const REASON_MAX_LENGTH = 500;
 
 /** Grows the text-sized "Change month" link to at least a 44pt target. */
 const LINK_HIT_SLOP = scale(12);
@@ -74,30 +69,25 @@ export default function BookAppointmentScreen(): ReactElement {
     onSelectSlot,
     onSelectVisitType,
     onChangeReason,
-    onConfirmPress,
+    onConfirmPress
   } = useBookAppointmentScreen();
 
   const footerBarStyle = useMemo(
     () => StyleSheet.flatten([styles.footerBar, footerInsetStyle]),
-    [styles.footerBar, footerInsetStyle],
+    [styles.footerBar, footerInsetStyle]
   );
 
   const stateContent = isLoading ? (
     <ActivityIndicator color={Colors[theme].green} />
   ) : (
     <CustomText style={styles.stateText}>
-      {isError
-        ? Strings.DoctorProfileScreen.loadError
-        : Strings.DoctorProfileScreen.notFound}
+      {isError ? Strings.DoctorProfileScreen.loadError : Strings.DoctorProfileScreen.notFound}
     </CustomText>
   );
 
   return (
     <Screen>
-      <ScreenHeader
-        title={Strings.DoctorProfileScreen.bookAppointment}
-        onBackPress={onBackPress}
-      />
+      <ScreenHeader title={Strings.DoctorProfileScreen.bookAppointment} onBackPress={onBackPress} />
 
       <View style={styles.bodyWrapper}>
         <KeyboardAwareScrollView
@@ -112,23 +102,16 @@ export default function BookAppointmentScreen(): ReactElement {
           ) : (
             <>
               <View style={styles.doctorCard}>
-                <Avatar
-                  initials={doctor.summary.initials}
-                  tone={AVATAR_TONE.green}
-                />
+                <Avatar initials={doctor.summary.initials} tone={AVATAR_TONE.green} />
                 <View style={styles.doctorInfo}>
-                  <CustomText style={styles.tTitle}>
-                    {doctor.summary.name}
-                  </CustomText>
+                  <CustomText style={styles.tTitle}>{doctor.summary.name}</CustomText>
                   <CustomText style={styles.tSub}>{doctorSubtitle}</CustomText>
                 </View>
               </View>
 
               <View>
                 <View style={styles.sectionTitle}>
-                  <CustomText style={styles.sectionTitleH3}>
-                    {monthLabel}
-                  </CustomText>
+                  <CustomText style={styles.sectionTitleH3}>{monthLabel}</CustomText>
                   <Pressable
                     accessibilityLabel={Strings.BookAppointmentScreen.changeMonth}
                     accessibilityRole="button"
@@ -210,9 +193,8 @@ export default function BookAppointmentScreen(): ReactElement {
                 </CustomText>
                 <TextInput
                   multiline
-                  accessibilityLabel={
-                    Strings.BookAppointmentScreen.reasonForVisit
-                  }
+                  accessibilityLabel={Strings.BookAppointmentScreen.reasonForVisit}
+                  maxLength={REASON_MAX_LENGTH}
                   placeholder={Strings.BookAppointmentScreen.reasonPlaceholder}
                   placeholderTextColor={Colors[theme].muted}
                   ref={reasonInputRef}
@@ -231,8 +213,7 @@ export default function BookAppointmentScreen(): ReactElement {
               <View style={styles.footerSummary}>
                 <ClockIcon color={Colors[theme].muted} size={scale(14)} />
                 <CustomText style={styles.tSub}>
-                  {summaryLabel ||
-                    Strings.BookAppointmentScreen.selectATimeSlot}
+                  {summaryLabel || Strings.BookAppointmentScreen.selectATimeSlot}
                 </CustomText>
               </View>
               <CustomText style={styles.footerFee}>{feeLabel}</CustomText>
@@ -249,7 +230,7 @@ export default function BookAppointmentScreen(): ReactElement {
         </KeyboardStickyView>
       </View>
 
-      {Platform.OS === "ios" && (
+      {Platform.OS === 'ios' && (
         <CalendarModal
           minimumDate={today}
           selectedDate={selectedDate}

@@ -1,13 +1,13 @@
-import DateTimePicker, { type DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { type ReactElement, useCallback, useState } from "react";
-import { Modal, Pressable, StyleSheet, View } from "react-native";
+import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { type ReactElement, useCallback, useState } from 'react';
+import { Modal, Pressable, StyleSheet, View } from 'react-native';
 
-import { CustomText } from "../custom-text";
-import { Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { scale } from "../../theme";
-import CalendarModalStyles from "./CalendarModalStyles";
-import type { CalendarModalProps } from "./CalendarModalTypes";
+import { CustomText } from '../custom-text';
+import { Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { scale } from '../../theme';
+import CalendarModalStyles from './CalendarModalStyles';
+import type { CalendarModalProps } from './CalendarModalTypes';
 
 /** Grows the text-sized Cancel / Done targets to at least 44pt. */
 const HEADER_HIT_SLOP = scale(12);
@@ -25,7 +25,7 @@ const CalendarModal = ({
   minimumDate,
   maximumDate,
   onConfirm,
-  onDismiss,
+  onDismiss
 }: CalendarModalProps): ReactElement => {
   const { styles } = useTheme(CalendarModalStyles);
   const [pendingDate, setPendingDate] = useState(selectedDate);

@@ -1,182 +1,121 @@
 import {
   APPOINTMENT_STATUS,
-  BLOOD_GROUP,
   DOSE_STATUS,
-  GENDER,
   MEDICINE_TINT,
   NOTIFICATION_TYPE,
   RECORD_TRAILING_KIND,
   RECORD_TYPE,
   STATUS_BADGE_TONE,
   TIME_SLOT_STATUS,
-  VISIT_MODE,
-} from "./Constants";
+  VISIT_MODE
+} from './Constants';
 import type {
   AppointmentListResponse,
   DoctorListResponse,
   DoctorProfileDetails,
-  HomeDashboardResponse,
   LabReportDetail,
   MedicinesResponse,
   NotificationItem,
-  PatientProfile,
   RecordListResponse,
-  TimeSlot,
-} from "../types";
+  TimeSlot
+} from '../types';
 
 /** Record id of the latest lab report; the Home "Lab reports" shortcut opens it. */
-export const LATEST_LAB_REPORT_ID = "rec_cbc";
-
-/**
- * Stand-in for the patient profile API: the one source for the signed-in patient's identity
- * and medical info, used by Home, Profile and Personal & medical info.
- */
-export const patientProfileDummyData: PatientProfile = Object.freeze({
-  id: "pat_1024",
-  initials: "AP",
-  firstName: "Aarav",
-  lastName: "Patel",
-  uhid: "CW-2024-08812",
-  phone: "+91 98765 43210",
-  dateOfBirth: "1992-03-14",
-  gender: GENDER.male,
-  bloodGroup: BLOOD_GROUP.bPositive,
-  weightKg: 72,
-  familyCount: 4,
-  allergies: Object.freeze([
-    { id: "penicillin", label: "Penicillin" },
-    { id: "peanuts", label: "Peanuts" },
-  ]),
-  existingConditions: "Mild hypertension",
-  emergencyContactName: "Priya Patel (Spouse)",
-  emergencyContactPhone: "98250 11223",
-});
-
-/** Stand-in for the Home dashboard API until the backend is wired up. */
-export const homeScreenDummyData: HomeDashboardResponse = {
-  patient: {
-    id: patientProfileDummyData.id,
-    firstName: patientProfileDummyData.firstName,
-    lastName: patientProfileDummyData.lastName,
-  },
-  opdToken: {
-    tokenNumber: "A-24",
-    department: "Cardiology",
-    nowServing: "A-18",
-    patientsAhead: 6,
-    estimatedWaitMinutes: 25,
-    queueProgress: 0.72,
-  },
-  nextAppointment: {
-    id: "apt_5531",
-    doctor: {
-      id: "doc_204",
-      name: "Dr. Rohan Mehta",
-      specialty: "Cardiologist",
-    },
-    room: "Room 204",
-    scheduledAt: "2026-09-29T11:30:00+05:30",
-  },
-  vitals: {
-    heartRate: { value: 78, unit: "bpm" },
-    bloodPressure: { systolic: 122, diastolic: 80, unit: "mmHg" },
-    bloodSugar: { value: 96, unit: "mg/dL" },
-    recordedAt: "2026-09-28T08:15:00+05:30",
-  },
-};
+export const LATEST_LAB_REPORT_ID = 'rec_cbc';
 
 /** Stand-in for the Find a doctor API until the backend is wired up. */
 export const findADoctorDummyData: DoctorListResponse = {
   totalAvailableToday: 42,
   doctors: [
     {
-      id: "doc_204",
-      initials: "RM",
-      name: "Dr. Rohan Mehta",
-      specialty: "cardiology",
-      specialtyLabel: "Cardiologist",
+      id: 'doc_204',
+      initials: 'RM',
+      name: 'Dr. Rohan Mehta',
+      specialty: 'cardiology',
+      specialtyLabel: 'Cardiologist',
       experienceYears: 14,
-      rating: "4.9",
+      rating: '4.9',
       reviewCount: 320,
-      nextSlotAt: "2026-10-06T11:30:00+05:30",
-      availableToday: true,
+      nextSlotAt: '2026-10-06T11:30:00+05:30',
+      availableToday: true
     },
     {
-      id: "doc_311",
-      initials: "SK",
-      name: "Dr. Sneha Kapoor",
-      specialty: "pediatrics",
-      specialtyLabel: "Pediatrician",
+      id: 'doc_311',
+      initials: 'SK',
+      name: 'Dr. Sneha Kapoor',
+      specialty: 'pediatrics',
+      specialtyLabel: 'Pediatrician',
       experienceYears: 9,
-      rating: "4.8",
+      rating: '4.8',
       reviewCount: 210,
-      nextSlotAt: "2026-10-06T14:00:00+05:30",
-      availableToday: true,
+      nextSlotAt: '2026-10-06T14:00:00+05:30',
+      availableToday: true
     },
     {
-      id: "doc_478",
-      initials: "VD",
-      name: "Dr. Vikram Desai",
-      specialty: "orthopedics",
-      specialtyLabel: "Orthopedic surgeon",
+      id: 'doc_478',
+      initials: 'VD',
+      name: 'Dr. Vikram Desai',
+      specialty: 'orthopedics',
+      specialtyLabel: 'Orthopedic surgeon',
       experienceYears: 18,
-      rating: "4.7",
+      rating: '4.7',
       reviewCount: 412,
-      nextSlotAt: "2026-10-07T10:00:00+05:30",
-      availableToday: false,
-    },
-  ],
+      nextSlotAt: '2026-10-07T10:00:00+05:30',
+      availableToday: false
+    }
+  ]
 };
 
 /** Stand-in for the doctor profile API, keyed by the doctor id from the list. */
-export const doctorProfileDummyData: Readonly<Record<string, DoctorProfileDetails>> =
-  Object.freeze({
+export const doctorProfileDummyData: Readonly<Record<string, DoctorProfileDetails>> = Object.freeze(
+  {
     doc_204: {
-      qualifications: "MBBS, MD, DM (Cardiology)",
-      patientsCount: "3,200+",
+      qualifications: 'MBBS, MD, DM (Cardiology)',
+      patientsCount: '3,200+',
       about:
-        "Senior consultant in interventional cardiology. Treats heart rhythm problems, high blood pressure and coronary artery disease, and performs angioplasty.",
+        'Senior consultant in interventional cardiology. Treats heart rhythm problems, high blood pressure and coronary artery disease, and performs angioplasty.',
       opdHours: [
-        { id: "monFri", label: "Mon – Fri", hours: "10:00 AM – 2:00 PM" },
-        { id: "sat", label: "Saturday", hours: "10:00 AM – 12:00 PM" },
-        { id: "sun", label: "Sunday", hours: null },
+        { id: 'monFri', label: 'Mon – Fri', hours: '10:00 AM – 2:00 PM' },
+        { id: 'sat', label: 'Saturday', hours: '10:00 AM – 12:00 PM' },
+        { id: 'sun', label: 'Sunday', hours: null }
       ],
-      locationTitle: "Cardiology wing, Block B",
-      locationSubtitle: "2nd floor, Room 204",
+      locationTitle: 'Cardiology wing, Block B',
+      locationSubtitle: '2nd floor, Room 204',
       consultationFee: 800,
-      insuranceAccepted: true,
+      insuranceAccepted: true
     },
     doc_311: {
-      qualifications: "MBBS, MD (Pediatrics)",
-      patientsCount: "2,400+",
+      qualifications: 'MBBS, MD (Pediatrics)',
+      patientsCount: '2,400+',
       about:
-        "Consultant pediatrician caring for newborns, children and teenagers. Focus on vaccinations, growth monitoring and childhood allergies.",
+        'Consultant pediatrician caring for newborns, children and teenagers. Focus on vaccinations, growth monitoring and childhood allergies.',
       opdHours: [
-        { id: "monFri", label: "Mon – Fri", hours: "2:00 PM – 6:00 PM" },
-        { id: "sat", label: "Saturday", hours: "10:00 AM – 1:00 PM" },
-        { id: "sun", label: "Sunday", hours: null },
+        { id: 'monFri', label: 'Mon – Fri', hours: '2:00 PM – 6:00 PM' },
+        { id: 'sat', label: 'Saturday', hours: '10:00 AM – 1:00 PM' },
+        { id: 'sun', label: 'Sunday', hours: null }
       ],
-      locationTitle: "Pediatrics wing, Block A",
-      locationSubtitle: "1st floor, Room 112",
+      locationTitle: 'Pediatrics wing, Block A',
+      locationSubtitle: '1st floor, Room 112',
       consultationFee: 600,
-      insuranceAccepted: true,
+      insuranceAccepted: true
     },
     doc_478: {
-      qualifications: "MBBS, MS (Orthopedics)",
-      patientsCount: "4,100+",
+      qualifications: 'MBBS, MS (Orthopedics)',
+      patientsCount: '4,100+',
       about:
-        "Orthopedic surgeon specialising in joint replacement, sports injuries and fracture care, with over eighteen years of surgical experience.",
+        'Orthopedic surgeon specialising in joint replacement, sports injuries and fracture care, with over eighteen years of surgical experience.',
       opdHours: [
-        { id: "monFri", label: "Mon – Fri", hours: "9:00 AM – 1:00 PM" },
-        { id: "sat", label: "Saturday", hours: "9:00 AM – 11:00 AM" },
-        { id: "sun", label: "Sunday", hours: null },
+        { id: 'monFri', label: 'Mon – Fri', hours: '9:00 AM – 1:00 PM' },
+        { id: 'sat', label: 'Saturday', hours: '9:00 AM – 11:00 AM' },
+        { id: 'sun', label: 'Sunday', hours: null }
       ],
-      locationTitle: "Orthopedics wing, Block C",
-      locationSubtitle: "Ground floor, Room 018",
+      locationTitle: 'Orthopedics wing, Block C',
+      locationSubtitle: 'Ground floor, Room 018',
       consultationFee: 1000,
-      insuranceAccepted: false,
-    },
-  });
+      insuranceAccepted: false
+    }
+  }
+);
 
 /**
  * Stand-in for the My Appointments API, grouped by tab, until the backend is wired up.
@@ -185,70 +124,70 @@ export const doctorProfileDummyData: Readonly<Record<string, DoctorProfileDetail
 export const appointmentsDummyData: AppointmentListResponse = {
   upcoming: [
     {
-      id: "appt_upc_1",
-      doctorId: "doc_204",
-      initials: "RM",
-      doctorName: "Dr. Rohan Mehta",
-      specialtyLabel: "Cardiology",
+      id: 'appt_upc_1',
+      doctorId: 'doc_204',
+      initials: 'RM',
+      doctorName: 'Dr. Rohan Mehta',
+      specialtyLabel: 'Cardiology',
       visitMode: VISIT_MODE.inPerson,
       status: APPOINTMENT_STATUS.confirmed,
-      scheduledAt: "2026-09-29T11:30:00+05:30",
+      scheduledAt: '2026-09-29T11:30:00+05:30'
     },
     {
-      id: "appt_upc_2",
-      doctorId: "doc_311",
-      initials: "SK",
-      doctorName: "Dr. Sneha Kapoor",
-      specialtyLabel: "Pediatrics",
+      id: 'appt_upc_2',
+      doctorId: 'doc_311',
+      initials: 'SK',
+      doctorName: 'Dr. Sneha Kapoor',
+      specialtyLabel: 'Pediatrics',
       visitMode: VISIT_MODE.video,
       status: APPOINTMENT_STATUS.pending,
-      scheduledAt: "2026-10-02T16:15:00+05:30",
+      scheduledAt: '2026-10-02T16:15:00+05:30'
     },
     {
-      id: "appt_upc_3",
-      doctorId: "doc_478",
-      initials: "VD",
-      doctorName: "Dr. Vikram Desai",
-      specialtyLabel: "Orthopedics",
+      id: 'appt_upc_3',
+      doctorId: 'doc_478',
+      initials: 'VD',
+      doctorName: 'Dr. Vikram Desai',
+      specialtyLabel: 'Orthopedics',
       visitMode: VISIT_MODE.inPerson,
       status: APPOINTMENT_STATUS.confirmed,
-      scheduledAt: "2026-10-12T10:00:00+05:30",
-    },
+      scheduledAt: '2026-10-12T10:00:00+05:30'
+    }
   ],
   completed: [
     {
-      id: "appt_com_1",
-      doctorId: "doc_204",
-      initials: "RM",
-      doctorName: "Dr. Rohan Mehta",
-      specialtyLabel: "Cardiology",
+      id: 'appt_com_1',
+      doctorId: 'doc_204',
+      initials: 'RM',
+      doctorName: 'Dr. Rohan Mehta',
+      specialtyLabel: 'Cardiology',
       visitMode: VISIT_MODE.inPerson,
       status: APPOINTMENT_STATUS.completed,
-      scheduledAt: "2026-08-14T09:30:00+05:30",
+      scheduledAt: '2026-08-14T09:30:00+05:30'
     },
     {
-      id: "appt_com_2",
-      doctorId: "doc_478",
-      initials: "VD",
-      doctorName: "Dr. Vikram Desai",
-      specialtyLabel: "Orthopedics",
+      id: 'appt_com_2',
+      doctorId: 'doc_478',
+      initials: 'VD',
+      doctorName: 'Dr. Vikram Desai',
+      specialtyLabel: 'Orthopedics',
       visitMode: VISIT_MODE.inPerson,
       status: APPOINTMENT_STATUS.completed,
-      scheduledAt: "2026-07-30T13:00:00+05:30",
-    },
+      scheduledAt: '2026-07-30T13:00:00+05:30'
+    }
   ],
   cancelled: [
     {
-      id: "appt_can_1",
-      doctorId: "doc_311",
-      initials: "SK",
-      doctorName: "Dr. Sneha Kapoor",
-      specialtyLabel: "Pediatrics",
+      id: 'appt_can_1',
+      doctorId: 'doc_311',
+      initials: 'SK',
+      doctorName: 'Dr. Sneha Kapoor',
+      specialtyLabel: 'Pediatrics',
       visitMode: VISIT_MODE.video,
       status: APPOINTMENT_STATUS.cancelled,
-      scheduledAt: "2026-08-02T15:00:00+05:30",
-    },
-  ],
+      scheduledAt: '2026-08-02T15:00:00+05:30'
+    }
+  ]
 };
 
 /** Stand-in for the Medical Records API, grouped by month, until the backend is wired up. */
@@ -256,58 +195,70 @@ export const recordsDummyData: RecordListResponse = {
   stats: {
     labReportsCount: 24,
     prescriptionsCount: 8,
-    dischargesCount: 3,
+    dischargesCount: 3
   },
   groups: [
     {
-      id: "grp_2026_09",
-      monthLabel: "September 2026",
+      id: 'grp_2026_09',
+      monthLabel: 'September 2026',
       records: [
         {
           id: LATEST_LAB_REPORT_ID,
           type: RECORD_TYPE.labReport,
-          title: "Complete blood count",
-          subtitle: "Pathology lab · 24 Sep",
-          trailing: { kind: RECORD_TRAILING_KIND.badge, label: "1 flag", tone: STATUS_BADGE_TONE.coral },
-          pressable: false,
+          title: 'Complete blood count',
+          subtitle: 'Pathology lab · 24 Sep',
+          trailing: {
+            kind: RECORD_TRAILING_KIND.badge,
+            label: '1 flag',
+            tone: STATUS_BADGE_TONE.coral
+          },
+          pressable: false
         },
         {
-          id: "rec_ecg",
+          id: 'rec_ecg',
           type: RECORD_TYPE.scan,
-          title: "ECG report",
-          subtitle: "Cardiology · 22 Sep",
-          trailing: { kind: RECORD_TRAILING_KIND.badge, label: "Normal", tone: STATUS_BADGE_TONE.green },
+          title: 'ECG report',
+          subtitle: 'Cardiology · 22 Sep',
+          trailing: {
+            kind: RECORD_TRAILING_KIND.badge,
+            label: 'Normal',
+            tone: STATUS_BADGE_TONE.green
+          }
         },
         {
-          id: "rec_prescription",
+          id: 'rec_prescription',
           type: RECORD_TYPE.prescription,
-          title: "Prescription",
-          subtitle: "Dr. Rohan Mehta · 22 Sep",
-          trailing: { kind: RECORD_TRAILING_KIND.chevron },
-        },
-      ],
+          title: 'Prescription',
+          subtitle: 'Dr. Rohan Mehta · 22 Sep',
+          trailing: { kind: RECORD_TRAILING_KIND.chevron }
+        }
+      ]
     },
     {
-      id: "grp_2026_07",
-      monthLabel: "July 2026",
+      id: 'grp_2026_07',
+      monthLabel: 'July 2026',
       records: [
         {
-          id: "rec_discharge",
+          id: 'rec_discharge',
           type: RECORD_TYPE.discharge,
-          title: "Discharge summary",
-          subtitle: "Ward 3B · 4 days stay",
-          trailing: { kind: RECORD_TRAILING_KIND.chevron },
+          title: 'Discharge summary',
+          subtitle: 'Ward 3B · 4 days stay',
+          trailing: { kind: RECORD_TRAILING_KIND.chevron }
         },
         {
-          id: "rec_xray",
+          id: 'rec_xray',
           type: RECORD_TYPE.scan,
-          title: "Chest X-ray",
-          subtitle: "Radiology · 11 Jul",
-          trailing: { kind: RECORD_TRAILING_KIND.badge, label: "Normal", tone: STATUS_BADGE_TONE.green },
-        },
-      ],
-    },
-  ],
+          title: 'Chest X-ray',
+          subtitle: 'Radiology · 11 Jul',
+          trailing: {
+            kind: RECORD_TRAILING_KIND.badge,
+            label: 'Normal',
+            tone: STATUS_BADGE_TONE.green
+          }
+        }
+      ]
+    }
+  ]
 };
 
 /**
@@ -333,88 +284,88 @@ export const getNotificationsDummyData = (now: Date = new Date()): readonly Noti
   return [
     // Today (2 unread, 1 read)
     {
-      id: "notif_queue",
+      id: 'notif_queue',
       type: NOTIFICATION_TYPE.queueUpdate,
-      title: "Your turn is coming up",
-      subtitle: "Token A-24 · 6 patients ahead. Please wait near Room 204.",
+      title: 'Your turn is coming up',
+      subtitle: 'Token A-24 · 6 patients ahead. Please wait near Room 204.',
       createdAt: minutesAgo(2),
-      unread: true,
+      unread: true
     },
     {
-      id: "notif_lab",
+      id: 'notif_lab',
       type: NOTIFICATION_TYPE.labReport,
-      title: "Lab report ready",
-      subtitle: "Your complete blood count results are available.",
+      title: 'Lab report ready',
+      subtitle: 'Your complete blood count results are available.',
       createdAt: hoursAgo(1),
-      unread: true,
+      unread: true
     },
     {
-      id: "notif_medicine",
+      id: 'notif_medicine',
       type: NOTIFICATION_TYPE.medicine,
-      title: "Medicine reminder",
-      subtitle: "Take Metoprolol 25 mg at 6:00 PM.",
+      title: 'Medicine reminder',
+      subtitle: 'Take Metoprolol 25 mg at 6:00 PM.',
       createdAt: hoursAgo(3),
-      unread: false,
+      unread: false
     },
     // Yesterday (all read)
     {
-      id: "notif_appointment",
+      id: 'notif_appointment',
       type: NOTIFICATION_TYPE.appointment,
-      title: "Appointment confirmed",
-      subtitle: "Dr. Rohan Mehta, Tue 29 Sep at 11:30 AM.",
+      title: 'Appointment confirmed',
+      subtitle: 'Dr. Rohan Mehta, Tue 29 Sep at 11:30 AM.',
       createdAt: daysAgo(1, 18, 40),
-      unread: false,
+      unread: false
     },
     {
-      id: "notif_bill",
+      id: 'notif_bill',
       type: NOTIFICATION_TYPE.billing,
-      title: "Bill generated",
-      subtitle: "₹4,350 due by 5 Oct. Pay online to skip the billing queue.",
+      title: 'Bill generated',
+      subtitle: '₹4,350 due by 5 Oct. Pay online to skip the billing queue.',
       createdAt: daysAgo(1, 14, 15),
-      unread: false,
+      unread: false
     },
     {
-      id: "notif_insurance",
+      id: 'notif_insurance',
       type: NOTIFICATION_TYPE.insurance,
-      title: "Insurance claim approved",
-      subtitle: "₹18,000 approved for your July ward stay.",
+      title: 'Insurance claim approved',
+      subtitle: '₹18,000 approved for your July ward stay.',
       createdAt: daysAgo(1, 10, 5),
-      unread: false,
+      unread: false
     },
     // This Week (no design reference — illustrative copy in the same tone)
     {
-      id: "notif_prescription_renewed",
+      id: 'notif_prescription_renewed',
       type: NOTIFICATION_TYPE.medicine,
-      title: "Prescription renewed",
-      subtitle: "Atorvastatin 10 mg renewed for another 30 days.",
+      title: 'Prescription renewed',
+      subtitle: 'Atorvastatin 10 mg renewed for another 30 days.',
       createdAt: daysAgo(4, 9, 0),
-      unread: false,
+      unread: false
     },
     {
-      id: "notif_appointment_rescheduled",
+      id: 'notif_appointment_rescheduled',
       type: NOTIFICATION_TYPE.appointment,
-      title: "Appointment rescheduled",
-      subtitle: "Moved to Thu 2 Oct at 4:15 PM with Dr. Sneha Kapoor.",
+      title: 'Appointment rescheduled',
+      subtitle: 'Moved to Thu 2 Oct at 4:15 PM with Dr. Sneha Kapoor.',
       createdAt: daysAgo(6, 12, 30),
-      unread: false,
+      unread: false
     },
     // Past (older than a week — no design reference)
     {
-      id: "notif_checkup_reminder",
+      id: 'notif_checkup_reminder',
       type: NOTIFICATION_TYPE.queueUpdate,
-      title: "Annual checkup reminder",
+      title: 'Annual checkup reminder',
       subtitle: "It's been a year since your last full body checkup.",
       createdAt: daysAgo(30, 9, 0),
-      unread: false,
+      unread: false
     },
     {
-      id: "notif_discharge_summary",
+      id: 'notif_discharge_summary',
       type: NOTIFICATION_TYPE.labReport,
-      title: "Discharge summary available",
-      subtitle: "Your Ward 3B discharge summary has been uploaded.",
+      title: 'Discharge summary available',
+      subtitle: 'Your Ward 3B discharge summary has been uploaded.',
       createdAt: daysAgo(45, 16, 0),
-      unread: false,
-    },
+      unread: false
+    }
   ];
 };
 
@@ -431,55 +382,55 @@ export const getDoctorProfileDetails = (id: string): DoctorProfileDetails | unde
 export const labReportDetailDummyData: Readonly<Record<string, LabReportDetail>> = Object.freeze({
   [LATEST_LAB_REPORT_ID]: {
     id: LATEST_LAB_REPORT_ID,
-    title: "Complete blood count",
-    sampleCollectedAt: "2026-09-24T08:10:00+05:30",
-    orderedByDoctorName: "Dr. Rohan Mehta",
-    reportId: "LAB-58213",
+    title: 'Complete blood count',
+    sampleCollectedAt: '2026-09-24T08:10:00+05:30',
+    orderedByDoctorName: 'Dr. Rohan Mehta',
+    reportId: 'LAB-58213',
     alertMessage:
-      "Haemoglobin is below the normal range. Your doctor will review this at your next visit.",
+      'Haemoglobin is below the normal range. Your doctor will review this at your next visit.',
     results: [
       {
-        id: "res_haemoglobin",
-        name: "Haemoglobin",
+        id: 'res_haemoglobin',
+        name: 'Haemoglobin',
         value: 11.2,
-        unit: "g/dL",
+        unit: 'g/dL',
         normalMin: 13.5,
         normalMax: 17.5,
         status: STATUS_BADGE_TONE.coral,
-        statusLabel: "Low",
+        statusLabel: 'Low'
       },
       {
-        id: "res_wbc",
-        name: "WBC count",
+        id: 'res_wbc',
+        name: 'WBC count',
         value: 7400,
-        unit: "/µL",
+        unit: '/µL',
         normalMin: 4500,
         normalMax: 11000,
         status: STATUS_BADGE_TONE.green,
-        statusLabel: "Normal",
+        statusLabel: 'Normal'
       },
       {
-        id: "res_platelets",
-        name: "Platelets",
+        id: 'res_platelets',
+        name: 'Platelets',
         value: 2.6,
-        unit: "lakh/µL",
+        unit: 'lakh/µL',
         normalMin: 1.5,
         normalMax: 4.5,
         status: STATUS_BADGE_TONE.green,
-        statusLabel: "Normal",
+        statusLabel: 'Normal'
       },
       {
-        id: "res_rbc",
-        name: "RBC count",
+        id: 'res_rbc',
+        name: 'RBC count',
         value: 4.3,
-        unit: "mill/µL",
+        unit: 'mill/µL',
         normalMin: 4.5,
         normalMax: 5.9,
         status: STATUS_BADGE_TONE.amber,
-        statusLabel: "Borderline",
-      },
-    ],
-  },
+        statusLabel: 'Borderline'
+      }
+    ]
+  }
 });
 
 /**
@@ -494,50 +445,50 @@ export const getLabReportDetail = (id: string): LabReportDetail | undefined =>
 /** Stand-in for the Medicines API until the backend is wired up. */
 export const medicinesDummyData: MedicinesResponse = {
   doses: [
-    { id: "dose_8am", scheduledAt: "2026-10-06T08:00:00+05:30", status: DOSE_STATUS.done },
-    { id: "dose_1pm", scheduledAt: "2026-10-06T13:00:00+05:30", status: DOSE_STATUS.done },
-    { id: "dose_6pm", scheduledAt: "2026-10-06T18:00:00+05:30", status: DOSE_STATUS.next },
-    { id: "dose_10pm", scheduledAt: "2026-10-06T22:00:00+05:30", status: DOSE_STATUS.pending },
+    { id: 'dose_8am', scheduledAt: '2026-10-06T08:00:00+05:30', status: DOSE_STATUS.done },
+    { id: 'dose_1pm', scheduledAt: '2026-10-06T13:00:00+05:30', status: DOSE_STATUS.done },
+    { id: 'dose_6pm', scheduledAt: '2026-10-06T18:00:00+05:30', status: DOSE_STATUS.next },
+    { id: 'dose_10pm', scheduledAt: '2026-10-06T22:00:00+05:30', status: DOSE_STATUS.pending }
   ],
   activePrescription: {
-    prescriberName: "Dr. Rohan Mehta",
-    prescribedAt: "2026-09-22T11:30:00+05:30",
+    prescriberName: 'Dr. Rohan Mehta',
+    prescribedAt: '2026-09-22T11:30:00+05:30',
     medicines: [
       {
-        id: "med_atorvastatin",
-        name: "Atorvastatin 10 mg",
-        statusLabel: "Taken",
+        id: 'med_atorvastatin',
+        name: 'Atorvastatin 10 mg',
+        statusLabel: 'Taken',
         statusTone: STATUS_BADGE_TONE.green,
         tintKey: MEDICINE_TINT.green,
-        dosage: "1 tablet · after dinner · 30 days",
+        dosage: '1 tablet · after dinner · 30 days',
         stockRemaining: 18,
         stockTotal: 30,
-        showRefillButton: false,
+        showRefillButton: false
       },
       {
-        id: "med_metoprolol",
-        name: "Metoprolol 25 mg",
-        statusLabel: "6 PM",
+        id: 'med_metoprolol',
+        name: 'Metoprolol 25 mg',
+        statusLabel: '6 PM',
         statusTone: STATUS_BADGE_TONE.amber,
         tintKey: MEDICINE_TINT.blue,
-        dosage: "1 tablet · twice a day · 60 days",
+        dosage: '1 tablet · twice a day · 60 days',
         stockRemaining: 44,
         stockTotal: 120,
-        showRefillButton: false,
+        showRefillButton: false
       },
       {
-        id: "med_iron_folic",
-        name: "Iron + Folic acid",
-        statusLabel: "Refill soon",
+        id: 'med_iron_folic',
+        name: 'Iron + Folic acid',
+        statusLabel: 'Refill soon',
         statusTone: STATUS_BADGE_TONE.coral,
         tintKey: MEDICINE_TINT.coral,
-        dosage: "1 capsule · after lunch · 45 days",
+        dosage: '1 capsule · after lunch · 45 days',
         stockRemaining: 3,
         stockTotal: 45,
-        showRefillButton: true,
-      },
-    ],
-  },
+        showRefillButton: true
+      }
+    ]
+  }
 };
 
 /** Booked-slot mock: every 3rd slot of a day is taken, since there is no availability API yet. */
@@ -553,5 +504,5 @@ export const applyDummyBookedSlots = (slots: readonly TimeSlot[]): TimeSlot[] =>
   slots.map((slot, index) =>
     slot.status === TIME_SLOT_STATUS.available && (index + 1) % TAKEN_SLOT_INTERVAL === 0
       ? { ...slot, status: TIME_SLOT_STATUS.taken }
-      : slot,
+      : slot
   );

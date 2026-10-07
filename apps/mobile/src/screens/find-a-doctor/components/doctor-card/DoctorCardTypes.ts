@@ -1,4 +1,4 @@
-import type { AvatarTone } from "../../../../components";
+import type { AvatarTone } from '../../../../components';
 
 export interface DoctorCardProps {
   id: string;

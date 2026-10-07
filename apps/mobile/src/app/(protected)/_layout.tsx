@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
 
 /**
  * Stack for every signed-in screen; the root layout guards the whole group.

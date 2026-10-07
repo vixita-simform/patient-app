@@ -1,10 +1,10 @@
-import type { ReactElement } from "react";
-import { Pressable, View } from "react-native";
+import type { ReactElement } from 'react';
+import { Pressable, View } from 'react-native';
 
-import { CustomText } from "../../../../components";
-import { useTheme } from "../../../../hooks";
-import RecordSummaryCardStyles from "./RecordSummaryCardStyles";
-import type { RecordSummaryCardProps, RecordSummaryTileData } from "./RecordSummaryCardTypes";
+import { CustomText } from '../../../../components';
+import { useTheme } from '../../../../hooks';
+import RecordSummaryCardStyles from './RecordSummaryCardStyles';
+import type { RecordSummaryCardProps, RecordSummaryTileData } from './RecordSummaryCardTypes';
 
 /**
  * Green summary strip: 3 stat tiles (count + label), e.g. "24 Lab reports".

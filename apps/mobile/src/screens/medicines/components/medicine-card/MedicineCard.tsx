@@ -1,19 +1,19 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { PillIcon } from "../../../../assets/icons";
-import { CustomButton, CustomText, IconBox, StatusBadge } from "../../../../components";
-import { BUTTON_VARIANT, MEDICINE_TINT, Strings, type MedicineTint } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import MedicineCardStyles from "./MedicineCardStyles";
-import type { MedicineCardProps } from "./MedicineCardTypes";
+import { PillIcon } from '../../../../assets/icons';
+import { CustomButton, CustomText, IconBox, StatusBadge } from '../../../../components';
+import { BUTTON_VARIANT, MEDICINE_TINT, Strings, type MedicineTint } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import MedicineCardStyles from './MedicineCardStyles';
+import type { MedicineCardProps } from './MedicineCardTypes';
 
 /** Maps a medicine's tint key to its stock-fill style key. */
 const FILL_STYLE_KEY = Object.freeze({
-  [MEDICINE_TINT.green]: "stockFillGreen",
-  [MEDICINE_TINT.blue]: "stockFillBlue",
-  [MEDICINE_TINT.coral]: "stockFillCoral",
+  [MEDICINE_TINT.green]: 'stockFillGreen',
+  [MEDICINE_TINT.blue]: 'stockFillBlue',
+  [MEDICINE_TINT.coral]: 'stockFillCoral'
 } as const satisfies Record<MedicineTint, string>);
 
 /**
@@ -23,14 +23,10 @@ const FILL_STYLE_KEY = Object.freeze({
  * @param {MedicineCardProps} props - the medicine entry and optional refill handler.
  * @returns {ReactElement} A React Element.
  */
-const MedicineCard = ({
-  medicine,
-  onOrderRefillPress,
-}: MedicineCardProps): ReactElement => {
+const MedicineCard = ({ medicine, onOrderRefillPress }: MedicineCardProps): ReactElement => {
   const { styles } = useTheme(MedicineCardStyles);
   const fillKey = FILL_STYLE_KEY[medicine.tintKey];
-  const stockFraction =
-    medicine.stockTotal > 0 ? medicine.stockRemaining / medicine.stockTotal : 0;
+  const stockFraction = medicine.stockTotal > 0 ? medicine.stockRemaining / medicine.stockTotal : 0;
   // One clamped percent drives both the fill width and the progressbar value.
   const stockPercent = Math.round(Math.min(Math.max(stockFraction, 0), 1) * 100);
   // Width is data-driven, so it cannot live in the static stylesheet.
@@ -39,9 +35,9 @@ const MedicineCard = ({
       StyleSheet.flatten([
         styles.stockFill,
         styles[fillKey],
-        { width: `${stockPercent}%` as const },
+        { width: `${stockPercent}%` as const }
       ]),
-    [styles, fillKey, stockPercent],
+    [styles, fillKey, stockPercent]
   );
   const stockOfLabel = `${medicine.stockRemaining} ${Strings.Common.of} ${medicine.stockTotal}`;
 
@@ -52,19 +48,14 @@ const MedicineCard = ({
         <View style={styles.info}>
           <View style={styles.row}>
             <CustomText style={styles.name}>{medicine.name}</CustomText>
-            <StatusBadge
-              label={medicine.statusLabel}
-              tone={medicine.statusTone}
-            />
+            <StatusBadge label={medicine.statusLabel} tone={medicine.statusTone} />
           </View>
           <CustomText style={styles.dosage}>{medicine.dosage}</CustomText>
         </View>
       </View>
       <View style={styles.stockBlock}>
         <View style={styles.row}>
-          <CustomText style={styles.stockLabel}>
-            {Strings.MedicinesScreen.stockLeft}
-          </CustomText>
+          <CustomText style={styles.stockLabel}>{Strings.MedicinesScreen.stockLeft}</CustomText>
           <CustomText style={styles.stockLabel}>{stockOfLabel}</CustomText>
         </View>
         <View

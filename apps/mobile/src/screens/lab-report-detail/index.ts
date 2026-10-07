@@ -1,1 +1,1 @@
-export { default as LabReportDetailScreen } from "./LabReportDetailScreen";
+export { default as LabReportDetailScreen } from './LabReportDetailScreen';

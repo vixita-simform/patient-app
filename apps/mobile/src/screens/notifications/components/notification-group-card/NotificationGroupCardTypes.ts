@@ -1,4 +1,4 @@
-import type { NotificationRowData } from "../notification-row";
+import type { NotificationRowData } from '../notification-row';
 
 export interface NotificationGroupCardProps {
   /** Group heading, e.g. "Today". */

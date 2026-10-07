@@ -1,16 +1,16 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
-import type { ListRenderItem } from "react-native";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import type { ListRenderItem } from 'react-native';
 
-import { CustomText, Screen, ScreenHeader } from "../../components";
-import { SCREEN_HEADER_VARIANT, Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { scale } from "../../theme";
-import { NotificationGroupCard } from "./components";
-import NotificationsScreenStyles from "./NotificationsScreenStyles";
-import type { NotificationGroupViewData } from "./NotificationsScreenTypes";
-import useNotificationsScreen from "./useNotificationsScreen";
+import { CustomText, Screen, ScreenHeader } from '../../components';
+import { SCREEN_HEADER_VARIANT, Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { scale } from '../../theme';
+import { NotificationGroupCard } from './components';
+import NotificationsScreenStyles from './NotificationsScreenStyles';
+import type { NotificationGroupViewData } from './NotificationsScreenTypes';
+import useNotificationsScreen from './useNotificationsScreen';
 
 /** Grows the text-sized "Mark all read" action to at least a 44pt target. */
 const ACTION_HIT_SLOP = scale(12);
@@ -34,19 +34,14 @@ const renderGroup: ListRenderItem<NotificationGroupViewData> = ({ item }) => (
  */
 export default function NotificationsScreen(): ReactElement {
   const { styles } = useTheme(NotificationsScreenStyles);
-  const {
-    groups,
-    hasUnread,
-    markAllReadAccessibilityState,
-    onPressBack,
-    onPressMarkAllRead,
-  } = useNotificationsScreen();
+  const { groups, hasUnread, markAllReadAccessibilityState, onPressBack, onPressMarkAllRead } =
+    useNotificationsScreen();
   const markAllReadTextStyle = useMemo(
     () =>
       hasUnread
         ? styles.markAllRead
         : StyleSheet.flatten([styles.markAllRead, styles.markAllReadDisabled]),
-    [styles, hasUnread],
+    [styles, hasUnread]
   );
 
   return (

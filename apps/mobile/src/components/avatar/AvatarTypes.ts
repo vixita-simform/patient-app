@@ -1,4 +1,4 @@
-import type { AvatarSize, AvatarTone } from "../../constants";
+import type { AvatarSize, AvatarTone } from '../../constants';
 
 export type { AvatarSize, AvatarTone };
 

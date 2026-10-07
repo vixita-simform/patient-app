@@ -1,11 +1,15 @@
-import type { ReactElement } from "react";
-import { memo, useCallback, useMemo } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import type { ReactElement } from 'react';
+import { memo, useCallback, useMemo } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 
-import { useTheme } from "../../hooks";
-import { CustomText } from "../custom-text";
-import ChipStyles from "./ChipStyles";
-import type { ChipProps } from "./ChipTypes";
+import { useTheme } from '../../hooks';
+import { scale } from '../../theme';
+import { CustomText } from '../custom-text';
+import ChipStyles from './ChipStyles';
+import type { ChipProps } from './ChipTypes';
+
+/** Grows the ~34pt chip to the 44pt minimum touch target. */
+const HIT_SLOP = scale(5);
 
 /**
  * Single-select pill chip; passes its id back on press.
@@ -18,11 +22,12 @@ const Chip = <T extends string>({ id, label, selected, onPress }: ChipProps<T>):
   const accessibilityState = useMemo(() => ({ selected }), [selected]);
   const chipStyle = useMemo(
     () => (selected ? StyleSheet.flatten([styles.chip, styles.chipActive]) : styles.chip),
-    [styles, selected],
+    [styles, selected]
   );
   const textStyle = useMemo(
-    () => (selected ? StyleSheet.flatten([styles.chipText, styles.chipTextActive]) : styles.chipText),
-    [styles, selected],
+    () =>
+      selected ? StyleSheet.flatten([styles.chipText, styles.chipTextActive]) : styles.chipText,
+    [styles, selected]
   );
 
   return (
@@ -30,6 +35,7 @@ const Chip = <T extends string>({ id, label, selected, onPress }: ChipProps<T>):
       accessibilityLabel={label}
       accessibilityRole="button"
       accessibilityState={accessibilityState}
+      hitSlop={HIT_SLOP}
       style={chipStyle}
       onPress={handlePress}
     >

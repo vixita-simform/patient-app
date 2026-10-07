@@ -1,2 +1,2 @@
-export * from "./TabConfig";
-export { default as useTabScreenOptions } from "./useTabScreenOptions";
+export * from './TabConfig';
+export { default as useTabScreenOptions } from './useTabScreenOptions';

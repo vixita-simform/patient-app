@@ -1,5 +1,5 @@
-import type { ProfileMenuId, ProfileMenuTone } from "../../../../constants";
-import type { ProfileIconComponent } from "../../ProfileScreenTypes";
+import type { ProfileMenuId, ProfileMenuTone } from '../../../../constants';
+import type { ProfileIconComponent } from '../../ProfileScreenTypes';
 
 export interface ProfileMenuRowProps {
   id: ProfileMenuId;

@@ -1,18 +1,53 @@
-import { Strings } from "../constants";
+import { Strings } from '../constants';
 
 // Formatted by hand rather than via Intl: en-IN output differs across ICU versions
 // ("Sept" vs "Sep", "am" vs "AM"), and we want identical output on iOS and Android.
 const D = Strings.Dates;
-export const WEEKDAYS: readonly string[] = Object.freeze([D.sun, D.mon, D.tue, D.wed, D.thu, D.fri, D.sat]);
+export const WEEKDAYS: readonly string[] = Object.freeze([
+  D.sun,
+  D.mon,
+  D.tue,
+  D.wed,
+  D.thu,
+  D.fri,
+  D.sat
+]);
 export const WEEKDAYS_LONG: readonly string[] = Object.freeze([
-  D.sunday, D.monday, D.tuesday, D.wednesday, D.thursday, D.friday, D.saturday,
+  D.sunday,
+  D.monday,
+  D.tuesday,
+  D.wednesday,
+  D.thursday,
+  D.friday,
+  D.saturday
 ]);
 const MONTHS: readonly string[] = Object.freeze([
-  D.jan, D.feb, D.mar, D.apr, D.may, D.jun, D.jul, D.aug, D.sep, D.oct, D.nov, D.dec,
+  D.jan,
+  D.feb,
+  D.mar,
+  D.apr,
+  D.may,
+  D.jun,
+  D.jul,
+  D.aug,
+  D.sep,
+  D.oct,
+  D.nov,
+  D.dec
 ]);
 export const MONTHS_LONG: readonly string[] = Object.freeze([
-  D.january, D.february, D.march, D.april, D.mayLong, D.june,
-  D.july, D.august, D.september, D.october, D.november, D.december,
+  D.january,
+  D.february,
+  D.march,
+  D.april,
+  D.mayLong,
+  D.june,
+  D.july,
+  D.august,
+  D.september,
+  D.october,
+  D.november,
+  D.december
 ]);
 
 type DateInput = Date | string | number;
@@ -25,7 +60,7 @@ const isValidDate = (date: Date): boolean => !Number.isNaN(date.getTime());
 export function formatDate(value: DateInput): string {
   const date = toDate(value);
   if (!isValidDate(date)) {
-    return "";
+    return '';
   }
   return `${WEEKDAYS[date.getDay()]}, ${date.getDate()} ${MONTHS[date.getMonth()]}`;
 }
@@ -34,7 +69,7 @@ export function formatDate(value: DateInput): string {
 export function formatDateWithYear(value: DateInput): string {
   const date = toDate(value);
   if (!isValidDate(date)) {
-    return "";
+    return '';
   }
   return `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
@@ -67,7 +102,7 @@ export function isThisWeek(value: DateInput, now: Date = new Date()): boolean {
 export function formatLongDate(value: DateInput): string {
   const date = toDate(value);
   if (!isValidDate(date)) {
-    return "";
+    return '';
   }
   return `${WEEKDAYS_LONG[date.getDay()]}, ${date.getDate()} ${MONTHS_LONG[date.getMonth()]}`;
 }
@@ -76,7 +111,7 @@ export function formatLongDate(value: DateInput): string {
 export function formatDateTime(value: DateInput): string {
   const date = toDate(value);
   if (!isValidDate(date)) {
-    return "";
+    return '';
   }
   return `${formatDate(date)}, ${formatTime(date)}`;
 }
@@ -85,7 +120,7 @@ export function formatDateTime(value: DateInput): string {
 export function formatRelativeDateTime(value: DateInput, now: Date = new Date()): string {
   const date = toDate(value);
   if (!isValidDate(date)) {
-    return "";
+    return '';
   }
   return isToday(date, now) ? `${Strings.Common.today}, ${formatTime(date)}` : formatDateTime(date);
 }
@@ -94,10 +129,10 @@ export function formatRelativeDateTime(value: DateInput, now: Date = new Date())
 export function formatTime(value: DateInput): string {
   const date = toDate(value);
   if (!isValidDate(date)) {
-    return "";
+    return '';
   }
   const hours = date.getHours();
-  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, '0');
   const period = hours < 12 ? D.am : D.pm;
   return `${hours % 12 || 12}:${minutes} ${period}`;
 }

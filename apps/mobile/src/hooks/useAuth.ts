@@ -1,6 +1,6 @@
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore } from 'react';
 
-import { clearAuthToken, getAuthToken, setAuthToken } from "../utils";
+import { clearAuthToken, getAuthToken, setAuthToken } from '../utils';
 
 interface AuthState {
   isLoading: boolean;

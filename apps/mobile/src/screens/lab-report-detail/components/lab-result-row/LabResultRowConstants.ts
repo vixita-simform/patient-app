@@ -5,5 +5,5 @@
  */
 export const RANGE_BAND = Object.freeze({
   start: 30,
-  width: 40,
+  width: 40
 } as const);

@@ -1,19 +1,19 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { CustomText, StatusBadge } from "../../../../components";
-import { STATUS_BADGE_TONE, Strings, type StatusBadgeTone } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import { formatNumber } from "../../../../utils";
-import LabResultRowStyles from "./LabResultRowStyles";
-import type { LabResultRowProps } from "./LabResultRowTypes";
+import { CustomText, StatusBadge } from '../../../../components';
+import { STATUS_BADGE_TONE, Strings, type StatusBadgeTone } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import { formatNumber } from '../../../../utils';
+import LabResultRowStyles from './LabResultRowStyles';
+import type { LabResultRowProps } from './LabResultRowTypes';
 
 /** Maps a result's status tone to its range-bar marker fill style key. */
 const MARK_STYLE_KEY = Object.freeze({
-  [STATUS_BADGE_TONE.green]: "markGreen",
-  [STATUS_BADGE_TONE.amber]: "markAmber",
-  [STATUS_BADGE_TONE.coral]: "markCoral",
+  [STATUS_BADGE_TONE.green]: 'markGreen',
+  [STATUS_BADGE_TONE.amber]: 'markAmber',
+  [STATUS_BADGE_TONE.coral]: 'markCoral'
 } as const satisfies Record<StatusBadgeTone, string>);
 
 /**
@@ -31,9 +31,9 @@ const LabResultRow = ({ result, isDivided }: LabResultRowProps): ReactElement =>
       StyleSheet.flatten([
         styles.rangeMark,
         styles[MARK_STYLE_KEY[result.status]],
-        { left: `${result.markerPercent}%` as const },
+        { left: `${result.markerPercent}%` as const }
       ]),
-    [styles, result.status, result.markerPercent],
+    [styles, result.status, result.markerPercent]
   );
 
   return (

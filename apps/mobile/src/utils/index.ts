@@ -9,12 +9,26 @@ export {
   isThisWeek,
   isToday,
   isYesterday,
-  WEEKDAYS,
+  WEEKDAYS
 } from './formatDate';
 export { getInitials } from './getInitials';
-export { clearAuthToken, getAuthToken, setAuthToken } from './authStorage';
+export {
+  clearAuthToken,
+  clearStoredPatient,
+  getAuthToken,
+  getStoredPatient,
+  setAuthToken,
+  setStoredPatient
+} from './authStorage';
 export { formatNumber } from './formatNumber';
 export { getAgeInYears } from './getAgeInYears';
 export { parseDateOnly } from './parseDateOnly';
 export { goBackOr } from './goBackOr';
-export { buildDateStrip, buildTimeSlots, type DateStripDay, formatMonthYear, startOfDay, toLocalDayId } from './bookingDates';
+export {
+  buildDateStrip,
+  buildTimeSlots,
+  type DateStripDay,
+  formatMonthYear,
+  startOfDay,
+  toLocalDayId
+} from './bookingDates';

@@ -1,13 +1,13 @@
-import type { ReactElement } from "react";
-import { Pressable, View } from "react-native";
+import type { ReactElement } from 'react';
+import { Pressable, View } from 'react-native';
 
-import { Avatar, CustomButton, CustomText, StatusBadge } from "../../../../components";
-import { CalendarIcon, ClockIcon, VideoIcon } from "../../../../assets/icons";
-import { APPOINTMENT_ACTION_ICON, Strings } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import AppointmentCardStyles from "./AppointmentCardStyles";
-import type { AppointmentCardProps } from "./AppointmentCardTypes";
+import { CalendarIcon, ClockIcon, VideoIcon } from '../../../../assets/icons';
+import { Avatar, CustomButton, CustomText, StatusBadge } from '../../../../components';
+import { APPOINTMENT_ACTION_ICON, Strings } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import AppointmentCardStyles from './AppointmentCardStyles';
+import type { AppointmentCardProps } from './AppointmentCardTypes';
 
 /**
  * Appointment card: doctor row with status badge, date/time meta pill, and an
@@ -28,7 +28,7 @@ const AppointmentCard = ({
   date,
   time,
   actions,
-  onPress,
+  onPress
 }: AppointmentCardProps): ReactElement => {
   const { styles, theme } = useTheme(AppointmentCardStyles);
   const iconColor = Colors[theme].navy;
@@ -43,38 +43,40 @@ const AppointmentCard = ({
         style={styles.summary}
         onPress={onPress}
       >
-        <View style={styles.apptTop}>
+        <View style={styles.appointmentTop}>
           <Avatar initials={initials} tone={avatarTone} />
-          <View style={styles.apptInfo}>
-            <CustomText style={styles.apptTitle}>{doctorName}</CustomText>
-            <CustomText style={styles.apptSub}>{detail}</CustomText>
+          <View style={styles.appointmentInfo}>
+            <CustomText style={styles.appointmentTitle}>{doctorName}</CustomText>
+            <CustomText style={styles.appointmentSub}>{detail}</CustomText>
           </View>
           <StatusBadge label={badgeLabel} tone={badgeTone} />
         </View>
-        <View style={styles.apptMeta}>
-          <View style={styles.apptMetaItem}>
+        <View style={styles.appointmentMeta}>
+          <View style={styles.appointmentMetaItem}>
             <CalendarIcon color={iconColor} size={scale(16)} />
-            <CustomText style={styles.apptMetaText}>{date}</CustomText>
+            <CustomText style={styles.appointmentMetaText}>{date}</CustomText>
           </View>
-          <View style={styles.apptMetaItem}>
+          <View style={styles.appointmentMetaItem}>
             <ClockIcon color={iconColor} size={scale(16)} />
-            <CustomText style={styles.apptMetaText}>{time}</CustomText>
+            <CustomText style={styles.appointmentMetaText}>{time}</CustomText>
           </View>
         </View>
       </Pressable>
       {actions?.length ? (
-        <View style={styles.apptActions}>
+        <View style={styles.appointmentActions}>
           {actions.map((action) => (
             <CustomButton
               accessibilityLabel={action.label}
               disabled={action.disabled}
-              icon={action.icon === APPOINTMENT_ACTION_ICON.video ? (
-                <VideoIcon color={Colors[theme].white} size={scale(16)} />
-              ) : undefined}
+              icon={
+                action.icon === APPOINTMENT_ACTION_ICON.video ? (
+                  <VideoIcon color={Colors[theme].white} size={scale(16)} />
+                ) : undefined
+              }
               key={action.label}
               label={action.label}
-              style={styles.apptActionBtn}
-              textStyle={styles.apptActionBtnText}
+              style={styles.appointmentActionBtn}
+              textStyle={styles.appointmentActionBtnText}
               variant={action.variant}
               onPress={action.onPress}
             />

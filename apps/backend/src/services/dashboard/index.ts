@@ -1,1 +1,1 @@
-export { getDashboard } from "./getDashboard";
+export { getDashboard } from './getDashboard';

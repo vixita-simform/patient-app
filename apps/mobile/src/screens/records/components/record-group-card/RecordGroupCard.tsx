@@ -1,11 +1,11 @@
-import type { ReactElement } from "react";
-import { Fragment } from "react";
-import { View } from "react-native";
+import type { ReactElement } from 'react';
+import { Fragment } from 'react';
+import { View } from 'react-native';
 
-import { useTheme } from "../../../../hooks";
-import { RecordRow } from "../record-row";
-import RecordGroupCardStyles from "./RecordGroupCardStyles";
-import type { RecordGroupCardProps } from "./RecordGroupCardTypes";
+import { useTheme } from '../../../../hooks';
+import { RecordRow } from '../record-row';
+import RecordGroupCardStyles from './RecordGroupCardStyles';
+import type { RecordGroupCardProps } from './RecordGroupCardTypes';
 
 /**
  * A month's card: a list of record rows with a divider between each pair.

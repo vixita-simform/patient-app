@@ -1,10 +1,10 @@
-import type { ReactElement } from "react";
-import { View } from "react-native";
+import type { ReactElement } from 'react';
+import { View } from 'react-native';
 
-import { useTheme } from "../../hooks";
-import { CustomText } from "../custom-text";
-import FormFieldStyles from "./FormFieldStyles";
-import type { FormFieldProps } from "./FormFieldTypes";
+import { useTheme } from '../../hooks';
+import { CustomText } from '../custom-text';
+import FormFieldStyles from './FormFieldStyles';
+import type { FormFieldProps } from './FormFieldTypes';
 
 /**
  * Label above a form control, with an optional error message below it.
@@ -18,7 +18,15 @@ const FormField = ({ label, children, error }: FormFieldProps): ReactElement => 
     <View style={styles.field}>
       <CustomText style={styles.fieldLabel}>{label}</CustomText>
       {children}
-      {error ? <CustomText style={styles.errorText}>{error}</CustomText> : null}
+      {error ? (
+        <CustomText
+          accessibilityLiveRegion="polite"
+          accessibilityRole="alert"
+          style={styles.errorText}
+        >
+          {error}
+        </CustomText>
+      ) : null}
     </View>
   );
 };

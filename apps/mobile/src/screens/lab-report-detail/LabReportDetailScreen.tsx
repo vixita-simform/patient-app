@@ -1,14 +1,14 @@
-import type { ReactElement } from "react";
-import { ScrollView, View } from "react-native";
+import type { ReactElement } from 'react';
+import { ScrollView, View } from 'react-native';
 
-import { AlertIcon, DownloadIcon, ShareIcon } from "../../assets/icons";
-import { CustomButton, CustomText, IconButton, Screen, ScreenHeader } from "../../components";
-import { Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import { LabResultRow } from "./components";
-import LabReportDetailScreenStyles from "./LabReportDetailScreenStyles";
-import useLabReportDetailScreen from "./useLabReportDetailScreen";
+import { AlertIcon, DownloadIcon, ShareIcon } from '../../assets/icons';
+import { CustomButton, CustomText, IconButton, Screen, ScreenHeader } from '../../components';
+import { Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { LabResultRow } from './components';
+import LabReportDetailScreenStyles from './LabReportDetailScreenStyles';
+import useLabReportDetailScreen from './useLabReportDetailScreen';
 
 /** Shared size for the header, alert and footer icons. */
 const ICON_SIZE = scale(20);
@@ -30,7 +30,7 @@ export default function LabReportDetailScreen(): ReactElement {
     showAlert,
     onBackPress,
     onSharePress,
-    onDownloadPress,
+    onDownloadPress
   } = useLabReportDetailScreen();
   const isShareDisabled = !onSharePress;
   const isDownloadDisabled = !onDownloadPress;

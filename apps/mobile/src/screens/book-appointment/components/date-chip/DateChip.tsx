@@ -1,11 +1,11 @@
-import type { ReactElement } from "react";
-import { useCallback, useMemo } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import type { ReactElement } from 'react';
+import { useCallback, useMemo } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 
-import { CustomText } from "../../../../components";
-import { useTheme } from "../../../../hooks";
-import DateChipStyles from "./DateChipStyles";
-import type { DateChipProps } from "./DateChipTypes";
+import { CustomText } from '../../../../components';
+import { useTheme } from '../../../../hooks';
+import DateChipStyles from './DateChipStyles';
+import type { DateChipProps } from './DateChipTypes';
 
 /**
  * One day cell in the horizontal date strip: weekday label over the day number.
@@ -19,22 +19,23 @@ const DateChip = ({
   accessibilityLabel,
   active,
   disabled,
-  onPress,
+  onPress
 }: DateChipProps): ReactElement => {
   const { styles } = useTheme(DateChipStyles);
   const handlePress = useCallback(() => onPress(id), [id, onPress]);
 
   const containerStyle = useMemo(
-    () => StyleSheet.flatten([styles.date, active && styles.dateActive, disabled && styles.dateOff]),
-    [styles, active, disabled],
+    () =>
+      StyleSheet.flatten([styles.date, active && styles.dateActive, disabled && styles.dateOff]),
+    [styles, active, disabled]
   );
   const dayStyle = useMemo(
     () => StyleSheet.flatten([styles.dateDay, active && styles.dateActiveDay]),
-    [styles, active],
+    [styles, active]
   );
   const numStyle = useMemo(
     () => StyleSheet.flatten([styles.dateNum, active && styles.dateActiveNum]),
-    [styles, active],
+    [styles, active]
   );
   const accessibilityState = useMemo(() => ({ selected: active, disabled }), [active, disabled]);
 

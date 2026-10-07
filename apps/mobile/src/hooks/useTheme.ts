@@ -1,8 +1,8 @@
-import { useCallback, useMemo, useState } from "react";
-import { useColorScheme } from "react-native";
+import { useCallback, useMemo, useState } from 'react';
+import { useColorScheme } from 'react-native';
 
-import type { ThemeMode } from "../theme";
-import { ThemeModeEnum } from "../theme";
+import type { ThemeMode } from '../theme';
+import { ThemeModeEnum } from '../theme';
 
 /** A concrete theme mode, or follow the OS setting. */
 type ThemeModeSetting = ThemeMode | ThemeModeEnum.system;
@@ -26,7 +26,7 @@ interface UseThemeReturn<T> {
  * - changeTheme: (value: ThemeMode) => void - change the current theme mode.
  */
 const useTheme = <T>(
-  styleSheetFn?: (theme: ThemeMode, isDark?: boolean) => T,
+  styleSheetFn?: (theme: ThemeMode, isDark?: boolean) => T
 ): UseThemeReturn<T> => {
   const colorScheme = useColorScheme();
   const [themeMode, setThemeMode] = useState<ThemeModeSetting>(ThemeModeEnum.light);
@@ -40,7 +40,7 @@ const useTheme = <T>(
   const isDark = currentThemeMode === ThemeModeEnum.dark;
   const styles = useMemo<T>(
     () => (styleSheetFn?.(currentThemeMode, isDark) ?? {}) as T,
-    [styleSheetFn, currentThemeMode, isDark],
+    [styleSheetFn, currentThemeMode, isDark]
   );
   const changeTheme = useCallback((value: ThemeMode): void => {
     setThemeMode(value);

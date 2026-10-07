@@ -1,5 +1,5 @@
-import type { RecordSummaryTileId } from "../../constants";
-import type { RecordRowData, RecordSummaryTileData } from "./components";
+import type { RecordSummaryTileId } from '../../constants';
+import type { RecordRowData, RecordSummaryTileData } from './components';
 
 /** One month group with its rows' navigability resolved. */
 export interface RecordGroupViewData {

@@ -1,9 +1,9 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
-import { StyleSheet, Text } from "react-native";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
+import { StyleSheet, Text } from 'react-native';
 
-import { Fonts } from "../../theme";
-import type { CustomTextType } from "./CustomTextTypes";
+import { Fonts } from '../../theme';
+import type { CustomTextType } from './CustomTextTypes';
 
 /** Caps Dynamic Type growth so large accessibility sizes stay readable without breaking layouts. */
 const MAX_FONT_SIZE_MULTIPLIER = 1.3;

@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../theme';
 
 /**
  * Styles for `CalendarModal`, the iOS date-picker bottom sheet.
@@ -11,35 +11,35 @@ const styles = (theme: ThemeMode) =>
   StyleSheet.create({
     backdrop: {
       flex: 1,
-      justifyContent: "flex-end",
-      backgroundColor: Colors[theme].navyAlpha40,
+      justifyContent: 'flex-end',
+      backgroundColor: Colors[theme].navyAlpha40
     },
     sheet: {
       backgroundColor: Colors[theme].card,
       borderTopLeftRadius: scale(20),
       borderTopRightRadius: scale(20),
-      paddingBottom: scale(24),
+      paddingBottom: scale(24)
     },
     header: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
       paddingTop: scale(14),
       paddingRight: scale(20),
       paddingBottom: scale(10),
       paddingLeft: scale(20),
       borderBottomWidth: scale(1),
-      borderBottomColor: Colors[theme].line,
+      borderBottomColor: Colors[theme].line
     },
     headerText: {
       fontFamily: Fonts.family.semiBold,
       fontSize: Fonts.size.f14,
       fontWeight: Fonts.weight.semi,
-      color: Colors[theme].green,
+      color: Colors[theme].green
     },
     body: {
-      alignItems: "center",
-    },
+      alignItems: 'center'
+    }
   });
 
 export default styles;

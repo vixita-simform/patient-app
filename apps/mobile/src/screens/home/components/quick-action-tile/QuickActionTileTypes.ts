@@ -1,6 +1,8 @@
-import type { ComponentType } from "react";
+import type { ComponentType } from 'react';
 
-export type QuickActionVariant = "green" | "blue" | "amber" | "emergency";
+import type { QuickActionVariant } from '../../../../constants';
+
+export type { QuickActionVariant };
 
 export interface QuickActionTileProps {
   label: string;

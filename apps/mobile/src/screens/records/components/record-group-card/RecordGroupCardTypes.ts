@@ -1,4 +1,4 @@
-import type { RecordRowData } from "../record-row";
+import type { RecordRowData } from '../record-row';
 
 export interface RecordGroupCardProps {
   records: readonly RecordRowData[];

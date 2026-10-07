@@ -1,2 +1,2 @@
-export { default as IconBox } from "./IconBox";
-export type { IconBoxProps } from "./IconBoxTypes";
+export { default as IconBox } from './IconBox';
+export type { IconBoxProps } from './IconBoxTypes';

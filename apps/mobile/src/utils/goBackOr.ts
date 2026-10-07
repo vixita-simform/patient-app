@@ -1,4 +1,4 @@
-import { type Href, router } from "expo-router";
+import { type Href, router } from 'expo-router';
 
 /**
  * Pops back when there is history, otherwise replaces the screen with `fallback`

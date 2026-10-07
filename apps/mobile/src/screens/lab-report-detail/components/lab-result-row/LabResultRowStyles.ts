@@ -1,7 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
-import { RANGE_BAND } from "./LabResultRowConstants";
+import { Colors, Fonts, scale, type ThemeMode } from '../../../../theme';
+import { RANGE_BAND } from './LabResultRowConstants';
 
 /** Marker diameter; the rail is inset by half of it so the marker never overhangs the track. */
 const MARKER_SIZE = scale(14);
@@ -10,70 +10,70 @@ const MARKER_HALF = MARKER_SIZE / 2;
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
     result: {
-      flexDirection: "column",
+      flexDirection: 'column',
       gap: scale(8),
       paddingVertical: scale(14),
-      paddingHorizontal: 0,
+      paddingHorizontal: 0
     },
     resultDivider: {
       borderTopWidth: scale(1),
-      borderTopColor: Colors[theme].line,
+      borderTopColor: Colors[theme].line
     },
     topRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between'
     },
     tTitle: {
       fontFamily: Fonts.family.bold,
       fontSize: Fonts.size.h3,
       fontWeight: Fonts.weight.extraSemi,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     valueRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between'
     },
     resultValue: {
       fontFamily: Fonts.family.extraBold,
       fontSize: Fonts.size.f22,
       fontWeight: Fonts.weight.extraBold,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     tXs: {
       fontFamily: Fonts.family.regular,
       fontSize: Fonts.size.f12,
-      color: Colors[theme].muted,
+      color: Colors[theme].muted
     },
     range: {
       height: scale(6),
       // design-drift[backgroundColor]: literal '#E6ECE9' has no matching token; added Colors.rangeTrack
       backgroundColor: Colors[theme].rangeTrack,
-      position: "relative",
-      borderRadius: scale(3),
+      position: 'relative',
+      borderRadius: scale(3)
     },
     // Inset rail that both the band and the marker are positioned in: the marker is
     // centred on its percent (translateX below), so a half-marker inset on each side
     // keeps it inside the track at 0% and 100%.
     rangeRail: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       bottom: 0,
       left: MARKER_HALF,
-      right: MARKER_HALF,
+      right: MARKER_HALF
     },
     rangeOk: {
-      position: "absolute",
+      position: 'absolute',
       left: `${RANGE_BAND.start}%`,
       width: `${RANGE_BAND.width}%`,
-      height: "100%",
+      height: '100%',
       // design-drift[backgroundColor]: literal '#BFE0D6' has no matching token; added Colors.rangeNormalBand
       backgroundColor: Colors[theme].rangeNormalBand,
-      borderRadius: scale(3),
+      borderRadius: scale(3)
     },
     rangeMark: {
-      position: "absolute",
+      position: 'absolute',
       top: scale(-4),
       width: MARKER_SIZE,
       height: MARKER_SIZE,
@@ -87,17 +87,17 @@ const styles = (theme: ThemeMode) =>
       shadowOpacity: 1,
       shadowRadius: 0,
       elevation: 1,
-      borderRadius: scale(7),
+      borderRadius: scale(7)
     },
     markCoral: {
-      backgroundColor: Colors[theme].coral,
+      backgroundColor: Colors[theme].coral
     },
     markGreen: {
-      backgroundColor: Colors[theme].green,
+      backgroundColor: Colors[theme].green
     },
     markAmber: {
-      backgroundColor: Colors[theme].amber,
-    },
+      backgroundColor: Colors[theme].amber
+    }
   });
 
 export default styles;

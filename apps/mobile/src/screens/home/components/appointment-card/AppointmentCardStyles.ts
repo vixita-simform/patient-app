@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
@@ -10,49 +10,49 @@ const styles = (theme: ThemeMode) =>
       borderColor: Colors[theme].line,
       padding: scale(16),
       borderRadius: scale(18),
-      flexDirection: "column",
-      gap: scale(12),
+      flexDirection: 'column',
+      gap: scale(12)
     },
     rowGap12: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: scale(12),
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: scale(12)
     },
     colFlex: {
-      flexDirection: "column",
+      flexDirection: 'column',
       flex: 1,
-      minWidth: 0,
+      minWidth: 0
     },
     textTitle: {
       fontFamily: Fonts.family.bold,
       fontSize: Fonts.size.h3,
       fontWeight: Fonts.weight.extraSemi,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     textSub: {
       fontFamily: Fonts.family.regular,
       fontSize: Fonts.size.h4,
-      color: Colors[theme].muted,
+      color: Colors[theme].muted
     },
-    apptMeta: {
-      flexDirection: "row",
+    appointmentMeta: {
+      flexDirection: 'row',
       gap: scale(16),
       backgroundColor: Colors[theme].background,
       paddingVertical: scale(10),
       paddingHorizontal: scale(12),
-      borderRadius: scale(12),
+      borderRadius: scale(12)
     },
-    apptMetaItem: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: scale(6),
+    appointmentMetaItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: scale(6)
     },
-    apptMetaText: {
+    appointmentMetaText: {
       fontFamily: Fonts.family.semiBold,
       fontSize: Fonts.size.h4,
       fontWeight: Fonts.weight.semi,
-      color: Colors[theme].navy,
-    },
+      color: Colors[theme].navy
+    }
   });
 
 export default styles;

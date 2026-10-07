@@ -1,4 +1,4 @@
-import type { NotificationType } from "../../constants";
+import type { NotificationType } from '../../constants';
 
 /** One notification row, as returned by the API (flat, ungrouped). */
 export interface NotificationItem {

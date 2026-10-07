@@ -1,22 +1,22 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
     tabs: {
-      flexDirection: "row",
+      flexDirection: 'row',
       backgroundColor: Colors[theme].segmentTrack,
       padding: scale(4),
-      borderRadius: scale(14),
+      borderRadius: scale(14)
     },
     tabItem: {
       flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
       paddingVertical: scale(10),
       paddingHorizontal: 0,
-      borderRadius: scale(11),
+      borderRadius: scale(11)
     },
     tabItemActive: {
       backgroundColor: Colors[theme].card,
@@ -25,18 +25,18 @@ const styles = (theme: ThemeMode) =>
       shadowOffset: { width: 0, height: scale(1) },
       shadowOpacity: 0.12,
       shadowRadius: scale(3),
-      elevation: 2,
+      elevation: 2
     },
     tabText: {
-      textAlign: "center",
+      textAlign: 'center',
       fontFamily: Fonts.family.semiBold,
       fontSize: Fonts.size.f14,
       fontWeight: Fonts.weight.semi,
-      color: Colors[theme].muted,
+      color: Colors[theme].muted
     },
     tabTextActive: {
-      color: Colors[theme].navy,
-    },
+      color: Colors[theme].navy
+    }
   });
 
 export default styles;

@@ -1,24 +1,24 @@
-import { screen } from "@testing-library/react-native";
+import { screen } from '@testing-library/react-native';
 
-import { CustomText, Screen } from "../../../src/components";
-import { RenderWrapper } from "../../Wrapper";
+import { CustomText, Screen } from '../../../src/components';
+import { RenderWrapper } from '../../Wrapper';
 
-describe("Screen", () => {
-  it("matches the snapshot", async () => {
+describe('Screen', () => {
+  it('matches the snapshot', async () => {
     await RenderWrapper(
       <Screen>
         <CustomText>Content</CustomText>
-      </Screen>,
+      </Screen>
     );
     expect(screen.toJSON()).toMatchSnapshot();
   });
 
-  it("renders its children", async () => {
+  it('renders its children', async () => {
     await RenderWrapper(
       <Screen>
         <CustomText>Content</CustomText>
-      </Screen>,
+      </Screen>
     );
-    expect(screen.getByText("Content")).toBeOnTheScreen();
+    expect(screen.getByText('Content')).toBeOnTheScreen();
   });
 });

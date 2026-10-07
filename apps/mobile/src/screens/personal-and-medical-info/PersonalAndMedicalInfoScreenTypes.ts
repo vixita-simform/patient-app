@@ -1,5 +1,5 @@
-import type { BloodGroup, Gender } from "../../constants";
-import type { ChipOption } from "./components";
+import type { BloodGroup, Gender } from '../../constants';
+import type { ChipOption } from './components';
 
 export interface UsePersonalAndMedicalInfoScreenReturn {
   initials: string;
@@ -12,7 +12,7 @@ export interface UsePersonalAndMedicalInfoScreenReturn {
   /** True on iOS, where the date picker is a modal component the screen must render. */
   shouldRenderIosPicker: boolean;
   gender: Gender;
-  bloodGroup: BloodGroup;
+  bloodGroup: BloodGroup | null;
   allergies: readonly ChipOption[];
   existingConditions: string;
   emergencyContactName: string;

@@ -1,16 +1,16 @@
-import { router } from "expo-router";
-import { useCallback, useMemo } from "react";
+import { router } from 'expo-router';
+import { useCallback, useMemo } from 'react';
 
 import {
   RECORD_SUMMARY_TILE_ID,
   RECORD_TYPE,
   recordsDummyData,
   STACK_ROUTES,
-  Strings,
-} from "../../constants";
-import type { RecordSummaryTileId } from "../../constants";
-import type { RecordSummaryTileData } from "./components";
-import type { RecordGroupViewData, UseRecordsScreenReturn } from "./RecordsScreenTypes";
+  Strings
+} from '../../constants';
+import type { RecordSummaryTileId } from '../../constants';
+import type { RecordSummaryTileData } from './components';
+import type { RecordGroupViewData, UseRecordsScreenReturn } from './RecordsScreenTypes';
 
 /**
  * Month groups with each row's navigability decided once: only lab reports have a detail
@@ -22,9 +22,9 @@ const RECORD_GROUPS: readonly RecordGroupViewData[] = Object.freeze(
     monthLabel: group.monthLabel,
     records: group.records.map((record) => ({
       ...record,
-      pressable: record.type === RECORD_TYPE.labReport && record.pressable !== false,
-    })),
-  })),
+      pressable: record.type === RECORD_TYPE.labReport && record.pressable !== false
+    }))
+  }))
 );
 
 /**
@@ -51,29 +51,29 @@ const useRecordsScreen = (): UseRecordsScreenReturn => {
         id: RECORD_SUMMARY_TILE_ID.labReports,
         value: recordsDummyData.stats.labReportsCount,
         label: Strings.Common.labReports,
-        pressable: false,
+        pressable: false
       },
       {
         id: RECORD_SUMMARY_TILE_ID.prescriptions,
         value: recordsDummyData.stats.prescriptionsCount,
         label: Strings.RecordsScreen.prescriptions,
-        pressable: true,
+        pressable: true
       },
       {
         id: RECORD_SUMMARY_TILE_ID.discharges,
         value: recordsDummyData.stats.dischargesCount,
         label: Strings.RecordsScreen.discharges,
-        pressable: false,
-      },
+        pressable: false
+      }
     ],
-    [],
+    []
   );
 
   return {
     summaryTiles,
     groups: RECORD_GROUPS,
     onRecordPress,
-    onSummaryTilePress,
+    onSummaryTilePress
   };
 };
 

@@ -1,23 +1,21 @@
-import type { ReactElement } from "react";
-import { Pressable, View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import type { ReactElement } from 'react';
+import { Pressable, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
-import { InfoIcon, LockIcon, PhoneIcon, PlusIcon } from "../../assets/icons";
-import { CustomButton, CustomText, Screen, SegmentedTabs, TextField } from "../../components";
-import { AUTH_TAB, BUTTON_VARIANT, Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import { CountryCodePicker } from "./components";
-import SignInScreenStyles from "./SignInScreenStyles";
-import useSignInScreen from "./useSignInScreen";
-
-const COPY = Strings.SignInScreen;
+import { InfoIcon, LockIcon, PhoneIcon, PlusIcon } from '../../assets/icons';
+import { CustomButton, CustomText, Screen, SegmentedTabs, TextField } from '../../components';
+import { AUTH_TAB, BUTTON_VARIANT, Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { CountryCodePicker } from './components';
+import SignInScreenStyles from './SignInScreenStyles';
+import useSignInScreen from './useSignInScreen';
 
 /** Grows the "Emergency? Call 108" link to at least a 44pt target. */
 const EMERGENCY_HIT_SLOP = scale(12);
 
 /**
- * Sign in: choose mobile number or patient ID, request an OTP, or use a password.
+ * Sign in: choose mobile number or patient ID, then request an OTP or enter a password.
  * @returns {ReactElement} A React Element.
  */
 const SignInScreen = (): ReactElement => {
@@ -25,22 +23,29 @@ const SignInScreen = (): ReactElement => {
   const {
     tabs,
     activeTab,
+    isPasswordMode,
     countries,
     selectedCountry,
     mobile,
     patientId,
+    password,
     mobileError,
     patientIdError,
+    passwordError,
     patientIdMaxLength,
-    isGetOtpDisabled,
+    isSubmitDisabled,
+    isSubmitting,
     onTabPress,
     onCountrySelect,
     onMobileChange,
     onPatientIdChange,
     onMobileBlur,
     onPatientIdBlur,
-    onGetOtpPress,
-    onEmergencyPress,
+    onPasswordChange,
+    onPasswordBlur,
+    onAuthMethodToggle,
+    onSubmitPress,
+    onEmergencyPress
   } = useSignInScreen();
 
   return (
@@ -56,9 +61,9 @@ const SignInScreen = (): ReactElement => {
             <PlusIcon color={Colors[theme].white} size={scale(24)} strokeWidth={2.6} />
           </View>
           <View style={styles.headingGroup}>
-            <CustomText style={styles.eyebrow}>{COPY.hospitalName}</CustomText>
-            <CustomText style={styles.authTitle}>{COPY.title}</CustomText>
-            <CustomText style={styles.subtitle}>{COPY.subtitle}</CustomText>
+            <CustomText style={styles.eyebrow}>{Strings.SignInScreen.hospitalName}</CustomText>
+            <CustomText style={styles.authTitle}>{Strings.SignInScreen.title}</CustomText>
+            <CustomText style={styles.subtitle}>{Strings.SignInScreen.subtitle}</CustomText>
           </View>
         </View>
 
@@ -68,7 +73,7 @@ const SignInScreen = (): ReactElement => {
           <TextField
             error={mobileError}
             keyboardType="number-pad"
-            label={COPY.tabMobileNumber}
+            label={Strings.SignInScreen.tabMobileNumber}
             leading={
               <>
                 <CountryCodePicker
@@ -80,7 +85,7 @@ const SignInScreen = (): ReactElement => {
               </>
             }
             maxLength={selectedCountry.maxLength}
-            placeholder={COPY.mobilePlaceholder}
+            placeholder={Strings.SignInScreen.mobilePlaceholder}
             value={mobile}
             onBlur={onMobileBlur}
             onChangeText={onMobileChange}
@@ -90,56 +95,71 @@ const SignInScreen = (): ReactElement => {
             autoCapitalize="characters"
             error={patientIdError}
             keyboardType="default"
-            label={COPY.tabPatientId}
+            label={Strings.SignInScreen.tabPatientId}
             maxLength={patientIdMaxLength}
-            placeholder={COPY.patientIdPlaceholder}
+            placeholder={Strings.SignInScreen.patientIdPlaceholder}
             value={patientId}
             onBlur={onPatientIdBlur}
             onChangeText={onPatientIdChange}
           />
         )}
-
+        {isPasswordMode ? (
+          <TextField
+            secureTextEntry
+            autoCapitalize="none"
+            autoComplete="current-password"
+            error={passwordError}
+            label={Strings.SignInScreen.passwordLabel}
+            placeholder={Strings.SignInScreen.passwordPlaceholder}
+            value={password}
+            onBlur={onPasswordBlur}
+            onChangeText={onPasswordChange}
+            onSubmitEditing={onSubmitPress}
+          />
+        ) : null}
         <CustomButton
-          disabled={isGetOtpDisabled}
-          label={COPY.getOtp}
+          disabled={isSubmitDisabled}
+          label={isPasswordMode ? Strings.SignInScreen.signIn : Strings.SignInScreen.getOtp}
+          loading={isSubmitting}
           variant={BUTTON_VARIANT.fill}
-          onPress={onGetOtpPress}
+          onPress={onSubmitPress}
         />
-
         <View style={styles.orRow}>
           <View style={styles.divider} />
-          <CustomText style={styles.textXs}>{COPY.or}</CustomText>
+          <CustomText style={styles.textXs}>{Strings.SignInScreen.or}</CustomText>
           <View style={styles.divider} />
         </View>
-
-        {/* Password sign-in flow is pending; shown disabled until it exists. */}
         <CustomButton
-          disabled
-          icon={<LockIcon color={Colors[theme].green} size={scale(20)} />}
-          label={COPY.signInWithPassword}
+          icon={
+            isPasswordMode ? undefined : <LockIcon color={Colors[theme].green} size={scale(20)} />
+          }
+          label={
+            isPasswordMode
+              ? Strings.SignInScreen.signInWithOtp
+              : Strings.SignInScreen.signInWithPassword
+          }
           variant={BUTTON_VARIANT.line}
+          onPress={onAuthMethodToggle}
         />
 
         <View style={styles.infoCard}>
           <InfoIcon color={Colors[theme].blue} size={scale(20)} />
           <CustomText style={styles.infoText}>
-            {COPY.newPatientPrefix}
-            <CustomText style={styles.infoTextBold}>
-              {COPY.websiteLink}
-            </CustomText>
-            {COPY.newPatientSuffix}
+            {Strings.SignInScreen.newPatientPrefix}
+            <CustomText style={styles.infoTextBold}>{Strings.SignInScreen.websiteLink}</CustomText>
+            {Strings.SignInScreen.newPatientSuffix}
           </CustomText>
         </View>
 
         <Pressable
-          accessibilityLabel={COPY.emergencyCall}
+          accessibilityLabel={Strings.SignInScreen.emergencyCall}
           accessibilityRole="link"
           hitSlop={EMERGENCY_HIT_SLOP}
           style={styles.emergencyRow}
           onPress={onEmergencyPress}
         >
           <PhoneIcon color={Colors[theme].coral} size={scale(16)} />
-          <CustomText style={styles.emergencyText}>{COPY.emergencyCall}</CustomText>
+          <CustomText style={styles.emergencyText}>{Strings.SignInScreen.emergencyCall}</CustomText>
         </Pressable>
       </KeyboardAwareScrollView>
     </Screen>

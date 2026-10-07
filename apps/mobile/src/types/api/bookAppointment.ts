@@ -1,4 +1,4 @@
-import type { TimeSlotStatus } from "../../constants";
+import type { TimeSlotStatus } from '../../constants';
 
 export type { TimeSlotStatus };
 

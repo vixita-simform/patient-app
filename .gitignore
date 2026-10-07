@@ -49,3 +49,4 @@ apps/mobile/design/.extracted/
 # Next.js (apps/backend)
 .next/
 next-env.d.ts
+**/*/.env

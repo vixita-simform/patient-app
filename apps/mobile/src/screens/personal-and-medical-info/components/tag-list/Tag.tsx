@@ -1,12 +1,12 @@
-import type { ReactElement } from "react";
-import { memo, useCallback } from "react";
-import { Pressable, View } from "react-native";
+import type { ReactElement } from 'react';
+import { memo, useCallback } from 'react';
+import { Pressable, View } from 'react-native';
 
-import { CloseIcon } from "../../../../assets/icons";
-import { CustomText } from "../../../../components";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import TagListStyles from "./TagListStyles";
+import { CloseIcon } from '../../../../assets/icons';
+import { CustomText } from '../../../../components';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import TagListStyles from './TagListStyles';
 
 /** Grows the 16px remove icon to the 44pt minimum touch target. */
 const REMOVE_HIT_SLOP = scale(14);

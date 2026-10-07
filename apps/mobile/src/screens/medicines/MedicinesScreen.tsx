@@ -1,14 +1,14 @@
-import type { ReactElement } from "react";
-import { ScrollView, View } from "react-native";
+import type { ReactElement } from 'react';
+import { ScrollView, View } from 'react-native';
 
-import { PlusIcon } from "../../assets/icons";
-import { CustomText, IconButton, Screen, ScreenHeader } from "../../components";
-import { Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import { DoseTimeline, MedicineCard } from "./components";
-import MedicinesScreenStyles from "./MedicinesScreenStyles";
-import useMedicinesScreen from "./useMedicinesScreen";
+import { PlusIcon } from '../../assets/icons';
+import { CustomText, IconButton, Screen, ScreenHeader } from '../../components';
+import { Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { DoseTimeline, MedicineCard } from './components';
+import MedicinesScreenStyles from './MedicinesScreenStyles';
+import useMedicinesScreen from './useMedicinesScreen';
 
 /**
  * "My medicines" screen: header, "Today's doses" summary card (4 dose
@@ -27,7 +27,7 @@ export default function MedicinesScreen(): ReactElement {
     medicines,
     onBackPress,
     onAddPress,
-    onOrderRefillPress,
+    onOrderRefillPress
   } = useMedicinesScreen();
   const isAddDisabled = !onAddPress;
 

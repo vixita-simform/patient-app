@@ -1,7 +1,7 @@
-import type { ComponentType } from "react";
+import type { ComponentType } from 'react';
 
-import type { IconTone } from "../../../../constants";
-import type { NotificationItem } from "../../../../types";
+import type { IconTone } from '../../../../constants';
+import type { NotificationItem } from '../../../../types';
 
 /** A `NotificationItem` plus its pre-formatted relative/absolute time label for display. */
 export interface NotificationRowData extends NotificationItem {

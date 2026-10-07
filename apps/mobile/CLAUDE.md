@@ -39,6 +39,7 @@ src/
     Metrics.tsx             # scale(), width, height, globalMetrics
     Fonts.ts                # Fonts.family.*, Fonts.size.* and Fonts.weight.*
     index.ts                # exports `theme`, `themes`, types, and Metrics
+  services/                 # backend API: apiRequest/ApiError, per-feature calls (authApi)
   utils/                    # formatCurrency (INR, en-IN), formatDate / formatTime
   constants/
     index.ts                # barrel
@@ -116,7 +117,7 @@ src/screens/home/
   import Fonts from "../../theme/Fonts"; // bad: file inside the folder
   import { theme } from "@/theme"; // bad: alias
   ```
-- Folders with an `index.ts`: `theme`, `components`, `assets/icons`, `hooks`, `constants`, `screens`, `utils`. When you add something to one of them, export it from that folder's `index.ts`. When you create a new folder that other code imports from, give it an `index.ts`.
+- Folders with an `index.ts`: `theme`, `components`, `assets/icons`, `hooks`, `constants`, `screens`, `services`, `utils`. When you add something to one of them, export it from that folder's `index.ts`. When you create a new folder that other code imports from, give it an `index.ts`.
 - Inside a folder, sibling files import each other directly (`./Metrics`, `./CustomTextTypes`), never through their own `index.ts`, to avoid circular imports.
 
 ## Styling rules

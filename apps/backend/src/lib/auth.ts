@@ -1,43 +1,52 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
+import { createHmac, timingSafeEqual } from 'node:crypto';
 
-import { env } from "./env";
+import { env } from './env';
 
-/** Patient ids are short opaque strings such as "p_001". */
+/** Patient ids are opaque strings of letters, digits, `_` and `-` (database ids are numeric). */
 const PATIENT_ID_PATTERN = /^[A-Za-z0-9_-]{1,64}$/;
 
-const sign = (patientId: string): string =>
-  createHmac("sha256", env.authTokenSecret).update(patientId).digest("base64url");
+/** How long an access token stays valid. */
+export const ACCESS_TOKEN_TTL_SECONDS = 7 * 24 * 60 * 60;
+
+const sign = (payload: string): string =>
+  createHmac('sha256', env.authTokenSecret).update(payload).digest('base64url');
 
 /**
- * Issues an access token for a patient: `<patientId>.<HMAC-SHA256 signature>`.
+ * Issues an access token for a patient: `<patientId>.<expiry>.<HMAC-SHA256 signature>`.
  * Stand-in until a real identity provider (OTP service) issues tokens.
  * @param patientId - the patient the token is for.
+ * @param now - current time in ms, overridable for tests.
  * @returns the signed token.
  */
-export function issueAccessToken(patientId: string): string {
+export function issueAccessToken(patientId: string, now: number = Date.now()): string {
   if (!PATIENT_ID_PATTERN.test(patientId)) {
-    throw new Error("Invalid patient id");
+    throw new Error('Invalid patient id');
   }
-  return `${patientId}.${sign(patientId)}`;
+  const payload = `${patientId}.${Math.floor(now / 1000) + ACCESS_TOKEN_TTL_SECONDS}`;
+  return `${payload}.${sign(payload)}`;
 }
 
 /**
  * Verifies a token and returns the patient id it was issued for.
  * @param token - the token from the Authorization header.
- * @returns the patient id, or null when the token is malformed or the signature is wrong.
+ * @param now - current time in ms, overridable for tests.
+ * @returns the patient id, or null when the token is malformed, expired or badly signed.
  */
-export function verifyAccessToken(token: string): string | null {
-  const separator = token.lastIndexOf(".");
-  if (separator <= 0) {
+export function verifyAccessToken(token: string, now: number = Date.now()): string | null {
+  const parts = token.split('.');
+  if (parts.length !== 3) {
     return null;
   }
-  const patientId = token.slice(0, separator);
-  if (!PATIENT_ID_PATTERN.test(patientId)) {
+  const [patientId, expiry, signature] = parts;
+  if (!PATIENT_ID_PATTERN.test(patientId) || !/^\d{1,12}$/.test(expiry)) {
     return null;
   }
-  const given = Buffer.from(token.slice(separator + 1));
-  const expected = Buffer.from(sign(patientId));
-  return given.length === expected.length && timingSafeEqual(given, expected) ? patientId : null;
+  const given = Buffer.from(signature);
+  const expected = Buffer.from(sign(`${patientId}.${expiry}`));
+  if (given.length !== expected.length || !timingSafeEqual(given, expected)) {
+    return null;
+  }
+  return Number(expiry) * 1000 > now ? patientId : null;
 }
 
 /**
@@ -46,7 +55,7 @@ export function verifyAccessToken(token: string): string | null {
  * @returns the verified patient id, or null when the caller is not signed in.
  */
 export function getAuthenticatedPatientId(request: Request): string | null {
-  const header = request.headers.get("authorization");
+  const header = request.headers.get('authorization');
   const match = header?.match(/^Bearer (\S+)$/);
   return match ? verifyAccessToken(match[1]) : null;
 }

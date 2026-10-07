@@ -1,6 +1,6 @@
-import type { ReactElement } from "react";
+import type { ReactElement } from 'react';
 
-import FindADoctorScreen from "../find-a-doctor/FindADoctorScreen";
+import FindADoctorScreen from '../find-a-doctor/FindADoctorScreen';
 
 /**
  * Visits tab: the Find a doctor screen embedded as the tab root.

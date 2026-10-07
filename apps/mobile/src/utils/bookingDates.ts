@@ -1,6 +1,6 @@
-import { TIME_SLOT_STATUS } from "../constants";
-import type { TimeSlot } from "../types";
-import { formatLongDate, isToday, MONTHS_LONG, WEEKDAYS } from "./formatDate";
+import { TIME_SLOT_STATUS } from '../constants';
+import type { TimeSlot } from '../types';
+import { formatLongDate, isToday, MONTHS_LONG, WEEKDAYS } from './formatDate';
 
 /** Number of days shown in the horizontal date strip, starting a day before the centre date. */
 const DATE_STRIP_DAYS = 6;
@@ -23,7 +23,7 @@ export interface DateStripDay {
   date: Date;
 }
 
-const pad2 = (value: number): string => String(value).padStart(2, "0");
+const pad2 = (value: number): string => String(value).padStart(2, '0');
 
 /** Local-calendar "YYYY-MM-DD" key; unlike `toISOString()` it never shifts the day by the UTC offset. */
 export function toLocalDayId(date: Date): string {
@@ -55,7 +55,7 @@ export function buildTimeSlots(date: Date, now: Date): TimeSlot[] {
       slots.push({
         id: `${pad2(hour)}:${pad2(minute)}`,
         label: `${hour % 12 || 12}:${pad2(minute)}`,
-        status: isPast ? TIME_SLOT_STATUS.past : TIME_SLOT_STATUS.available,
+        status: isPast ? TIME_SLOT_STATUS.past : TIME_SLOT_STATUS.available
       });
     }
   }
@@ -77,7 +77,7 @@ export function buildDateStrip(centerDate: Date, today: Date): DateStripDay[] {
       dayNumber: String(date.getDate()),
       accessibilityLabel: formatLongDate(date),
       disabled: date < todayStart,
-      date,
+      date
     };
   });
 }

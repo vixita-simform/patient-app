@@ -1,24 +1,18 @@
-import type { ReactElement } from "react";
-import { View } from "react-native";
+import type { ReactElement } from 'react';
+import { View } from 'react-native';
 
-import { CustomText } from "../../../../components";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import VitalTileStyles from "./VitalTileStyles";
-import type { VitalTileProps } from "./VitalTileTypes";
+import { CustomText } from '../../../../components';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import VitalTileStyles from './VitalTileStyles';
+import type { VitalTileProps } from './VitalTileTypes';
 
 /**
  * Compact vital-sign tile: tinted icon, value with optional unit, and label.
  * @param {VitalTileProps} props - vital data.
  * @returns {ReactElement} A React Element.
  */
-const VitalTile = ({
-  Icon,
-  tone,
-  value,
-  unit,
-  label,
-}: VitalTileProps): ReactElement => {
+const VitalTile = ({ Icon, tone, value, unit, label }: VitalTileProps): ReactElement => {
   const { styles, theme } = useTheme(VitalTileStyles);
 
   return (

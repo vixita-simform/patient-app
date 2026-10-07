@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
@@ -9,32 +9,32 @@ const styles = (theme: ThemeMode) =>
       backgroundColor: Colors[theme].card,
       borderWidth: scale(1),
       borderColor: Colors[theme].line,
-      flexDirection: "column",
+      flexDirection: 'column',
       gap: scale(6),
       padding: scale(12),
-      borderRadius: scale(16),
+      borderRadius: scale(16)
     },
     vitalValueRow: {
-      flexDirection: "row",
-      alignItems: "baseline",
+      flexDirection: 'row',
+      alignItems: 'baseline'
     },
     vitalValue: {
       fontFamily: Fonts.family.extraBold,
       fontSize: Fonts.size.h1,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     vitalUnit: {
       fontFamily: Fonts.family.semiBold,
       fontSize: Fonts.size.h5,
       fontWeight: Fonts.weight.semi,
       color: Colors[theme].muted,
-      marginLeft: scale(2),
+      marginLeft: scale(2)
     },
     textXs: {
       fontFamily: Fonts.family.regular,
       fontSize: Fonts.size.f12,
-      color: Colors[theme].muted,
-    },
+      color: Colors[theme].muted
+    }
   });
 
 export default styles;

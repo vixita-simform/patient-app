@@ -1,11 +1,11 @@
-import type { BottomTabNavigationOptions } from "expo-router/js-tabs";
-import { useMemo } from "react";
-import { StyleSheet } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import type { BottomTabNavigationOptions } from 'expo-router/js-tabs';
+import { useMemo } from 'react';
+import { StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useTheme } from "../hooks";
-import { Colors } from "../theme";
-import TabBarStyles, { TAB_BAR_BASE_HEIGHT } from "./TabBarStyles";
+import { useTheme } from '../hooks';
+import { Colors } from '../theme';
+import TabBarStyles, { TAB_BAR_BASE_HEIGHT } from './TabBarStyles';
 
 /**
  * Screen options for the bottom tab navigator, themed and sized to the bottom safe-area inset.
@@ -20,13 +20,10 @@ export default function useTabScreenOptions(): BottomTabNavigationOptions {
       headerShown: false,
       tabBarActiveTintColor: Colors[theme].green,
       tabBarInactiveTintColor: Colors[theme].tabInactive,
-      tabBarStyle: StyleSheet.flatten([
-        styles.tabBar,
-        { height: TAB_BAR_BASE_HEIGHT + bottom },
-      ]),
+      tabBarStyle: StyleSheet.flatten([styles.tabBar, { height: TAB_BAR_BASE_HEIGHT + bottom }]),
       tabBarItemStyle: styles.tabBarItem,
-      tabBarLabelStyle: styles.tabBarLabel,
+      tabBarLabelStyle: styles.tabBarLabel
     }),
-    [theme, styles, bottom],
+    [theme, styles, bottom]
   );
 }

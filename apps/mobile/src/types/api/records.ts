@@ -1,4 +1,4 @@
-import type { RECORD_TRAILING_KIND, RecordType, StatusBadgeTone } from "../../constants";
+import type { RECORD_TRAILING_KIND, RecordType, StatusBadgeTone } from '../../constants';
 
 /** Record row trailing slot: a status pill, or a plain chevron (no status). */
 export type RecordTrailing =

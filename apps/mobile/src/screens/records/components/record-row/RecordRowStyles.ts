@@ -1,30 +1,30 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
     record: {
-      flexDirection: "row",
+      flexDirection: 'row',
       gap: scale(12),
-      alignItems: "center",
+      alignItems: 'center'
     },
     info: {
-      flexDirection: "column",
+      flexDirection: 'column',
       flex: 1,
-      minWidth: 0,
+      minWidth: 0
     },
     title: {
       fontFamily: Fonts.family.bold,
       fontSize: Fonts.size.h3,
       fontWeight: Fonts.weight.extraSemi,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     subtitle: {
       fontFamily: Fonts.family.regular,
       fontSize: Fonts.size.h4,
-      color: Colors[theme].muted,
-    },
+      color: Colors[theme].muted
+    }
   });
 
 export default styles;

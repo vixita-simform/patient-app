@@ -1,4 +1,4 @@
-import type { TimeSlotStatus } from "../../../../types";
+import type { TimeSlotStatus } from '../../../../types';
 
 export interface TimeSlotChipProps {
   /** 24h "HH:mm" slot key, passed back to `onPress`. */

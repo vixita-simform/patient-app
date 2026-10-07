@@ -1,16 +1,16 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from 'react';
 
-import { DOSE_STATUS, medicinesDummyData, STACK_ROUTES, Strings } from "../../constants";
-import type { DoseStatus } from "../../constants";
-import { formatDate, formatTime, goBackOr } from "../../utils";
-import type { DoseChipData } from "./components";
-import type { UseMedicinesScreenReturn } from "./MedicinesScreenTypes";
+import type { DoseStatus } from '../../constants';
+import { DOSE_STATUS, medicinesDummyData, STACK_ROUTES, Strings } from '../../constants';
+import { formatDate, formatTime, goBackOr } from '../../utils';
+import type { DoseChipData } from './components';
+import type { UseMedicinesScreenReturn } from './MedicinesScreenTypes';
 
-/** Spoken status per dose, so "next" and "later" aren't told apart by colour alone. */
+/** Spoken status per dose, so "next" and "later" aren't told apart by color alone. */
 const DOSE_STATUS_LABEL = Object.freeze({
   [DOSE_STATUS.done]: Strings.MedicinesScreen.taken,
   [DOSE_STATUS.next]: Strings.MedicinesScreen.doseNext,
-  [DOSE_STATUS.pending]: Strings.MedicinesScreen.dosePending,
+  [DOSE_STATUS.pending]: Strings.MedicinesScreen.dosePending
 } as const satisfies Record<DoseStatus, string>);
 
 /**
@@ -29,10 +29,10 @@ const useMedicinesScreen = (): UseMedicinesScreenReturn => {
           id: dose.id,
           status: dose.status,
           timeLabel,
-          accessibilityLabel: `${timeLabel}, ${DOSE_STATUS_LABEL[dose.status]}`,
+          accessibilityLabel: `${timeLabel}, ${DOSE_STATUS_LABEL[dose.status]}`
         };
       }),
-    [doses],
+    [doses]
   );
 
   const dosesTakenLabel = useMemo(() => {
@@ -43,7 +43,7 @@ const useMedicinesScreen = (): UseMedicinesScreenReturn => {
   const prescriberLine = useMemo(
     () =>
       `${activePrescription.prescriberName}${Strings.Common.dotSeparator}${formatDate(activePrescription.prescribedAt)}`,
-    [activePrescription.prescriberName, activePrescription.prescribedAt],
+    [activePrescription.prescriberName, activePrescription.prescribedAt]
   );
 
   const onBackPress = useCallback(() => {
@@ -59,7 +59,7 @@ const useMedicinesScreen = (): UseMedicinesScreenReturn => {
     // The header "+" (spec §8) and "Order refill" (spec §9 Q6) have no flow yet, so
     // no handler is returned and the screen renders both buttons disabled.
     onAddPress: undefined,
-    onOrderRefillPress: undefined,
+    onOrderRefillPress: undefined
   };
 };
 

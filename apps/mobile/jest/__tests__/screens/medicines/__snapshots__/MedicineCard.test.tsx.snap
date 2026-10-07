@@ -268,7 +268,7 @@ exports[`MedicineCard matches the snapshot 1`] = `
       accessibilityRole="button"
       accessibilityState={
         {
-          "busy": undefined,
+          "busy": false,
           "checked": undefined,
           "disabled": true,
           "expanded": undefined,

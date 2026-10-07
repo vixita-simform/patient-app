@@ -1,9 +1,9 @@
-import type { ReactElement } from "react";
-import { memo, useCallback } from "react";
-import { Pressable } from "react-native";
-import type { StyleProp, TextStyle, ViewStyle } from "react-native";
+import type { ReactElement } from 'react';
+import { memo, useCallback } from 'react';
+import { Pressable } from 'react-native';
+import type { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
-import { CustomText } from "../custom-text";
+import { CustomText } from '../custom-text';
 
 // Shared, frozen a11y states so each render reuses the same objects.
 const SELECTED_STATE = Object.freeze({ selected: true });
@@ -29,7 +29,7 @@ const SegmentedTab = <T extends string>({
   isActive,
   style,
   textStyle,
-  onPress,
+  onPress
 }: SegmentedTabProps<T>): ReactElement => {
   const handlePress = useCallback(() => onPress(id), [id, onPress]);
 

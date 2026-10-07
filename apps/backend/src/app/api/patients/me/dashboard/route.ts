@@ -1,10 +1,15 @@
-import type { HomeDashboardResponse } from "@patient-app/shared-types";
+import type { HomeDashboardResponse } from '@patient-app/shared-types';
 
-import { getAuthenticatedPatientId, internalError, unauthorized } from "../../../../../lib";
-import { getDashboard } from "../../../../../services/dashboard";
+import {
+  getAuthenticatedPatientId,
+  internalError,
+  notFound,
+  unauthorized
+} from '../../../../../lib';
+import { getDashboard } from '../../../../../services/dashboard';
 
 // Per-patient data: never prerender or cache.
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request): Promise<Response> {
   try {
@@ -12,9 +17,12 @@ export async function GET(request: Request): Promise<Response> {
     if (!patientId) {
       return unauthorized();
     }
-    const body: HomeDashboardResponse = await getDashboard(patientId);
+    const body: HomeDashboardResponse | null = await getDashboard(patientId);
+    if (!body) {
+      return notFound('Patient not found.');
+    }
     return Response.json(body);
   } catch (error) {
-    return internalError("GET /api/patients/me/dashboard", error);
+    return internalError('GET /api/patients/me/dashboard', error);
   }
 }

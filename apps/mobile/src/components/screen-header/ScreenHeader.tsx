@@ -1,15 +1,15 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { BackIcon } from "../../assets/icons";
-import { SCREEN_HEADER_VARIANT, Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import { CustomText } from "../custom-text";
-import { IconButton } from "../icon-button";
-import ScreenHeaderStyles from "./ScreenHeaderStyles";
-import type { ScreenHeaderProps } from "./ScreenHeaderTypes";
+import { BackIcon } from '../../assets/icons';
+import { SCREEN_HEADER_VARIANT, Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { CustomText } from '../custom-text';
+import { IconButton } from '../icon-button';
+import ScreenHeaderStyles from './ScreenHeaderStyles';
+import type { ScreenHeaderProps } from './ScreenHeaderTypes';
 
 /**
  * Screen header: optional back button, title and an optional trailing action.
@@ -20,13 +20,13 @@ const ScreenHeader = ({
   title,
   onBackPress,
   right,
-  variant = SCREEN_HEADER_VARIANT.centered,
+  variant = SCREEN_HEADER_VARIANT.centered
 }: ScreenHeaderProps): ReactElement => {
   const { styles, theme } = useTheme(ScreenHeaderStyles);
   const isCentered = variant === SCREEN_HEADER_VARIANT.centered;
   const titleStyle = useMemo(
     () => (isCentered ? styles.title : StyleSheet.flatten([styles.title, styles.titleLarge])),
-    [styles, isCentered],
+    [styles, isCentered]
   );
   const spacer = isCentered ? <View style={styles.slotSpacer} /> : null;
 

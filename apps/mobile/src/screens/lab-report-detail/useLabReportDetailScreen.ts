@@ -1,14 +1,14 @@
-import { useLocalSearchParams } from "expo-router";
-import { useCallback, useMemo } from "react";
+import { useLocalSearchParams } from 'expo-router';
+import { useCallback, useMemo } from 'react';
 
-import { getLabReportDetail, STACK_ROUTES, STATUS_BADGE_TONE, Strings } from "../../constants";
-import type { LabReportDetail } from "../../types";
-import { formatDateTime, goBackOr } from "../../utils";
-import { RANGE_BAND } from "./components";
+import { getLabReportDetail, STACK_ROUTES, STATUS_BADGE_TONE, Strings } from '../../constants';
+import type { LabReportDetail } from '../../types';
+import { formatDateTime, goBackOr } from '../../utils';
+import { RANGE_BAND } from './components';
 import type {
   LabResultRowData,
-  UseLabReportDetailScreenReturn,
-} from "./LabReportDetailScreenTypes";
+  UseLabReportDetailScreenReturn
+} from './LabReportDetailScreenTypes';
 
 /**
  * Computes a result's range-bar marker position as a percentage of the
@@ -37,27 +37,27 @@ export const computeMarkerPercent = (value: number, min: number, max: number): n
 export default function useLabReportDetailScreen(): UseLabReportDetailScreenReturn {
   const params = useLocalSearchParams();
   // Route params are untrusted: only a single string id is accepted.
-  const id = typeof params.id === "string" ? params.id : undefined;
+  const id = typeof params.id === 'string' ? params.id : undefined;
 
   const report = useMemo<LabReportDetail | null>(
     () => (id ? (getLabReportDetail(id) ?? null) : null),
-    [id],
+    [id]
   );
   const title = report?.title ?? Strings.Common.labReports;
-  const sampleCollectedLabel = report ? formatDateTime(report.sampleCollectedAt) : "";
+  const sampleCollectedLabel = report ? formatDateTime(report.sampleCollectedAt) : '';
 
   const results = useMemo<readonly LabResultRowData[]>(
     () =>
       (report?.results ?? []).map((result) => ({
         ...result,
-        markerPercent: computeMarkerPercent(result.value, result.normalMin, result.normalMax),
+        markerPercent: computeMarkerPercent(result.value, result.normalMin, result.normalMax)
       })),
-    [report],
+    [report]
   );
 
   const showAlert = useMemo(
     () => results.some((result) => result.status === STATUS_BADGE_TONE.coral),
-    [results],
+    [results]
   );
 
   const onBackPress = useCallback(() => {
@@ -74,6 +74,6 @@ export default function useLabReportDetailScreen(): UseLabReportDetailScreenRetu
     // Share and Download PDF await a report-document backend; until then no
     // handler is returned and the screen renders both buttons disabled.
     onSharePress: undefined,
-    onDownloadPress: undefined,
+    onDownloadPress: undefined
   };
 }

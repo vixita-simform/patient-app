@@ -1,64 +1,90 @@
-import { useFormik } from "formik";
-import { useCallback, useEffect, useRef } from "react";
-import { Alert, Linking } from "react-native";
+import { useFormik } from 'formik';
+import { useCallback, useEffect, useRef } from 'react';
+import { Alert, Linking } from 'react-native';
 
-import type { SegmentedTabItem } from "../../components";
+import type { SegmentedTabItem } from '../../components';
+import type { AuthTab } from '../../constants';
 import {
+  AUTH_METHOD,
   AUTH_TAB,
   COUNTRY_CODES,
   DEFAULT_COUNTRY,
   EMERGENCY_AMBULANCE_NUMBER,
-  Strings,
   getCountryByCode,
-} from "../../constants";
-import type { AuthTab } from "../../constants";
-import { signIn } from "../../hooks";
-import type { SignInFormValues, UseSignInScreenReturn } from "./SignInScreenTypes";
-import { PATIENT_ID_RULES, signInSchema } from "./SignInScreenValidation";
-
-// TODO(auth): call the OTP request/verify API and sign in with the token it returns.
-// Until then the placeholder token is accepted in development builds only.
-const PLACEHOLDER_AUTH_TOKEN = "placeholder-token";
+  HTTP_STATUS,
+  Strings
+} from '../../constants';
+import { usePatient } from '../../context';
+import { signIn } from '../../hooks';
+import { ApiError, signInWithPassword } from '../../services';
+import type { SignInFormValues, UseSignInScreenReturn } from './SignInScreenTypes';
+import { PATIENT_ID_RULES, signInSchema } from './SignInScreenValidation';
 
 const COPY = Strings.SignInScreen;
 
 const TABS: readonly SegmentedTabItem<AuthTab>[] = Object.freeze([
   { id: AUTH_TAB.mobile, label: COPY.tabMobileNumber },
-  { id: AUTH_TAB.patientId, label: COPY.tabPatientId },
+  { id: AUTH_TAB.patientId, label: COPY.tabPatientId }
 ]);
 
 const INITIAL_VALUES: SignInFormValues = Object.freeze({
   tab: AUTH_TAB.mobile,
+  method: AUTH_METHOD.otp,
   countryCode: DEFAULT_COUNTRY.code,
-  mobile: "",
-  patientId: "",
+  mobile: '',
+  patientId: '',
+  password: ''
 });
 
 /**
- * Sign in screen logic: Formik + Yup form state, input sanitising and navigation.
+ * The username the backend expects: the mobile number with its dial code, or the patient ID.
+ * @param {SignInFormValues} values - Current form values.
+ * @returns {string} The username.
+ */
+const getUsername = ({ tab, countryCode, mobile, patientId }: SignInFormValues): string =>
+  tab === AUTH_TAB.mobile ? `${getCountryByCode(countryCode).dialCode}${mobile}` : patientId;
+
+/**
+ * Picks the message to show for a failed password sign-in.
+ * @param {unknown} error - What the API call threw.
+ * @returns {string} Wrong credentials, or a generic failure.
+ */
+const getPasswordSignInError = (error: unknown): string =>
+  error instanceof ApiError && error.status === HTTP_STATUS.unauthorized
+    ? COPY.invalidCredentials
+    : COPY.signInFailed;
+
+/**
+ * Sign in screen logic: Formik + Yup form state, input sanitising, OTP or password sign-in.
  * @returns {UseSignInScreenReturn} Form values, errors and handlers for the screen.
  */
 const useSignInScreen = (): UseSignInScreenReturn => {
+  const { savePatient } = usePatient();
   const formik = useFormik<SignInFormValues>({
     initialValues: INITIAL_VALUES,
     validationSchema: signInSchema,
     validateOnMount: true,
-    onSubmit: async (_values, { setStatus }) => {
+    onSubmit: async (values, { setStatus }) => {
       setStatus(undefined);
-
-      // No OTP check exists yet, so release builds must never sign in with the placeholder.
-      if (!__DEV__) {
-        setStatus(COPY.signInFailed);
+      if (values.method === AUTH_METHOD.password) {
+        try {
+          const { accessToken, patient } = await signInWithPassword({
+            username: getUsername(values),
+            password: values.password
+          });
+          // Save the patient first so the screens behind the route guard already have it.
+          await savePatient(patient);
+          // The root layout's route guard then moves to the protected screens.
+          await signIn(accessToken);
+        } catch (error) {
+          setStatus(getPasswordSignInError(error));
+        }
         return;
       }
 
-      try {
-        // The root layout's route guard then moves to the protected screens.
-        await signIn(PLACEHOLDER_AUTH_TOKEN);
-      } catch {
-        setStatus(COPY.signInFailed);
-      }
-    },
+      // There is no OTP service yet, so OTP sign-in must never create a session.
+      setStatus(COPY.otpUnavailable);
+    }
   });
 
   // Latest Formik bag in a ref, so the handlers below are stable and depend on values only.
@@ -69,14 +95,18 @@ const useSignInScreen = (): UseSignInScreenReturn => {
 
   const selectedCountry = getCountryByCode(formik.values.countryCode);
   const isMobileTab = formik.values.tab === AUTH_TAB.mobile;
-  // Form-level submit error, shown under the active tab's field and cleared on the next edit.
-  const submitError = typeof formik.status === "string" ? formik.status : undefined;
+  const isPasswordMode = formik.values.method === AUTH_METHOD.password;
+  // Form-level submit error, cleared on the next edit. It shows under the password field in
+  // password mode, otherwise under the active tab's field.
+  const submitError = typeof formik.status === 'string' ? formik.status : undefined;
+  const identifierSubmitError = isPasswordMode ? undefined : submitError;
   const mobileFieldError = formik.touched.mobile ? formik.errors.mobile : undefined;
   const patientIdFieldError = formik.touched.patientId ? formik.errors.patientId : undefined;
+  const passwordFieldError = formik.touched.password ? formik.errors.password : undefined;
 
   const onTabPress = useCallback((id: AuthTab) => {
     formikRef.current.setStatus(undefined);
-    formikRef.current.setFieldValue("tab", id);
+    formikRef.current.setFieldValue('tab', id);
   }, []);
 
   const onCountrySelect = useCallback((code: string) => {
@@ -88,7 +118,7 @@ const useSignInScreen = (): UseSignInScreenReturn => {
     setValues({
       ...values,
       countryCode: code,
-      mobile: values.mobile.slice(0, country.maxLength),
+      mobile: values.mobile.slice(0, country.maxLength)
     });
   }, []);
 
@@ -97,28 +127,51 @@ const useSignInScreen = (): UseSignInScreenReturn => {
     setStatus(undefined);
     // Digits only, capped at the selected country's max length.
     setFieldValue(
-      "mobile",
-      text.replace(/\D/g, "").slice(0, getCountryByCode(values.countryCode).maxLength),
+      'mobile',
+      text.replace(/\D/g, '').slice(0, getCountryByCode(values.countryCode).maxLength)
     );
   }, []);
 
   const onPatientIdChange = useCallback((text: string) => {
     formikRef.current.setStatus(undefined);
     formikRef.current.setFieldValue(
-      "patientId",
-      text.replace(/[^A-Za-z0-9-]/g, "").toUpperCase().slice(0, PATIENT_ID_RULES.maxLength),
+      'patientId',
+      text
+        .replace(/[^A-Za-z0-9-]/g, '')
+        .toUpperCase()
+        .slice(0, PATIENT_ID_RULES.maxLength)
     );
   }, []);
 
   const onMobileBlur = useCallback(() => {
-    formikRef.current.setFieldTouched("mobile", true);
+    formikRef.current.setFieldTouched('mobile', true);
   }, []);
 
   const onPatientIdBlur = useCallback(() => {
-    formikRef.current.setFieldTouched("patientId", true);
+    formikRef.current.setFieldTouched('patientId', true);
   }, []);
 
-  const onGetOtpPress = useCallback(() => {
+  const onPasswordChange = useCallback((text: string) => {
+    formikRef.current.setStatus(undefined);
+    formikRef.current.setFieldValue('password', text);
+  }, []);
+
+  const onPasswordBlur = useCallback(() => {
+    formikRef.current.setFieldTouched('password', true);
+  }, []);
+
+  const onAuthMethodToggle = useCallback(() => {
+    const { values, setStatus, setFieldTouched, setValues } = formikRef.current;
+    const nextMethod =
+      values.method === AUTH_METHOD.password ? AUTH_METHOD.otp : AUTH_METHOD.password;
+
+    setStatus(undefined);
+    // Never carry a typed password over to (or back from) OTP mode.
+    setValues({ ...values, method: nextMethod, password: '' });
+    setFieldTouched('password', false, false);
+  }, []);
+
+  const onSubmitPress = useCallback(() => {
     formikRef.current.handleSubmit();
   }, []);
 
@@ -131,26 +184,34 @@ const useSignInScreen = (): UseSignInScreenReturn => {
   return {
     tabs: TABS,
     activeTab: formik.values.tab,
+    isPasswordMode,
     countries: COUNTRY_CODES,
     selectedCountry,
     mobile: formik.values.mobile,
     patientId: formik.values.patientId,
-    mobileError: mobileFieldError ?? (isMobileTab ? submitError : undefined),
-    patientIdError: patientIdFieldError ?? (isMobileTab ? undefined : submitError),
+    password: formik.values.password,
+    mobileError: mobileFieldError ?? (isMobileTab ? identifierSubmitError : undefined),
+    patientIdError: patientIdFieldError ?? (isMobileTab ? undefined : identifierSubmitError),
+    passwordError: passwordFieldError ?? (isPasswordMode ? submitError : undefined),
     patientIdMaxLength: PATIENT_ID_RULES.maxLength,
-    // Only the active tab's field gates submission (schema ignores the other one).
-    isGetOtpDisabled:
+    // Only the active tab's field (plus the password in password mode) gates submission.
+    isSubmitDisabled:
       !formik.isValid ||
       formik.isSubmitting ||
-      (isMobileTab ? !formik.values.mobile : !formik.values.patientId),
+      (isMobileTab ? !formik.values.mobile : !formik.values.patientId) ||
+      (isPasswordMode && !formik.values.password),
+    isSubmitting: formik.isSubmitting,
     onTabPress,
     onCountrySelect,
     onMobileChange,
     onPatientIdChange,
     onMobileBlur,
     onPatientIdBlur,
-    onGetOtpPress,
-    onEmergencyPress,
+    onPasswordChange,
+    onPasswordBlur,
+    onAuthMethodToggle,
+    onSubmitPress,
+    onEmergencyPress
   };
 };
 

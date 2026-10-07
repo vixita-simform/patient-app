@@ -1,7 +1,7 @@
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
-import { AUTH_TAB, DEFAULT_COUNTRY, Strings, getCountryByCode } from "../../constants";
-import type { AuthTab } from "../../constants";
+import { AUTH_METHOD, AUTH_TAB, DEFAULT_COUNTRY, Strings, getCountryByCode } from '../../constants';
+import type { AuthMethod, AuthTab } from '../../constants';
 
 const COPY = Strings.SignInScreen;
 
@@ -9,19 +9,21 @@ const COPY = Strings.SignInScreen;
 export const PATIENT_ID_RULES = Object.freeze({
   minLength: 4,
   maxLength: 20,
-  pattern: /^[A-Za-z0-9-]+$/,
+  pattern: /^[A-Za-z0-9-]+$/
 });
 
 const DIGITS_ONLY = /^\d+$/;
 
 /**
- * Validation for the sign-in form. Only the field of the active tab is validated, and the
- * mobile rules (length, leading digit) follow the selected country.
+ * Validation for the sign-in form. Only the field of the active tab is validated, the
+ * mobile rules (length, leading digit) follow the selected country, and the password is
+ * required only in password mode.
  */
 export const signInSchema = Yup.object({
   tab: Yup.string().required(),
+  method: Yup.string().required(),
   countryCode: Yup.string().required(),
-  mobile: Yup.string().when(["tab", "countryCode"], (values, schema) => {
+  mobile: Yup.string().when(['tab', 'countryCode'], (values, schema) => {
     const [tab, countryCode] = values as [AuthTab, string];
 
     if (tab !== AUTH_TAB.mobile) {
@@ -40,13 +42,13 @@ export const signInSchema = Yup.object({
       .matches(DIGITS_ONLY, COPY.mobileDigitsOnly)
       .min(country.minLength, lengthMessage)
       .max(country.maxLength, lengthMessage)
-      .test("leadingDigit", COPY.mobileInvalidStart, (value) =>
+      .test('leadingDigit', COPY.mobileInvalidStart, (value) =>
         !value || !country.leadingDigits
           ? true
-          : new RegExp(`^[${country.leadingDigits}]`).test(value),
+          : new RegExp(`^[${country.leadingDigits}]`).test(value)
       );
   }),
-  patientId: Yup.string().when("tab", (values, schema) => {
+  patientId: Yup.string().when('tab', (values, schema) => {
     const [tab] = values as [AuthTab];
 
     if (tab !== AUTH_TAB.patientId) {
@@ -58,4 +60,9 @@ export const signInSchema = Yup.object({
       .min(PATIENT_ID_RULES.minLength, COPY.patientIdTooShort)
       .matches(PATIENT_ID_RULES.pattern, COPY.patientIdInvalid);
   }),
+  password: Yup.string().when('method', (values, schema) => {
+    const [method] = values as [AuthMethod];
+
+    return method === AUTH_METHOD.password ? schema.required(COPY.passwordRequired) : schema;
+  })
 });

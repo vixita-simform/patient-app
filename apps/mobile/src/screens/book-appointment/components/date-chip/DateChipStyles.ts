@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../../../theme';
 
 /**
  * Styles for the date-strip day cell.
@@ -15,37 +15,37 @@ const styles = (theme: ThemeMode) =>
       backgroundColor: Colors[theme].card,
       borderWidth: scale(1),
       borderColor: Colors[theme].line,
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
       gap: scale(4),
       flexShrink: 0,
-      borderRadius: scale(16),
+      borderRadius: scale(16)
     },
     dateActive: {
       backgroundColor: Colors[theme].green,
-      borderColor: Colors[theme].green,
+      borderColor: Colors[theme].green
     },
     dateOff: {
-      opacity: 0.4,
+      opacity: 0.4
     },
     dateDay: {
       fontFamily: Fonts.family.semiBold,
       fontSize: Fonts.size.f12,
       fontWeight: Fonts.weight.semi,
-      color: Colors[theme].muted,
+      color: Colors[theme].muted
     },
     dateActiveDay: {
-      color: Colors[theme].paleMint,
+      color: Colors[theme].paleMint
     },
     dateNum: {
       fontFamily: Fonts.family.bold,
       fontSize: Fonts.size.h1,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     dateActiveNum: {
-      color: Colors[theme].white,
-    },
+      color: Colors[theme].white
+    }
   });
 
 export default styles;

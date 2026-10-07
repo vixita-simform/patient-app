@@ -1,2 +1,2 @@
-export { default as StatusBadge } from "./StatusBadge";
-export type { StatusBadgeProps, StatusBadgeTone } from "./StatusBadgeTypes";
+export { default as StatusBadge } from './StatusBadge';
+export type { StatusBadgeProps, StatusBadgeTone } from './StatusBadgeTypes';

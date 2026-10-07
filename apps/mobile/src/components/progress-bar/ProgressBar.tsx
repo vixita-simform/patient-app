@@ -1,10 +1,10 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { useTheme } from "../../hooks";
-import ProgressBarStyles from "./ProgressBarStyles";
-import type { ProgressBarProps } from "./ProgressBarTypes";
+import { useTheme } from '../../hooks';
+import ProgressBarStyles from './ProgressBarStyles';
+import type { ProgressBarProps } from './ProgressBarTypes';
 
 /**
  * Linear progress bar (light track and mint fill, designed for dark surfaces).
@@ -17,9 +17,8 @@ const ProgressBar = ({ value }: ProgressBarProps): ReactElement => {
   const percent = Math.round(clamped * 100);
   // Width is data-driven, so it cannot live in the static stylesheet
   const fillStyle = useMemo(
-    () =>
-      StyleSheet.flatten([styles.tokenProgressFill, { width: `${clamped * 100}%` as const }]),
-    [styles, clamped],
+    () => StyleSheet.flatten([styles.tokenProgressFill, { width: `${clamped * 100}%` as const }]),
+    [styles, clamped]
   );
   const accessibilityValue = useMemo(() => ({ min: 0, max: 100, now: percent }), [percent]);
 

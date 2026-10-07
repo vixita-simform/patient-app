@@ -1,5 +1,5 @@
-import type { MedicineEntry } from "../../types";
-import type { DoseChipData } from "./components";
+import type { MedicineEntry } from '../../types';
+import type { DoseChipData } from './components';
 
 /** Data the screen needs once derived from `medicinesDummyData`. */
 export interface UseMedicinesScreenReturn {

@@ -1,13 +1,13 @@
-import type { ReactElement } from "react";
-import { useCallback, useMemo } from "react";
-import type { PressableStateCallbackType, StyleProp, ViewStyle } from "react-native";
-import { Pressable, StyleSheet } from "react-native";
+import type { ReactElement } from 'react';
+import { useCallback, useMemo } from 'react';
+import type { PressableStateCallbackType, StyleProp, ViewStyle } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
-import { ICON_BUTTON_VARIANT } from "../../constants";
-import { useTheme } from "../../hooks";
-import { scale } from "../../theme";
-import IconButtonStyles from "./IconButtonStyles";
-import type { IconButtonProps } from "./IconButtonTypes";
+import { ICON_BUTTON_VARIANT } from '../../constants';
+import { useTheme } from '../../hooks';
+import { scale } from '../../theme';
+import IconButtonStyles from './IconButtonStyles';
+import type { IconButtonProps } from './IconButtonTypes';
 
 /** Extends the 40px visual target to the 48px minimum touch size. */
 const HIT_SLOP = scale(4);
@@ -22,7 +22,7 @@ const IconButton = ({
   onPress,
   disabled = false,
   variant = ICON_BUTTON_VARIANT.outline,
-  accessibilityLabel,
+  accessibilityLabel
 }: IconButtonProps): ReactElement => {
   const { styles } = useTheme(IconButtonStyles);
   const getStyle = useCallback(
@@ -31,9 +31,9 @@ const IconButton = ({
         styles.iconBtn,
         variant === ICON_BUTTON_VARIANT.fill && styles.iconBtnFill,
         pressed && styles.pressed,
-        disabled && styles.disabled,
+        disabled && styles.disabled
       ]),
-    [styles, variant, disabled],
+    [styles, variant, disabled]
   );
   const accessibilityState = useMemo(() => ({ disabled }), [disabled]);
 

@@ -1,22 +1,18 @@
-import { type ReactElement } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  ScrollView,
-  TextInput,
-  View,
-} from "react-native";
+import { type ReactElement, useCallback } from 'react';
+import type { ListRenderItem } from 'react-native';
+import { ActivityIndicator, FlatList, ScrollView, TextInput, View } from 'react-native';
 
-import { KeyboardAvoidingView } from "react-native-keyboard-controller";
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
-import { FilterIcon, SearchIcon } from "../../assets/icons";
-import { Chip, CustomText, IconButton, Screen, ScreenHeader } from "../../components";
-import { Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import FindADoctorScreenStyles from "./FindADoctorScreenStyles";
-import type { FindADoctorScreenProps } from "./FindADoctorScreenTypes";
-import useFindADoctorScreen from "./useFindADoctorScreen";
+import { FilterIcon, SearchIcon } from '../../assets/icons';
+import { Chip, CustomText, IconButton, Screen, ScreenHeader } from '../../components';
+import { Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { DoctorCard } from './components';
+import FindADoctorScreenStyles from './FindADoctorScreenStyles';
+import type { DoctorRowData, FindADoctorScreenProps } from './FindADoctorScreenTypes';
+import useFindADoctorScreen from './useFindADoctorScreen';
 
 /**
  * Find a doctor: header, static search, specialty chips, count and doctor list.
@@ -26,7 +22,7 @@ import useFindADoctorScreen from "./useFindADoctorScreen";
  * @returns {ReactElement} A React Element.
  */
 export default function FindADoctorScreen({
-  showBackButton = true,
+  showBackButton = true
 }: FindADoctorScreenProps = {}): ReactElement {
   const { styles, theme } = useTheme(FindADoctorScreenStyles);
   const {
@@ -39,11 +35,32 @@ export default function FindADoctorScreen({
     searchQuery,
     onSearchChange,
     onSpecialtyPress,
-    renderItem,
     keyExtractor,
+    onDoctorPress,
+    onBookPress,
     onBackPress,
-    onFilterPress,
+    onFilterPress
   } = useFindADoctorScreen();
+
+  const renderItem = useCallback<ListRenderItem<DoctorRowData>>(
+    ({ item }) => (
+      <DoctorCard
+        availableToday={item.availableToday}
+        experienceYears={item.experienceYears}
+        id={item.id}
+        initials={item.initials}
+        name={item.name}
+        nextSlot={item.nextSlotLabel}
+        rating={item.rating}
+        reviewCount={item.reviewCount}
+        specialtyLabel={item.specialtyLabel}
+        tone={item.tone}
+        onBookPress={onBookPress}
+        onPress={onDoctorPress}
+      />
+    ),
+    [onDoctorPress, onBookPress]
+  );
 
   const listHeader = (
     <View style={styles.listHeader}>
@@ -77,9 +94,7 @@ export default function FindADoctorScreen({
           />
         ))}
       </ScrollView>
-      <CustomText style={styles.countText}>
-        {countLabel}
-      </CustomText>
+      <CustomText style={styles.countText}>{countLabel}</CustomText>
     </View>
   );
 
@@ -88,9 +103,7 @@ export default function FindADoctorScreen({
     <ActivityIndicator color={Colors[theme].green} />
   ) : (
     <CustomText style={styles.stateText}>
-      {isError
-        ? Strings.Common.somethingWentWrong
-        : Strings.FindADoctorScreen.emptyMessage}
+      {isError ? Strings.Common.somethingWentWrong : Strings.FindADoctorScreen.emptyMessage}
     </CustomText>
   );
 
@@ -99,7 +112,10 @@ export default function FindADoctorScreen({
       <View style={styles.screen}>
         <ScreenHeader
           right={
-            <IconButton accessibilityLabel={Strings.FindADoctorScreen.filter} onPress={onFilterPress}>
+            <IconButton
+              accessibilityLabel={Strings.FindADoctorScreen.filter}
+              onPress={onFilterPress}
+            >
               <FilterIcon color={Colors[theme].navy} size={scale(20)} />
             </IconButton>
           }

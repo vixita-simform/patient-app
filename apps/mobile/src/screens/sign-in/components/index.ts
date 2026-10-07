@@ -1,1 +1,1 @@
-export { default as CountryCodePicker } from "./country-code-picker/CountryCodePicker";
+export { default as CountryCodePicker } from './country-code-picker/CountryCodePicker';

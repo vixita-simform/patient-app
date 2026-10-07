@@ -1,6 +1,6 @@
-import type { AccessibilityState } from "react-native";
+import type { AccessibilityState } from 'react-native';
 
-import type { NotificationRowData } from "./components";
+import type { NotificationRowData } from './components';
 
 /** One recency-bucketed group, with each notification's time label pre-formatted for display. */
 export interface NotificationGroupViewData {

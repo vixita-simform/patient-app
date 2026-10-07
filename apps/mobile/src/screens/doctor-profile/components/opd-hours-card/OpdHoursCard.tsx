@@ -1,11 +1,11 @@
-import React, { type ReactElement } from "react";
-import { View } from "react-native";
+import React, { type ReactElement } from 'react';
+import { View } from 'react-native';
 
-import { CustomText } from "../../../../components";
-import { Strings } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import OpdHoursCardStyles from "./OpdHoursCardStyles";
-import type { OpdHoursCardProps } from "./OpdHoursCardTypes";
+import { CustomText } from '../../../../components';
+import { Strings } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import OpdHoursCardStyles from './OpdHoursCardStyles';
+import type { OpdHoursCardProps } from './OpdHoursCardTypes';
 
 /**
  * Card listing OPD hours per day; a null value renders muted "Closed".

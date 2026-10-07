@@ -1,1 +1,1 @@
-export { default as BookAppointmentScreen } from "./BookAppointmentScreen";
+export { default as BookAppointmentScreen } from './BookAppointmentScreen';

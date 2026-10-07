@@ -1,11 +1,11 @@
-import type { ReactElement } from "react";
-import { Pressable, View } from "react-native";
+import type { ReactElement } from 'react';
+import { Pressable, View } from 'react-native';
 
-import { useTheme } from "../../hooks";
-import { scale } from "../../theme";
-import { CustomText } from "../custom-text";
-import SectionHeaderStyles from "./SectionHeaderStyles";
-import type { SectionHeaderProps } from "./SectionHeaderTypes";
+import { useTheme } from '../../hooks';
+import { scale } from '../../theme';
+import { CustomText } from '../custom-text';
+import SectionHeaderStyles from './SectionHeaderStyles';
+import type { SectionHeaderProps } from './SectionHeaderTypes';
 
 /** Enlarges the small text link's touch target. */
 const HIT_SLOP = scale(8);
@@ -15,11 +15,7 @@ const HIT_SLOP = scale(8);
  * @param {SectionHeaderProps} props - title, link label and press handler.
  * @returns {ReactElement} A React Element.
  */
-const SectionHeader = ({
-  title,
-  actionLabel,
-  onActionPress,
-}: SectionHeaderProps): ReactElement => {
+const SectionHeader = ({ title, actionLabel, onActionPress }: SectionHeaderProps): ReactElement => {
   const { styles } = useTheme(SectionHeaderStyles);
 
   return (

@@ -1,9 +1,9 @@
-import type { ReactElement } from "react";
-import Svg, { Path, type SvgProps } from "react-native-svg";
+import type { ReactElement } from 'react';
+import Svg, { Path, type SvgProps } from 'react-native-svg';
 
-import { theme } from "../../theme";
+import { theme } from '../../theme';
 
-interface BedIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
+interface BedIconProps extends Omit<SvgProps, 'width' | 'height' | 'color'> {
   size?: number;
   color?: string;
   strokeWidth?: number;
@@ -36,7 +36,12 @@ export function BedIcon({
         strokeLinejoin="round"
         strokeWidth={strokeWidth}
       />
-      <Path d="M3 12V6M21 20v-2M3 20v-2" stroke={color} strokeLinecap="round" strokeWidth={strokeWidth} />
+      <Path
+        d="M3 12V6M21 20v-2M3 20v-2"
+        stroke={color}
+        strokeLinecap="round"
+        strokeWidth={strokeWidth}
+      />
       <Path d="M3 18h18" stroke={color} strokeLinecap="round" strokeWidth={strokeWidth} />
     </Svg>
   );

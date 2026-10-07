@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
-import type { IconButtonVariant } from "../../constants";
+import type { IconButtonVariant } from '../../constants';
 
 export interface IconButtonProps {
   children: ReactNode;

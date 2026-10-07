@@ -1,17 +1,21 @@
-import type { ReactElement } from "react";
-import { View } from "react-native";
+import type { ReactElement } from 'react';
+import { View } from 'react-native';
 
-import { Chip } from "../../../../components";
-import { useTheme } from "../../../../hooks";
-import ChipGroupStyles from "./ChipGroupStyles";
-import type { ChipGroupProps } from "./ChipGroupTypes";
+import { Chip } from '../../../../components';
+import { useTheme } from '../../../../hooks';
+import ChipGroupStyles from './ChipGroupStyles';
+import type { ChipGroupProps } from './ChipGroupTypes';
 
 /**
  * Wrapping row of single-select pill chips, typed by the option id union.
  * @param {ChipGroupProps<T>} props - options, selected id and select handler.
  * @returns {ReactElement} A React Element.
  */
-const ChipGroup = <T extends string>({ options, selectedId, onSelect }: ChipGroupProps<T>): ReactElement => {
+const ChipGroup = <T extends string>({
+  options,
+  selectedId,
+  onSelect
+}: ChipGroupProps<T>): ReactElement => {
   const { styles } = useTheme(ChipGroupStyles);
 
   return (

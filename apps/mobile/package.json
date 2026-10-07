@@ -57,7 +57,9 @@
     "lint:fix": "expo lint --fix",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run lint",
-    "test": "jest"
+    "test": "jest",
+    "pretty": "prettier --write \"{src,jest}/**/*.{js,jsx,ts,tsx}\"",
+    "spelling": "cspell lint \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "private": true,
   "jest": {

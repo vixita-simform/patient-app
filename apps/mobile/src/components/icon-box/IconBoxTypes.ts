@@ -1,6 +1,6 @@
-import type { ComponentType } from "react";
+import type { ComponentType } from 'react';
 
-import type { IconTone } from "../../constants";
+import type { IconTone } from '../../constants';
 
 export interface IconBoxProps {
   /** Icon component following the icons' `size` / `color` props. */

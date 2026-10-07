@@ -1,6 +1,6 @@
-import type { ComponentType } from "react";
+import type { ComponentType } from 'react';
 
-import type { ProfileMenuId, ProfileMenuTone, ProfileStatId } from "../../constants";
+import type { ProfileMenuId, ProfileMenuTone, ProfileStatId } from '../../constants';
 
 /** Icon component shape accepted by the menu rows. */
 export type ProfileIconComponent = ComponentType<{ size?: number; color?: string }>;

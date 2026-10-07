@@ -1,9 +1,9 @@
-import type { ReactElement } from "react";
-import Svg, { Circle, Path, type SvgProps } from "react-native-svg";
+import type { ReactElement } from 'react';
+import Svg, { Circle, Path, type SvgProps } from 'react-native-svg';
 
-import { theme } from "../../theme";
+import { theme } from '../../theme';
 
-interface SearchIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
+interface SearchIconProps extends Omit<SvgProps, 'width' | 'height' | 'color'> {
   size?: number;
   color?: string;
   strokeWidth?: number;

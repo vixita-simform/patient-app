@@ -1,25 +1,25 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
     field: {
-      flexDirection: "column",
-      gap: scale(8),
+      flexDirection: 'column',
+      gap: scale(8)
     },
     fieldLabel: {
       fontFamily: Fonts.family.semiBold,
       fontSize: Fonts.size.h4,
       fontWeight: Fonts.weight.semi,
-      color: Colors[theme].bodySlate,
+      color: Colors[theme].bodySlate
     },
     errorText: {
       fontFamily: Fonts.family.medium,
       fontSize: Fonts.size.f12,
       fontWeight: Fonts.weight.low,
-      color: Colors[theme].coral,
-    },
+      color: Colors[theme].coral
+    }
   });
 
 export default styles;

@@ -1,14 +1,14 @@
-import { scale } from "./Metrics";
+import { scale } from './Metrics';
 
 /**
  * Figtree font families, matching the fonts loaded in src/app/_layout.tsx
  */
 const family = {
-  regular: "Figtree_400Regular",
-  medium: "Figtree_500Medium",
-  semiBold: "Figtree_600SemiBold",
-  bold: "Figtree_700Bold",
-  extraBold: "Figtree_800ExtraBold",
+  regular: 'Figtree_400Regular',
+  medium: 'Figtree_500Medium',
+  semiBold: 'Figtree_600SemiBold',
+  bold: 'Figtree_700Bold',
+  extraBold: 'Figtree_800ExtraBold'
 } as const;
 
 /**
@@ -32,7 +32,7 @@ const size = {
   f22: scale(22),
   f28: scale(28),
   f32: scale(32),
-  f64: scale(64),
+  f64: scale(64)
 } as const;
 
 /**
@@ -40,14 +40,14 @@ const size = {
  * Each key maps to exact CSS font-weight values
  */
 const weight = {
-  semiLow: "400",
-  low: "500",
-  semi: "600",
-  extraSemi: "700",
-  extraBold: "800",
-  full: "900",
-  bold: "bold",
-  normal: "normal",
+  semiLow: '400',
+  low: '500',
+  semi: '600',
+  extraSemi: '700',
+  extraBold: '800',
+  full: '900',
+  bold: 'bold',
+  normal: 'normal'
 } as const;
 
 /**

@@ -1,12 +1,12 @@
-import type { ReactElement } from "react";
-import { Pressable, View } from "react-native";
+import type { ReactElement } from 'react';
+import { Pressable, View } from 'react-native';
 
-import { Avatar, CustomText, StatusBadge } from "../../../../components";
-import { CalendarIcon, ClockIcon } from "../../../../assets/icons";
-import { useTheme } from "../../../../hooks";
-import { Colors, scale } from "../../../../theme";
-import AppointmentCardStyles from "./AppointmentCardStyles";
-import type { AppointmentCardProps } from "./AppointmentCardTypes";
+import { CalendarIcon, ClockIcon } from '../../../../assets/icons';
+import { Avatar, CustomText, StatusBadge } from '../../../../components';
+import { useTheme } from '../../../../hooks';
+import { Colors, scale } from '../../../../theme';
+import AppointmentCardStyles from './AppointmentCardStyles';
+import type { AppointmentCardProps } from './AppointmentCardTypes';
 
 /**
  * Upcoming appointment card: doctor, status badge and date/time pill.
@@ -20,7 +20,7 @@ const AppointmentCard = ({
   badgeLabel,
   date,
   time,
-  onPress,
+  onPress
 }: AppointmentCardProps): ReactElement => {
   const { styles, theme } = useTheme(AppointmentCardStyles);
   const iconColor = Colors[theme].navy;
@@ -40,14 +40,14 @@ const AppointmentCard = ({
         </View>
         {badgeLabel ? <StatusBadge label={badgeLabel} /> : null}
       </View>
-      <View style={styles.apptMeta}>
-        <View style={styles.apptMetaItem}>
+      <View style={styles.appointmentMeta}>
+        <View style={styles.appointmentMetaItem}>
           <CalendarIcon color={iconColor} size={scale(16)} />
-          <CustomText style={styles.apptMetaText}>{date}</CustomText>
+          <CustomText style={styles.appointmentMetaText}>{date}</CustomText>
         </View>
-        <View style={styles.apptMetaItem}>
+        <View style={styles.appointmentMetaItem}>
           <ClockIcon color={iconColor} size={scale(16)} />
-          <CustomText style={styles.apptMetaText}>{time}</CustomText>
+          <CustomText style={styles.appointmentMetaText}>{time}</CustomText>
         </View>
       </View>
     </Pressable>

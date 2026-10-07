@@ -1,9 +1,9 @@
-import type { ReactElement } from "react";
-import Svg, { Line, Path, type SvgProps } from "react-native-svg";
+import type { ReactElement } from 'react';
+import Svg, { Line, Path, type SvgProps } from 'react-native-svg';
 
-import { theme } from "../../theme";
+import { theme } from '../../theme';
 
-interface AlertIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
+interface AlertIconProps extends Omit<SvgProps, 'width' | 'height' | 'color'> {
   size?: number;
   color?: string;
   strokeWidth?: number;
@@ -29,8 +29,24 @@ export function AlertIcon({
         strokeLinejoin="round"
         strokeWidth={strokeWidth}
       />
-      <Line stroke={color} strokeLinecap="round" strokeWidth={strokeWidth} x1="12" x2="12" y1="9.5" y2="13.5" />
-      <Line stroke={color} strokeLinecap="round" strokeWidth={strokeWidth} x1="12" x2="12" y1="16.5" y2="16.5" />
+      <Line
+        stroke={color}
+        strokeLinecap="round"
+        strokeWidth={strokeWidth}
+        x1="12"
+        x2="12"
+        y1="9.5"
+        y2="13.5"
+      />
+      <Line
+        stroke={color}
+        strokeLinecap="round"
+        strokeWidth={strokeWidth}
+        x1="12"
+        x2="12"
+        y1="16.5"
+        y2="16.5"
+      />
     </Svg>
   );
 }

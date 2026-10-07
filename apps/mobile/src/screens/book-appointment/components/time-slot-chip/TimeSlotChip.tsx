@@ -1,12 +1,12 @@
-import type { ReactElement } from "react";
-import { useCallback, useMemo } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import type { ReactElement } from 'react';
+import { useCallback, useMemo } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 
-import { CustomText } from "../../../../components";
-import { TIME_SLOT_STATUS } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import TimeSlotChipStyles from "./TimeSlotChipStyles";
-import type { TimeSlotChipProps } from "./TimeSlotChipTypes";
+import { CustomText } from '../../../../components';
+import { TIME_SLOT_STATUS } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import TimeSlotChipStyles from './TimeSlotChipStyles';
+import type { TimeSlotChipProps } from './TimeSlotChipTypes';
 
 /**
  * One cell in the 3-column time-slot grid, with available / selected / taken / past states.
@@ -27,9 +27,9 @@ const TimeSlotChip = ({ id, label, status, onPress }: TimeSlotChipProps): ReactE
         styles.slot,
         active && styles.slotActive,
         taken && styles.slotTaken,
-        past && styles.slotPast,
+        past && styles.slotPast
       ]),
-    [styles, active, taken, past],
+    [styles, active, taken, past]
   );
   const labelStyle = useMemo(
     () =>
@@ -37,9 +37,9 @@ const TimeSlotChip = ({ id, label, status, onPress }: TimeSlotChipProps): ReactE
         styles.slotLabel,
         active && styles.slotActiveLabel,
         taken && styles.slotTakenLabel,
-        past && styles.slotPastLabel,
+        past && styles.slotPastLabel
       ]),
-    [styles, active, taken, past],
+    [styles, active, taken, past]
   );
   const accessibilityState = useMemo(() => ({ selected: active, disabled }), [active, disabled]);
 

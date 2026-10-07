@@ -1,4 +1,4 @@
-import type { LabResultRowData } from "../../LabReportDetailScreenTypes";
+import type { LabResultRowData } from '../../LabReportDetailScreenTypes';
 
 export interface LabResultRowProps {
   result: LabResultRowData;

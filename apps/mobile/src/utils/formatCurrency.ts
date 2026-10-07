@@ -8,7 +8,7 @@ export function formatCurrency(amount: number, fractionDigits = 0): string {
       style: 'currency',
       currency: 'INR',
       minimumFractionDigits: fractionDigits,
-      maximumFractionDigits: fractionDigits,
+      maximumFractionDigits: fractionDigits
     });
     formatters.set(fractionDigits, formatter);
   }

@@ -1,51 +1,45 @@
-import { router } from "expo-router";
-import { createElement, useCallback, useMemo, useState } from "react";
-import type { ListRenderItem } from "react-native";
+import { router } from 'expo-router';
+import { useCallback, useMemo, useState } from 'react';
 
-import { findADoctorDummyData, STACK_ROUTES, Strings } from "../../constants";
-import type { DoctorSummary, SpecialtyId } from "../../types";
-import { formatRelativeDateTime } from "../../utils";
-import { DoctorCard } from "./components";
+import { findADoctorDummyData, STACK_ROUTES, Strings } from '../../constants';
+import type { DoctorSummary, SpecialtyId } from '../../types';
+import { formatRelativeDateTime } from '../../utils';
 import type {
   DoctorAvatarTone,
+  DoctorRowData,
   SpecialtyChipItem,
-  UseFindADoctorScreenReturn,
-} from "./FindADoctorScreenTypes";
+  UseFindADoctorScreenReturn
+} from './FindADoctorScreenTypes';
 
 /** Chip order as designed. */
 const SPECIALTY_CHIPS: readonly SpecialtyChipItem[] = Object.freeze([
-  { id: "all", label: Strings.FindADoctorScreen.all },
-  { id: "cardiology", label: Strings.FindADoctorScreen.cardiology },
-  { id: "orthopedics", label: Strings.FindADoctorScreen.orthopedics },
-  { id: "pediatrics", label: Strings.FindADoctorScreen.pediatrics },
-  { id: "dermatology", label: Strings.FindADoctorScreen.dermatology },
-  { id: "ent", label: Strings.FindADoctorScreen.ent },
+  { id: 'all', label: Strings.FindADoctorScreen.all },
+  { id: 'cardiology', label: Strings.FindADoctorScreen.cardiology },
+  { id: 'orthopedics', label: Strings.FindADoctorScreen.orthopedics },
+  { id: 'pediatrics', label: Strings.FindADoctorScreen.pediatrics },
+  { id: 'dermatology', label: Strings.FindADoctorScreen.dermatology },
+  { id: 'ent', label: Strings.FindADoctorScreen.ent }
 ]);
 
-const AVATAR_TONES: readonly DoctorAvatarTone[] = Object.freeze([
-  "green",
-  "blue",
-  "amber",
-]);
+const AVATAR_TONES: readonly DoctorAvatarTone[] = Object.freeze(['green', 'blue', 'amber']);
 
 /** Tone per doctor id, keyed by position in the unfiltered list so it never changes with a filter. */
 const TONE_BY_DOCTOR_ID: ReadonlyMap<string, DoctorAvatarTone> = new Map(
   findADoctorDummyData.doctors.map((doctor, index) => [
     doctor.id,
-    AVATAR_TONES[index % AVATAR_TONES.length],
-  ]),
+    AVATAR_TONES[index % AVATAR_TONES.length]
+  ])
 );
 
-const EMPTY_LIST: readonly DoctorSummary[] = Object.freeze([]);
+const EMPTY_LIST: readonly DoctorRowData[] = Object.freeze([]);
 
 /**
  * State and handlers for the Find a doctor screen.
  * @returns {UseFindADoctorScreenReturn} chips, list data and render helpers, count label and handlers.
  */
 export default function useFindADoctorScreen(): UseFindADoctorScreenReturn {
-  const [selectedSpecialty, setSelectedSpecialty] =
-    useState<SpecialtyId>("all");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSpecialty, setSelectedSpecialty] = useState<SpecialtyId>('all');
+  const [searchQuery, setSearchQuery] = useState('');
   // Mock request state: the static data never loads or fails.
   const isLoading = false;
   const isError = false;
@@ -54,19 +48,16 @@ export default function useFindADoctorScreen(): UseFindADoctorScreenReturn {
     const query = searchQuery.trim().toLowerCase();
     return findADoctorDummyData.doctors.filter(
       (doctor) =>
-        (selectedSpecialty === "all" ||
-          doctor.specialty === selectedSpecialty) &&
-        (query === "" ||
+        (selectedSpecialty === 'all' || doctor.specialty === selectedSpecialty) &&
+        (query === '' ||
           doctor.name.toLowerCase().includes(query) ||
-          doctor.specialtyLabel.toLowerCase().includes(query)),
+          doctor.specialtyLabel.toLowerCase().includes(query))
     );
   }, [selectedSpecialty, searchQuery]);
 
   // Unfiltered shows the API total; any filter shows what the local match found.
-  const isFiltered = selectedSpecialty !== "all" || searchQuery.trim() !== "";
-  const count = isFiltered
-    ? doctors.length
-    : findADoctorDummyData.totalAvailableToday;
+  const isFiltered = selectedSpecialty !== 'all' || searchQuery.trim() !== '';
+  const count = isFiltered ? doctors.length : findADoctorDummyData.totalAvailableToday;
   const countLabel = `${count} ${
     count === 1
       ? Strings.FindADoctorScreen.doctorAvailableToday
@@ -95,30 +86,22 @@ export default function useFindADoctorScreen(): UseFindADoctorScreenReturn {
   // Booking flow is not built yet, so Book opens the profile, which carries the booking CTA.
   const onBookPress = onDoctorPress;
 
-  const renderItem = useCallback<ListRenderItem<DoctorSummary>>(
-    ({ item }) =>
-      createElement(DoctorCard, {
-        id: item.id,
-        initials: item.initials,
-        tone: TONE_BY_DOCTOR_ID.get(item.id) ?? AVATAR_TONES[0],
-        name: item.name,
-        specialtyLabel: item.specialtyLabel,
-        experienceYears: item.experienceYears,
-        rating: item.rating,
-        reviewCount: item.reviewCount,
-        nextSlot: formatRelativeDateTime(item.nextSlotAt),
-        availableToday: item.availableToday,
-        onPress: onDoctorPress,
-        onBookPress,
-      }),
-    [onDoctorPress, onBookPress],
+  // Rows are built per render pass so "Today" labels follow the clock.
+  const rows = useMemo<readonly DoctorRowData[]>(
+    () =>
+      doctors.map((doctor) => ({
+        ...doctor,
+        tone: TONE_BY_DOCTOR_ID.get(doctor.id) ?? AVATAR_TONES[0],
+        nextSlotLabel: formatRelativeDateTime(doctor.nextSlotAt)
+      })),
+    [doctors]
   );
 
-  const keyExtractor = useCallback((doctor: DoctorSummary) => doctor.id, []);
+  const keyExtractor = useCallback((doctor: DoctorRowData) => doctor.id, []);
 
   return {
     chips: SPECIALTY_CHIPS,
-    listData: isLoading || isError ? EMPTY_LIST : doctors,
+    listData: isLoading || isError ? EMPTY_LIST : rows,
     countLabel,
     isLoading,
     isError,
@@ -126,9 +109,10 @@ export default function useFindADoctorScreen(): UseFindADoctorScreenReturn {
     searchQuery,
     onSearchChange: setSearchQuery,
     onSpecialtyPress,
-    renderItem,
     keyExtractor,
+    onDoctorPress,
+    onBookPress,
     onBackPress,
-    onFilterPress,
+    onFilterPress
   };
 }

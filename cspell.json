@@ -1,0 +1,58 @@
+// cSpell Settings
+{
+  // Version of the setting file.  Always 0.2
+  "version": "0.2",
+  // language - current active spelling language
+  "language": "en",
+  // words - list of words to be always considered correct
+  "words": [
+    "Apisauce",
+    "Ashville",
+    "buildconfig",
+    "carewell",
+    "Cochiti",
+    "datetimepicker",
+    "Favourite",
+    "Figtree",
+    "Formik",
+    "Inei",
+    "Itmeo",
+    "Kolkata",
+    "Malinka",
+    "MMKV",
+    "Nega",
+    "notif",
+    "Pacman",
+    "Palo",
+    "parameterised",
+    "persistor",
+    "Pressable",
+    "Reactotron",
+    "reduxjs",
+    "Retrowave",
+    "sanitising",
+    "Sharpeye",
+    "signin",
+    "simform",
+    "uhid",
+    // TODO: Remove those word when remove the dummy data
+    "Aarav",
+    "appt",
+    "Atorvastatin",
+    "Desai",
+    "interventional",
+    "Kapoor",
+    "MBBS",
+    "Mehta",
+    "Metoprolol",
+    "Priya",
+    "Rohan",
+    "Sneha",
+    "specialising",
+    "Vikram"
+  ],
+  // flagWords - list of words to be always considered incorrect
+  // This is useful for offensive words and common spelling errors.
+  // For example "hte" should be "the"
+  "flagWords": ["hte"]
+}

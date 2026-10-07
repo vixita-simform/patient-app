@@ -1,5 +1,5 @@
-import type { AppointmentCardProps } from "./components/appointment-card/AppointmentCardTypes";
-import type { OpdTokenCardProps } from "./components/opd-token-card/OpdTokenCardTypes";
+import type { AppointmentCardProps } from './components/appointment-card/AppointmentCardTypes';
+import type { OpdTokenCardProps } from './components/opd-token-card/OpdTokenCardTypes';
 
 export interface HomeUser {
   initials: string;
@@ -17,11 +17,12 @@ export interface HomeVitals {
   sugar: HomeVital;
 }
 
-export type HomeAppointment = Omit<AppointmentCardProps, "onPress">;
+export type HomeAppointment = Omit<AppointmentCardProps, 'onPress'>;
 
 export interface HomeViewData {
   user: HomeUser;
-  token: OpdTokenCardProps;
+  /** null when the patient has no OPD token today. */
+  token: OpdTokenCardProps | null;
   appointment: HomeAppointment | null;
   vitals: HomeVitals;
 }

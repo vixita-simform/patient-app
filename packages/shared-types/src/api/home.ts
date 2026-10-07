@@ -39,18 +39,20 @@ export interface BloodPressureReading {
   unit: string;
 }
 
+/** Latest reading of each vital; null when the patient has none recorded. */
 export interface Vitals {
-  heartRate: VitalReading;
-  bloodPressure: BloodPressureReading;
-  bloodSugar: VitalReading;
-  /** ISO 8601 date-time */
-  recordedAt: string;
+  heartRate: VitalReading | null;
+  bloodPressure: BloodPressureReading | null;
+  bloodSugar: VitalReading | null;
+  /** ISO 8601 date-time of the newest reading; null when there are none. */
+  recordedAt: string | null;
 }
 
 /** API response shape for the Home dashboard (GET /patients/me/dashboard). */
 export interface HomeDashboardResponse {
   patient: PatientSummary;
-  opdToken: OpdToken;
+  /** Today's OPD queue token; null when the patient has none. */
+  opdToken: OpdToken | null;
   nextAppointment: NextAppointment | null;
   vitals: Vitals;
 }

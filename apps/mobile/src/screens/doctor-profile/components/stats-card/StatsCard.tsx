@@ -1,22 +1,18 @@
-import { type ReactElement } from "react";
-import { View } from "react-native";
+import { type ReactElement } from 'react';
+import { View } from 'react-native';
 
-import { CustomText } from "../../../../components";
-import { Strings } from "../../../../constants";
-import { useTheme } from "../../../../hooks";
-import StatsCardStyles from "./StatsCardStyles";
-import type { StatsCardProps } from "./StatsCardTypes";
+import { CustomText } from '../../../../components';
+import { Strings } from '../../../../constants';
+import { useTheme } from '../../../../hooks';
+import StatsCardStyles from './StatsCardStyles';
+import type { StatsCardProps } from './StatsCardTypes';
 
 /**
  * Three-column strip: experience, patients and rating, split by dividers.
  * @param {StatsCardProps} props - the three stat values.
  * @returns {ReactElement} A React Element.
  */
-const StatsCard = ({
-  experience,
-  patients,
-  rating,
-}: StatsCardProps): ReactElement => {
+const StatsCard = ({ experience, patients, rating }: StatsCardProps): ReactElement => {
   const { styles } = useTheme(StatsCardStyles);
 
   return (

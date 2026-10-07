@@ -1,18 +1,18 @@
-import type { ReactElement } from "react";
-import { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import type { ReactElement } from 'react';
+import { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { STATUS_BADGE_TONE, type StatusBadgeTone } from "../../constants";
-import { useTheme } from "../../hooks";
-import { CustomText } from "../custom-text";
-import StatusBadgeStyles from "./StatusBadgeStyles";
-import type { StatusBadgeProps } from "./StatusBadgeTypes";
+import { STATUS_BADGE_TONE, type StatusBadgeTone } from '../../constants';
+import { useTheme } from '../../hooks';
+import { CustomText } from '../custom-text';
+import StatusBadgeStyles from './StatusBadgeStyles';
+import type { StatusBadgeProps } from './StatusBadgeTypes';
 
 /** Maps a tone to its background/text style keys. */
 const TONE_STYLE_KEY = Object.freeze({
-  [STATUS_BADGE_TONE.green]: { container: "badgeGreen", text: "badgeGreenText" },
-  [STATUS_BADGE_TONE.amber]: { container: "badgeAmber", text: "badgeAmberText" },
-  [STATUS_BADGE_TONE.coral]: { container: "badgeCoral", text: "badgeCoralText" },
+  [STATUS_BADGE_TONE.green]: { container: 'badgeGreen', text: 'badgeGreenText' },
+  [STATUS_BADGE_TONE.amber]: { container: 'badgeAmber', text: 'badgeAmberText' },
+  [STATUS_BADGE_TONE.coral]: { container: 'badgeCoral', text: 'badgeCoralText' }
 } as const satisfies Record<StatusBadgeTone, { container: string; text: string }>);
 
 /**
@@ -26,11 +26,11 @@ const StatusBadge = ({ label, tone = STATUS_BADGE_TONE.green }: StatusBadgeProps
 
   const containerStyle = useMemo(
     () => StyleSheet.flatten([styles.badge, styles[toneKey.container]]),
-    [styles, toneKey],
+    [styles, toneKey]
   );
   const textStyle = useMemo(
     () => StyleSheet.flatten([styles.badgeText, styles[toneKey.text]]),
-    [styles, toneKey],
+    [styles, toneKey]
   );
 
   return (

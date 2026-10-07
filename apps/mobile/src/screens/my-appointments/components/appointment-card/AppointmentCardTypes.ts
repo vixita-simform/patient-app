@@ -1,5 +1,5 @@
-import type { AvatarTone, StatusBadgeTone } from "../../../../components";
-import type { AppointmentActionIcon, ButtonVariant } from "../../../../constants";
+import type { AvatarTone, StatusBadgeTone } from '../../../../components';
+import type { AppointmentActionIcon, ButtonVariant } from '../../../../constants';
 
 export interface AppointmentActionItem {
   label: string;

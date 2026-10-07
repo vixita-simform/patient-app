@@ -1,20 +1,18 @@
-import type { ReactElement } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
-import type { ListRenderItem } from "react-native";
+import type { ReactElement } from 'react';
+import { ActivityIndicator, FlatList, View } from 'react-native';
+import type { ListRenderItem } from 'react-native';
 
-import { PlusIcon } from "../../assets/icons";
-import { CustomText, IconButton, Screen, ScreenHeader, SegmentedTabs } from "../../components";
-import { ICON_BUTTON_VARIANT, SCREEN_HEADER_VARIANT, Strings } from "../../constants";
-import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
-import { AppointmentCard } from "./components";
-import type { AppointmentListItem } from "./MyAppointmentsScreenTypes";
-import MyAppointmentsScreenStyles from "./MyAppointmentsScreenStyles";
-import useMyAppointmentsScreen from "./useMyAppointmentsScreen";
+import { PlusIcon } from '../../assets/icons';
+import { CustomText, IconButton, Screen, ScreenHeader, SegmentedTabs } from '../../components';
+import { ICON_BUTTON_VARIANT, SCREEN_HEADER_VARIANT, Strings } from '../../constants';
+import { useTheme } from '../../hooks';
+import { Colors, scale } from '../../theme';
+import { AppointmentCard } from './components';
+import type { AppointmentListItem } from './MyAppointmentsScreenTypes';
+import MyAppointmentsScreenStyles from './MyAppointmentsScreenStyles';
+import useMyAppointmentsScreen from './useMyAppointmentsScreen';
 
-const renderItem: ListRenderItem<AppointmentListItem> = ({ item }) => (
-  <AppointmentCard {...item} />
-);
+const renderItem: ListRenderItem<AppointmentListItem> = ({ item }) => <AppointmentCard {...item} />;
 
 const keyExtractor = (item: AppointmentListItem): string => item.id;
 
@@ -41,9 +39,7 @@ export default function MyAppointmentsScreen(): ReactElement {
     <ActivityIndicator color={Colors[theme].green} />
   ) : (
     <CustomText style={styles.stateText}>
-      {isError
-        ? Strings.Common.somethingWentWrong
-        : Strings.MyAppointmentsScreen.emptyMessage}
+      {isError ? Strings.Common.somethingWentWrong : Strings.MyAppointmentsScreen.emptyMessage}
     </CustomText>
   );
 

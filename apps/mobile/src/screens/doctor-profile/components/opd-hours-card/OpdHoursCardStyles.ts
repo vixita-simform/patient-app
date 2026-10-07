@@ -1,49 +1,49 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../../../theme";
+import { Colors, Fonts, scale, type ThemeMode } from '../../../../theme';
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
     card: {
-      flexDirection: "column",
+      flexDirection: 'column',
       backgroundColor: Colors[theme].card,
       borderWidth: scale(1),
       borderColor: Colors[theme].line,
       padding: scale(16),
-      borderRadius: scale(18),
+      borderRadius: scale(18)
     },
     cardTitle: {
       fontFamily: Fonts.family.bold,
       fontWeight: Fonts.weight.extraSemi,
       fontSize: Fonts.size.f16,
       color: Colors[theme].navy,
-      marginBottom: scale(6),
+      marginBottom: scale(6)
     },
     hoursRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      paddingVertical: scale(8),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingVertical: scale(8)
     },
     hoursLabel: {
       fontFamily: Fonts.family.regular,
       fontSize: Fonts.size.f14,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     hoursValue: {
       fontFamily: Fonts.family.bold,
       fontWeight: Fonts.weight.extraSemi,
       fontSize: Fonts.size.f14,
-      color: Colors[theme].navy,
+      color: Colors[theme].navy
     },
     textSub: {
       fontFamily: Fonts.family.regular,
       fontSize: Fonts.size.h4,
-      color: Colors[theme].muted,
+      color: Colors[theme].muted
     },
     divider: {
       height: scale(1),
-      backgroundColor: Colors[theme].line,
-    },
+      backgroundColor: Colors[theme].line
+    }
   });
 
 export default styles;

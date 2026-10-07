@@ -1,7 +1,7 @@
-import { NOTIFICATION_GROUP, Strings } from "../../constants";
-import type { NotificationGroupId } from "../../constants";
-import type { NotificationGroup, NotificationItem } from "../../types";
-import { formatDate, formatTime, isThisWeek, isToday, isYesterday } from "../../utils";
+import { NOTIFICATION_GROUP, Strings } from '../../constants';
+import type { NotificationGroupId } from '../../constants';
+import type { NotificationGroup, NotificationItem } from '../../types';
+import { formatDate, formatTime, isThisWeek, isToday, isYesterday } from '../../utils';
 
 const MINUTE_MS = 60 * 1000;
 const HOUR_MS = 60 * MINUTE_MS;
@@ -10,7 +10,7 @@ const GROUP_LABELS: Record<NotificationGroupId, string> = Object.freeze({
   [NOTIFICATION_GROUP.today]: Strings.Common.today,
   [NOTIFICATION_GROUP.yesterday]: Strings.NotificationsScreen.yesterday,
   [NOTIFICATION_GROUP.thisWeek]: Strings.NotificationsScreen.thisWeek,
-  [NOTIFICATION_GROUP.past]: Strings.NotificationsScreen.past,
+  [NOTIFICATION_GROUP.past]: Strings.NotificationsScreen.past
 });
 
 /**
@@ -23,13 +23,13 @@ const GROUP_LABELS: Record<NotificationGroupId, string> = Object.freeze({
  */
 export function groupNotificationsByRecency(
   notifications: readonly NotificationItem[],
-  now: Date = new Date(),
+  now: Date = new Date()
 ): NotificationGroup[] {
   const buckets: Record<NotificationGroupId, NotificationItem[]> = {
     [NOTIFICATION_GROUP.today]: [],
     [NOTIFICATION_GROUP.yesterday]: [],
     [NOTIFICATION_GROUP.thisWeek]: [],
-    [NOTIFICATION_GROUP.past]: [],
+    [NOTIFICATION_GROUP.past]: []
   };
 
   notifications.forEach((notification) => {
