@@ -81,8 +81,8 @@ else
   message="$1"
 fi
 
-if ! [[ "$message" =~ ^(feat|FTR|fix|FIX|docs|style|CLP|refactor|RFR|perf|test|TST|build|ci|chore|revert|vendor|wip|WIP|security|SCR|CRO):[[:space:]][A-Z0-9]+-[A-Z0-9]+:[[:space:]][A-Za-z0-9].*$ ]]; then
-  echo  "Commit message should start with the commit type, followed by Zoho or Asana task-id and task name (example: 'feat: TA1-T123: Enable Client Certificate Support')"
+if ! [[ "$message" =~ ^(feat|FTR|fix|FIX|docs|style|CLP|refactor|RFR|perf|test|TST|build|ci|chore|revert|vendor|wip|WIP|security|SCR|CRO):[[:space:]](([A-Z0-9]+-[A-Z0-9]+):[[:space:]])?[A-Za-z0-9].*$ ]]; then
+  echo "Commit message should start with the commit type, optionally followed by a Zoho or Asana task-id, then the task name (examples: 'feat: TA1-T123: Enable Client Certificate Support' or 'feat: Enable Client Certificate Support')"
   echo "Select the type of change that you're committing"
   printTable ':' "PREFIX:TITLE:DESCRIPTION:EMOJI😀
 feat / FTR:Features:A new feature for the user, not a new feature for a build script:✨
