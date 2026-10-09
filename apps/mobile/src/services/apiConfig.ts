@@ -10,6 +10,7 @@ import { API_CONFIG } from '../constants';
  */
 export const getApiBaseUrl = (): string | undefined => {
   const configured = process.env.EXPO_PUBLIC_API_URL;
+  console.log('configured ---->', configured);
   if (configured) {
     // Passwords and tokens must never travel over plain HTTP outside development.
     if (!__DEV__ && !configured.startsWith('https://')) {
@@ -19,5 +20,6 @@ export const getApiBaseUrl = (): string | undefined => {
   }
 
   const host = __DEV__ ? Constants.expoConfig?.hostUri?.split(':')[0] : undefined;
+  console.log('host', host);
   return host ? `http://${host}:${API_CONFIG.devServerPort}` : undefined;
 };

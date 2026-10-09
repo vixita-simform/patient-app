@@ -224,7 +224,10 @@ const PersonalAndMedicalInfoScreen = freezeStringsObject({
   existingConditions: 'Existing conditions',
   emergencyContact: 'Emergency contact',
   editPhoto: 'Edit photo',
-  saveChanges: 'Save changes'
+  saveChanges: 'Save changes',
+  saved: 'Your details have been saved.',
+  loadFailed: 'Could not load your medical info. Please try again.',
+  sessionExpired: 'Your session has expired. Please sign in again.'
 });
 
 /**

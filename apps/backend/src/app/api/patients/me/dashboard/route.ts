@@ -1,28 +1,13 @@
 import type { HomeDashboardResponse } from '@patient-app/shared-types';
 
-import {
-  getAuthenticatedPatientId,
-  internalError,
-  notFound,
-  unauthorized
-} from '../../../../../lib';
+import { notFound } from '../../../../../lib';
+import { withAuth } from '../../../../../middlewares';
 import { getDashboard } from '../../../../../services/dashboard';
 
 // Per-patient data: never prerender or cache.
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: Request): Promise<Response> {
-  try {
-    const patientId = getAuthenticatedPatientId(request);
-    if (!patientId) {
-      return unauthorized();
-    }
-    const body: HomeDashboardResponse | null = await getDashboard(patientId);
-    if (!body) {
-      return notFound('Patient not found.');
-    }
-    return Response.json(body);
-  } catch (error) {
-    return internalError('GET /api/patients/me/dashboard', error);
-  }
-}
+export const GET = withAuth('GET /api/patients/me/dashboard', async (_request, { patientId }) => {
+  const body: HomeDashboardResponse | null = await getDashboard(patientId);
+  return body ? Response.json(body) : notFound('Patient not found.');
+});

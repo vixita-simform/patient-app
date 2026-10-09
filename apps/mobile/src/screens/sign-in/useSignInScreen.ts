@@ -65,6 +65,7 @@ const useSignInScreen = (): UseSignInScreenReturn => {
     validationSchema: signInSchema,
     validateOnMount: true,
     onSubmit: async (values, { setStatus }) => {
+      console.log('call formik **************');
       setStatus(undefined);
       if (values.method === AUTH_METHOD.password) {
         try {
@@ -77,6 +78,7 @@ const useSignInScreen = (): UseSignInScreenReturn => {
           // The root layout's route guard then moves to the protected screens.
           await signIn(accessToken);
         } catch (error) {
+          console.log('error', error);
           setStatus(getPasswordSignInError(error));
         }
         return;
@@ -152,6 +154,7 @@ const useSignInScreen = (): UseSignInScreenReturn => {
   }, []);
 
   const onPasswordChange = useCallback((text: string) => {
+    console.log('text', text);
     formikRef.current.setStatus(undefined);
     formikRef.current.setFieldValue('password', text);
   }, []);

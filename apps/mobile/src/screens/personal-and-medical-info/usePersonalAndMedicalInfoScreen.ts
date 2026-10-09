@@ -1,11 +1,20 @@
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import { useCallback, useMemo, useState } from 'react';
-import { Platform } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Alert, Platform } from 'react-native';
 
-import { BLOOD_GROUP, GENDER, STACK_ROUTES, Strings } from '../../constants';
+import { BLOOD_GROUP, GENDER, HTTP_STATUS, STACK_ROUTES, Strings } from '../../constants';
 import type { BloodGroup, Gender } from '../../constants';
 import { usePatient } from '../../context';
-import { formatDateWithYear, getInitials, goBackOr, parseDateOnly } from '../../utils';
+import { ApiError, getMedicalInfo, updateMedicalInfo } from '../../services';
+import type { MedicalInfoResponse, PatientAllergy } from '../../types';
+import {
+  formatDateWithYear,
+  getAuthToken,
+  getInitials,
+  goBackOr,
+  parseDateOnly,
+  toLocalDayId
+} from '../../utils';
 import type { ChipOption } from './components';
 import type { UsePersonalAndMedicalInfoScreenReturn } from './PersonalAndMedicalInfoScreenTypes';
 
@@ -32,35 +41,119 @@ const BLOOD_GROUP_OPTIONS: readonly ChipOption<BloodGroup>[] = Object.freeze([
 /** The date picker is a modal component on iOS; Android uses the imperative API. */
 const SHOULD_RENDER_IOS_PICKER = Platform.OS === 'ios';
 
+/** Existing conditions are one comma-separated text field on the form, a list in the API. */
+const CONDITION_SEPARATOR = ', ';
+
+const toAllergyChips = (allergies: readonly PatientAllergy[]): readonly ChipOption[] =>
+  allergies.map(({ id, allergen }) => ({ id, label: allergen }));
+
+/** Splits "a, b ,, c" into ["a", "b", "c"]. */
+const splitList = (value: string): string[] =>
+  value
+    .split(',')
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0);
+
+/** First word is the first name; the rest (possibly empty) is the last name. */
+const splitFullName = (fullName: string): { firstName: string; lastName: string } => {
+  const [firstName = '', ...rest] = fullName.trim().split(/\s+/);
+  return { firstName, lastName: rest.join(' ') };
+};
+
 /**
- * Local form state and handlers for the Personal & medical info screen.
- * There is no profile API yet, so Save, "+ Add" allergy and "Edit photo" return no handler
- * and render disabled instead of pretending to work.
+ * A message safe to show for a failed load or save.
+ * @param {unknown} error - what the API call threw.
+ * @param {string} fallback - shown for anything but an expired session.
+ * @returns {string} The alert message.
+ */
+const toErrorMessage = (error: unknown, fallback: string): string =>
+  error instanceof ApiError && error.status === HTTP_STATUS.unauthorized
+    ? COPY.sessionExpired
+    : fallback;
+
+/**
+ * Reads the stored access token.
+ * @returns {Promise<string>} The token.
+ * @throws {ApiError} 401 when the patient is not signed in.
+ */
+const requireAuthToken = async (): Promise<string> => {
+  const token = await getAuthToken();
+  if (!token) {
+    throw new ApiError(HTTP_STATUS.unauthorized, COPY.sessionExpired);
+  }
+  return token;
+};
+
+/**
+ * Form state and handlers for the Personal & medical info screen. The form starts from the
+ * stored patient, is then filled from GET /api/patients/me/medical-info, and Save sends it
+ * back with PUT. "+ Add" allergy and "Edit photo" have no input UI yet, so they return no
+ * handler and render disabled instead of pretending to work.
  * @returns {UsePersonalAndMedicalInfoScreenReturn} Field values, options and handlers.
  */
 export default function usePersonalAndMedicalInfoScreen(): UsePersonalAndMedicalInfoScreenReturn {
-  const { patient } = usePatient();
+  const { patient, savePatient } = usePatient();
+  const [medicalInfo, setMedicalInfo] = useState<MedicalInfoResponse | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   const [fullName, setFullName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState<Date | null>(null);
   const [gender, setGender] = useState<Gender>(GENDER.male);
   const [bloodGroup, setBloodGroup] = useState<BloodGroup | null>(null);
-  // No profile API stores these yet, so they start empty instead of showing someone else's record.
   const [allergies, setAllergies] = useState<readonly ChipOption[]>([]);
   const [existingConditions, setExistingConditions] = useState('');
   const [emergencyContactName, setEmergencyContactName] = useState('');
 
-  // Fill the form from the signed-in patient once it is known (and if the patient changes).
+  // Fill the form from the signed-in patient until the API answers, so it is not blank meanwhile.
   // Adjusted during render rather than in an effect: https://react.dev/learn/you-might-not-need-an-effect
   const [syncedPatient, setSyncedPatient] = useState(patient);
   if (patient !== syncedPatient) {
     setSyncedPatient(patient);
-    if (patient) {
+    // Once the API has answered it wins; a late restore of the stored patient must not overwrite it.
+    if (patient && !medicalInfo) {
       setFullName(`${patient.firstName} ${patient.lastName}`.trim());
       setGender(patient.gender);
       setBloodGroup(patient.bloodGroup);
       setDateOfBirth(patient.dateOfBirth ? parseDateOnly(patient.dateOfBirth) : null);
     }
   }
+
+  // Fill the whole form each time the API returns medical info (on load and after a save).
+  const [syncedMedicalInfo, setSyncedMedicalInfo] = useState(medicalInfo);
+  if (medicalInfo !== syncedMedicalInfo) {
+    setSyncedMedicalInfo(medicalInfo);
+    if (medicalInfo) {
+      const { patient: detail } = medicalInfo;
+      setFullName(`${detail.firstName} ${detail.lastName}`.trim());
+      setGender(detail.gender);
+      setBloodGroup(detail.bloodGroup);
+      setDateOfBirth(detail.dateOfBirth ? parseDateOnly(detail.dateOfBirth) : null);
+      setAllergies(toAllergyChips(medicalInfo.allergies));
+      setExistingConditions(
+        medicalInfo.conditions.map(({ name }) => name).join(CONDITION_SEPARATOR)
+      );
+      setEmergencyContactName(medicalInfo.emergencyContact?.name ?? '');
+    }
+  }
+
+  useEffect(() => {
+    let isActive = true;
+    const load = async (): Promise<void> => {
+      try {
+        const response = await getMedicalInfo(await requireAuthToken());
+        if (isActive) {
+          setMedicalInfo(response);
+        }
+      } catch (error) {
+        if (isActive) {
+          Alert.alert(toErrorMessage(error, COPY.loadFailed));
+        }
+      }
+    };
+    load();
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   const [isIosPickerVisible, setIsIosPickerVisible] = useState(false);
   const maximumDate = useMemo(() => new Date(), []);
@@ -111,6 +204,54 @@ export default function usePersonalAndMedicalInfoScreen(): UsePersonalAndMedical
     goBackOr(STACK_ROUTES.home);
   }, []);
 
+  const hasEmergencyContact = medicalInfo?.emergencyContact != null;
+  // Save needs the loaded record (so lists are never wiped by an empty form) and the required fields.
+  const canSave =
+    medicalInfo !== null &&
+    !isSaving &&
+    fullName.trim().length > 0 &&
+    dateOfBirth !== null &&
+    (!hasEmergencyContact || emergencyContactName.trim().length > 0);
+
+  const onSavePress = useCallback((): void => {
+    if (!dateOfBirth) {
+      return;
+    }
+    const save = async (): Promise<void> => {
+      setIsSaving(true);
+      try {
+        const response = await updateMedicalInfo(await requireAuthToken(), {
+          ...splitFullName(fullName),
+          dateOfBirth: toLocalDayId(dateOfBirth),
+          gender,
+          bloodGroup,
+          allergies: allergies.map(({ label }) => label),
+          conditions: splitList(existingConditions),
+          emergencyContactName: hasEmergencyContact ? emergencyContactName.trim() : null
+        });
+        setMedicalInfo(response);
+        // Keep Profile and Home in step; the server already has the change if storage fails.
+        await savePatient(response.patient).catch(() => undefined);
+        Alert.alert(COPY.saved);
+      } catch (error) {
+        Alert.alert(toErrorMessage(error, COMMON.somethingWentWrong));
+      } finally {
+        setIsSaving(false);
+      }
+    };
+    save();
+  }, [
+    allergies,
+    bloodGroup,
+    dateOfBirth,
+    emergencyContactName,
+    existingConditions,
+    fullName,
+    gender,
+    hasEmergencyContact,
+    savePatient
+  ]);
+
   return {
     initials: getInitials(fullName),
     fullName,
@@ -124,7 +265,7 @@ export default function usePersonalAndMedicalInfoScreen(): UsePersonalAndMedical
     allergies,
     existingConditions,
     emergencyContactName,
-    emergencyContactPhone: '',
+    emergencyContactPhone: medicalInfo?.emergencyContact?.phone ?? '',
     genderOptions: GENDER_OPTIONS,
     bloodGroupOptions: BLOOD_GROUP_OPTIONS,
     onFullNameChange: setFullName,
@@ -139,6 +280,6 @@ export default function usePersonalAndMedicalInfoScreen(): UsePersonalAndMedical
     onEmergencyContactNameChange: setEmergencyContactName,
     onAvatarPress: undefined,
     onBackPress,
-    onSavePress: undefined
+    onSavePress: canSave ? onSavePress : undefined
   };
 }

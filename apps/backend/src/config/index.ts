@@ -1,1 +1,1 @@
-export { getPool, query } from './database';
+export { getPool, query, type TransactionQuery, withTransaction } from './database';

@@ -46,6 +46,7 @@
     "eslint-plugin-react-native": "^5.0.0",
     "jest": "~29.7.0",
     "jest-expo": "~57.0.5",
+    "jest-sonar-reporter": "^2.0.0",
     "typescript": "~6.0.3"
   },
   "scripts": {
@@ -61,16 +62,5 @@
     "pretty": "prettier --write \"{src,jest}/**/*.{js,jsx,ts,tsx}\"",
     "spelling": "cspell lint \"src/**/*.{js,jsx,ts,tsx}\""
   },
-  "private": true,
-  "jest": {
-    "preset": "jest-expo",
-    "roots": [
-      "<rootDir>/jest"
-    ],
-    "setupFiles": [
-      "<rootDir>/jest/setup.ts"
-    ],
-    "clearMocks": true,
-    "globalSetup": "<rootDir>/jest/globalSetup.js"
-  }
+  "private": true
 }

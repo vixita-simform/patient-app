@@ -255,7 +255,8 @@ export const API_CONFIG = {
 
 export const API_ENDPOINTS = {
   signIn: '/api/auth/sign-in',
-  dashboard: '/api/patients/me/dashboard'
+  dashboard: '/api/patients/me/dashboard',
+  medicalInfo: '/api/patients/me/medical-info'
 } as const;
 
 /** HTTP statuses the app branches on. `networkError` (0) means no response was received. */

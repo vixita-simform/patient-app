@@ -35,3 +35,33 @@ export async function query<Row extends QueryResultRow>(
   const result = await getPool().query<Row>(text, [...params]);
   return result.rows;
 }
+
+/** Runs parameterised SQL on the client that owns the current transaction. */
+export type TransactionQuery = <Row extends QueryResultRow>(
+  text: string,
+  params?: readonly unknown[]
+) => Promise<Row[]>;
+
+/**
+ * Runs `work` inside one transaction: committed when it resolves, rolled back when it throws.
+ * @param work - the queries to run; use the `query` it is given, not the pool's.
+ * @returns what `work` returns.
+ */
+export async function withTransaction<T>(
+  work: (query: TransactionQuery) => Promise<T>
+): Promise<T> {
+  const client = await getPool().connect();
+  const run: TransactionQuery = async (text, params = []) =>
+    (await client.query(text, [...params])).rows;
+  try {
+    await client.query('BEGIN');
+    const result = await work(run);
+    await client.query('COMMIT');
+    return result;
+  } catch (error) {
+    await client.query('ROLLBACK').catch(() => {});
+    throw error;
+  } finally {
+    client.release();
+  }
+}

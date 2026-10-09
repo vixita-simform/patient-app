@@ -33,6 +33,6 @@ export interface UsePersonalAndMedicalInfoScreenReturn {
   /** Undefined until a photo picker exists; the pen button renders disabled. */
   onAvatarPress?: () => void;
   onBackPress: () => void;
-  /** Undefined until the profile update API exists; "Save changes" renders disabled. */
+  /** Undefined while loading or saving, or when a required field is empty; "Save changes" renders disabled. */
   onSavePress?: () => void;
 }
