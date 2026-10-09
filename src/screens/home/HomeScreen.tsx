@@ -1,140 +1,190 @@
 import type { ReactElement } from "react";
-import { ScrollView, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 
 import {
-  ActivityIcon,
   BellIcon,
-  CalendarIcon,
-  DropIcon,
-  FlaskIcon,
-  HeartIcon,
-  PhoneIcon,
-  PillIcon,
+  ChevronRightIcon,
+  PenIcon,
+  SwapIcon,
 } from "../../assets/icons";
-import {
-  Avatar,
-  CustomText,
-  IconButton,
-  Screen,
-  SectionHeader,
-} from "../../components";
+import { AppText, Card, Screen, SectionHeader, Sheet } from "../../components";
 import { Strings } from "../../constants";
 import { useTheme } from "../../hooks";
-import { Colors, scale } from "../../theme";
+import { scale, themes } from "../../theme";
 import {
-  AppointmentCard,
-  OpdTokenCard,
-  QuickActionTile,
-  VitalTile,
+  ClientCodeRow,
+  MessagePreviewCard,
+  StatCard,
+  TeamMemberTile,
 } from "./components";
 import HomeScreenStyles from "./HomeScreenStyles";
 import useHomeScreen from "./useHomeScreen";
 
+const SWAP_ICON_SIZE = scale(16);
+const BELL_ICON_SIZE = scale(20);
+const PEN_ICON_SIZE = scale(16);
+const CHEVRON_SIZE = scale(14);
+const ICON_STROKE = 2;
+
 /**
- * Home dashboard: header, OPD token, quick actions, next appointment and latest vitals.
+ * Home tab: client header, summary stats, recent documents, messages and team.
  * @returns {ReactElement} A React Element.
  */
 export default function HomeScreen(): ReactElement {
   const { styles, theme } = useTheme(HomeScreenStyles);
   const {
-    data,
-    onPressBell,
-    onPressBookVisit,
-    onPressLabReports,
-    onPressMedicines,
-    onPressCallAmbulance,
-    onPressSeeAll,
-    onPressHistory,
-    onPressAppointment,
+    client,
+    clientCodes,
+    showClientSwitch,
+    ccOpen,
+    unreadCount,
+    recentDocuments,
+    recentMessages,
+    documentCount,
+    summary,
+    team,
+    onOpenClientSheet,
+    onCloseClientSheet,
+    onSelectClient,
+    onPressNotifications,
+    onPressOutstanding,
+    onPressDocuments,
+    onPressSigning,
+    onPressMessages,
+    onPressTeam,
   } = useHomeScreen();
+  const { colors } = themes[theme];
 
   return (
     <Screen>
-      <View style={styles.header}>
-        <View style={styles.rowGap12}>
-          <Avatar initials={data.user.initials} size="compact" tone="navy" />
-          <View style={styles.col}>
-            <CustomText style={styles.textXs}>
-              {Strings.HomeScreen.goodMorning}
-            </CustomText>
-            <CustomText style={styles.greetingName}>
-              {data.user.name}
-            </CustomText>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.headerText}>
+            <AppText style={styles.greeting}>{Strings.HomeScreen.goodMorning}</AppText>
+            <AppText numberOfLines={1} style={styles.clientName}>
+              {client.name}
+            </AppText>
+            <AppText numberOfLines={1} style={styles.clientFarm}>
+              {client.farm}
+            </AppText>
+          </View>
+          <View style={styles.headerActions}>
+            {showClientSwitch ? (
+              <Pressable
+                accessibilityLabel={Strings.HomeScreen.switchClientCode}
+                accessibilityRole="button"
+                style={styles.switchButton}
+                onPress={onOpenClientSheet}>
+                <SwapIcon color={colors.primary} size={SWAP_ICON_SIZE} strokeWidth={ICON_STROKE} />
+              </Pressable>
+            ) : null}
+            <Pressable
+              accessibilityLabel={Strings.HomeScreen.notifications}
+              accessibilityRole="button"
+              style={styles.bellButton}
+              onPress={onPressNotifications}>
+              <BellIcon color={colors.text} size={BELL_ICON_SIZE} strokeWidth={ICON_STROKE} />
+              {unreadCount > 0 ? (
+                <View style={styles.badge}>
+                  <AppText style={styles.badgeText}>{unreadCount}</AppText>
+                </View>
+              ) : null}
+            </Pressable>
           </View>
         </View>
-        <IconButton
-          accessibilityLabel={Strings.HomeScreen.notifications}
-          onPress={onPressBell}
-        >
-          <BellIcon color={Colors[theme].navy} size={scale(20)} />
-        </IconButton>
-      </View>
-      <ScrollView
-        contentContainerStyle={styles.body}
-        showsVerticalScrollIndicator={false}
-        style={styles.scroll}
-      >
-        <OpdTokenCard {...data.token} />
-        <View style={styles.quick}>
-          <QuickActionTile
-            Icon={CalendarIcon}
-            label={Strings.HomeScreen.bookVisit}
-            variant="green"
-            onPress={onPressBookVisit}
+
+        <View style={styles.statGrid}>
+          <StatCard
+            caption={Strings.HomeScreen.itemsNeedAttention}
+            colors={[colors.primary, colors.primaryDark]}
+            label={Strings.HomeScreen.outstanding}
+            value={summary.outstandingCount}
+            onPress={onPressOutstanding}
           />
-          <QuickActionTile
-            Icon={FlaskIcon}
-            label={Strings.HomeScreen.labReports}
-            variant="blue"
-            onPress={onPressLabReports}
-          />
-          <QuickActionTile
-            Icon={PillIcon}
-            label={Strings.HomeScreen.medicines}
-            variant="amber"
-            onPress={onPressMedicines}
-          />
-          <QuickActionTile
-            Icon={PhoneIcon}
-            label={Strings.HomeScreen.callAmbulance}
-            variant="emergency"
-            onPress={onPressCallAmbulance}
+          <StatCard
+            caption={Strings.HomeScreen.availableToView}
+            colors={[colors.teal, colors.tealDark]}
+            label={Strings.DocumentsScreen.title}
+            value={documentCount}
+            onPress={onPressDocuments}
           />
         </View>
+
+        <Card style={styles.signatureCard} onPress={onPressSigning}>
+          <View style={styles.signatureRow}>
+            <View style={styles.signatureIconBox}>
+              <PenIcon color={colors.orange} size={PEN_ICON_SIZE} />
+            </View>
+            <View style={styles.signatureText}>
+              <AppText style={styles.signatureTitle}>{Strings.HomeScreen.awaitingSignature}</AppText>
+              <AppText style={styles.signatureSubtitle}>
+                {`${summary.pendingSignatureCount} ${Strings.HomeScreen.needYourSignature}`}
+              </AppText>
+            </View>
+            <ChevronRightIcon color={colors.textSecondary} size={CHEVRON_SIZE} />
+          </View>
+        </Card>
+
         <SectionHeader
-          actionLabel={Strings.HomeScreen.seeAll}
-          title={Strings.HomeScreen.nextAppointment}
-          onActionPress={onPressSeeAll}
+          actionLabel={Strings.HomeScreen.viewAll}
+          title={Strings.HomeScreen.recentDocuments}
+          onActionPress={onPressDocuments}
         />
-        {data.appointment ? (
-          <AppointmentCard {...data.appointment} onPress={onPressAppointment} />
-        ) : null}
-        <SectionHeader
-          actionLabel={Strings.HomeScreen.history}
-          title={Strings.HomeScreen.latestVitals}
-          onActionPress={onPressHistory}
-        />
-        <View style={styles.vitals}>
-          <VitalTile
-            Icon={HeartIcon}
-            label={Strings.HomeScreen.heartRate}
-            tone="coral"
-            {...data.vitals.heart}
-          />
-          <VitalTile
-            Icon={ActivityIcon}
-            label={Strings.HomeScreen.bloodPressure}
-            tone="blue"
-            {...data.vitals.bloodPressure}
-          />
-          <VitalTile
-            Icon={DropIcon}
-            label={Strings.HomeScreen.sugar}
-            tone="amber"
-            {...data.vitals.sugar}
-          />
+        <View style={styles.list}>
+          {recentDocuments.map((doc) => (
+            <Card key={doc.id} style={styles.docCard}>
+              <View style={styles.docInfo}>
+                <AppText style={styles.docName}>{doc.name}</AppText>
+                <AppText style={styles.docMeta}>
+                  {`${doc.type}${Strings.Common.metaSeparator}${doc.date}`}
+                </AppText>
+              </View>
+            </Card>
+          ))}
         </View>
+
+        <SectionHeader
+          actionLabel={Strings.HomeScreen.viewAll}
+          title={Strings.MessagesScreen.title}
+          onActionPress={onPressMessages}
+        />
+        <View style={styles.list}>
+          {recentMessages.map((message) => (
+            <MessagePreviewCard key={message.id} message={message} onPress={onPressMessages} />
+          ))}
+        </View>
+
+        <SectionHeader
+          actionLabel={Strings.HomeScreen.viewAll}
+          title={Strings.HomeScreen.yourTeam}
+          onActionPress={onPressTeam}
+        />
+        <ScrollView
+          horizontal
+          contentContainerStyle={styles.teamRow}
+          showsHorizontalScrollIndicator={false}>
+          {team.map((member) => (
+            <TeamMemberTile key={member.id} member={member} />
+          ))}
+        </ScrollView>
       </ScrollView>
+
+      <Sheet
+        title={Strings.HomeScreen.switchClientCodeTitle}
+        visible={ccOpen}
+        onClose={onCloseClientSheet}>
+        {clientCodes.map((c) => (
+          <ClientCodeRow
+            active={c.code === client.code}
+            client={c}
+            key={c.code}
+            onSelect={onSelectClient}
+          />
+        ))}
+      </Sheet>
     </Screen>
   );
 }

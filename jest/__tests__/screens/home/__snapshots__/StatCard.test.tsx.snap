@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatCard matches the snapshot 1`] = `
+<KeyboardProvider>
+  <View
+    accessibilityLabel="Outstanding, 4"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <ViewManagerAdapter_ExpoLinearGradient
+      colors={
+        [
+          4278230182,
+          4278222474,
+        ]
+      }
+      endPoint={
+        [
+          1,
+          1,
+        ]
+      }
+      startPoint={
+        [
+          0,
+          0,
+        ]
+      }
+      style={
+        {
+          "borderRadius": 18,
+          "borderWidth": 0,
+          "padding": 21,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "rgba(255,255,255,0.75)",
+            "fontFamily": "Figtree_600SemiBold",
+            "fontSize": 15,
+            "fontWeight": "600",
+            "letterSpacing": 1,
+            "marginBottom": 5,
+            "marginHorizontal": 0,
+            "marginTop": 0,
+            "textTransform": "uppercase",
+          }
+        }
+      >
+        Outstanding
+      </Text>
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#FFFFFF",
+            "fontFamily": "Figtree_800ExtraBold",
+            "fontSize": 35,
+            "fontWeight": "800",
+            "marginBottom": 2,
+            "marginHorizontal": 0,
+            "marginTop": 0,
+          }
+        }
+      >
+        4
+      </Text>
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "rgba(255,255,255,0.65)",
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 15,
+          }
+        }
+      >
+        items need attention
+      </Text>
+    </ViewManagerAdapter_ExpoLinearGradient>
+  </View>
+</KeyboardProvider>
+`;

@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import Svg, { Path, type SvgProps } from "react-native-svg";
+import Svg, { G, Path, Polyline, type SvgProps } from "react-native-svg";
 
 import { theme } from "../../theme";
 
@@ -17,18 +17,20 @@ interface HomeIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
 export function HomeIcon({
   size = 24,
   color = theme.colors.navy,
-  strokeWidth = 1.8,
+  strokeWidth = 2,
   ...rest
 }: HomeIconProps): ReactElement {
   return (
     <Svg fill="none" height={size} viewBox="0 0 24 24" width={size} {...rest}>
-      <Path
-        d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"
+      <G
         stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={strokeWidth}
-      />
+      >
+        <Path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+        <Polyline points="9 22 9 12 15 12 15 22" />
+      </G>
     </Svg>
   );
 }

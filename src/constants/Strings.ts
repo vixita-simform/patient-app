@@ -18,97 +18,150 @@ const freezeStringsObject = <T extends KeyStringValueMap>(strings: T): T =>
  */
 const Common = freezeStringsObject({
   back: "Back",
+  close: "Close",
+  now: "Now",
+  metaSeparator: " · ",
+  listSeparator: ", ",
+  takePhoto: "Take a photo",
+  uploadFromStorage: "Upload from storage",
+  whoShouldSee: "Who should see this?",
+  /** Template: {count} is the number of items not yet shown. */
+  loadMoreCount: "Load More ({count} more)",
 });
 
 const TabBar = freezeStringsObject({
   home: "Home",
-  visits: "Visits",
-  records: "Records",
-  profile: "Profile",
+  documents: "Docs",
+  upload: "Upload",
+  messages: "Messages",
+  more: "More",
 });
 
-/**
- * A collection of labels for the HomeScreen.
- * @type {Object}
- */
 const HomeScreen = freezeStringsObject({
+  title: "Home",
   goodMorning: "Good morning",
+  switchClientCode: "Switch client code",
+  switchClientCodeTitle: "Switch Client Code",
   notifications: "Notifications",
-  yourOpdToken: "Your OPD token",
-  nowServing: "Now serving",
-  patientsAhead: "patients ahead",
-  // "About 12 min wait": approximation, not the section heading.
-  about: "About",
-  minWait: "min wait",
-  bookVisit: "Book visit",
-  labReports: "Lab reports",
-  medicines: "Medicines",
-  callAmbulance: "Call ambulance",
-  nextAppointment: "Next appointment",
-  seeAll: "See all",
-  today: "Today",
-  latestVitals: "Latest vitals",
-  history: "History",
-  heartRate: "Heart rate",
-  bloodPressure: "Blood pressure",
-  sugar: "Sugar",
+  outstanding: "Outstanding",
+  itemsNeedAttention: "items need attention",
+  availableToView: "available to view",
+  awaitingSignature: "Documents awaiting signature",
+  needYourSignature: "document(s) need your signature",
+  recentDocuments: "Recent Documents",
+  viewAll: "View All",
+  yourTeam: "Your ifac Team",
 });
 
-const FindADoctorScreen = freezeStringsObject({
-  title: "Find a doctor",
-  filter: "Filter",
-  searchPlaceholder: "Search doctor, department or symptom",
+const DocumentsScreen = freezeStringsObject({
+  title: "Documents",
+  subtitle: "Accounts, returns & certificates",
+  searchPlaceholder: "Search documents...",
+  filterByYear: "Filter by year",
+  year: "Year",
+  allYears: "All Years",
   all: "All",
-  cardiology: "Cardiology",
-  orthopedics: "Orthopedics",
-  pediatrics: "Pediatrics",
-  dermatology: "Dermatology",
-  ent: "ENT",
-  doctorsAvailableToday: "doctors available today",
-  doctorAvailableToday: "doctor available today",
-  errorMessage: "Something went wrong. Please try again.",
-  emptyMessage: "No doctors found",
+  download: "Download",
+  /** Template: {name} is the document name. */
+  downloadDocument: "Download {name}",
+  /** Template: {shown} of {total} documents. */
+  showingCount: "Showing {shown} of {total}",
 });
 
-const DoctorCard = freezeStringsObject({
-  yrsExp: "yrs exp.",
-  reviews: "reviews",
-  nextAvailable: "Next available",
-  book: "Book",
+const UploadScreen = freezeStringsObject({
+  title: "Upload",
+  heading: "Upload Document",
+  subtitle: "Capture or upload your documents",
+  fileHint: "PDF, JPG, PNG, HEIC up to 25MB",
+  documentTypeLabel: "Document type",
+  selectDocumentType: "Select document type",
+  categoriesConfirmed: "Categories are confirmed by your ifac team",
+  veriffNotice: "Identity check via Veriff will start after upload.",
+  submitDocument: "Submit Document",
+  uploading: "Uploading...",
+  securelySending: "Securely sending your document",
+  documentUploaded: "Document uploaded",
+  confirmCategory: "They'll confirm the category.",
+  sentTo: "Sent to: ",
+  uploadAnother: "Upload Another",
+  previouslyUploaded: "Previously uploaded",
+  replace: "Replace",
+  /** Template: {name} is the document name. */
+  replaceDocument: "Replace {name}",
 });
 
-const DoctorProfileScreen = freezeStringsObject({
-  favourite: "Favourite",
-  yrs: "yrs",
-  experience: "Experience",
-  patients: "Patients",
-  rating: "Rating",
-  about: "About",
-  opdHours: "OPD hours",
+const MessagesScreen = freezeStringsObject({
+  title: "Messages",
+  subtitle: "Secure chat with your ifac team",
+  participants: "participants",
   closed: "Closed",
-  consultationFee: "Consultation fee",
-  insuranceAccepted: "Insurance accepted",
-  videoConsult: "Video consultation",
-  bookAppointment: "Book appointment",
-  notFound: "Doctor not found",
-  loadError: "Could not load this doctor. Please try again.",
+  closedBy: "This chat was closed by ifac on",
+  viewOnly: "View only \u2014 replies are disabled",
+  attachDocument: "Attach a document",
+  uploadNote: "Uses the standard upload \u2014 also saved to Documents",
+  sendTo: "Send to",
+  recipientSingular: "recipient",
+  recipientPlural: "recipients",
+  selectRecipient: "Select a recipient",
+  typeMessage: "Type a message...",
+  sendMessage: "Send message",
+  attachDocumentLabel: "Attach document",
+  visibleTo: "Visible to",
 });
 
-const RecordsScreen = freezeStringsObject({
-  title: "Records",
+const MoreScreen = freezeStringsObject({
+  title: "More",
+  subtitle: "All features & settings",
 });
 
-const ProfileScreen = freezeStringsObject({
-  title: "Profile",
+const MoreItems = freezeStringsObject({
+  signingLabel: "Document Signing",
+  signingDesc: "Sign electronically",
+  amlLabel: "Identity Verification",
+  amlDesc: "AML & KYC status",
+  invoicesLabel: "Invoices & Payments",
+  invoicesDesc: "View & pay invoices",
+  meetingsLabel: "Meetings & Calls",
+  meetingsDesc: "Book & manage meetings",
+  checklistLabel: "Outstanding Items",
+  checklistDesc: "Documents checklist",
+  teamLabel: "Your ifac Team",
+  teamDesc: "Your assigned advisors",
+  servicesLabel: "ifac Services",
+  servicesDesc: "Our full range",
+  datafeedsLabel: "Data Feeds",
+  datafeedsDesc: "Co-op & mart integrations",
+  linksLabel: "Quick Links",
+  linksDesc: "FarmPro, Bright & more",
+  notificationsLabel: "Notifications",
+  notificationsDesc: "All notifications",
+  profileLabel: "Profile & Preferences",
+  profileDesc: "Notifications, security & comms",
+  helpLabel: "Help & Support",
+  helpDesc: "FAQs & guides",
+});
+
+const FeatureScreen = freezeStringsObject({
+  comingSoon: "Coming soon",
+  comingSoonBody: "This section is on its way. Check back after the next update.",
+});
+
+const RecipientPicker = freezeStringsObject({
+  /** Template: {name} is the single recipient. */
+  sharedWith: "Shared with {name}",
+  hintSelected: "Only the people you tick can see this document.",
+  hintEmpty: "Select at least one recipient to continue.",
 });
 
 export default Object.freeze({
+  RecipientPicker,
   Common,
   TabBar,
   HomeScreen,
-  FindADoctorScreen,
-  DoctorCard,
-  DoctorProfileScreen,
-  RecordsScreen,
-  ProfileScreen,
+  DocumentsScreen,
+  UploadScreen,
+  MessagesScreen,
+  MoreScreen,
+  MoreItems,
+  FeatureScreen,
 });

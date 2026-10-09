@@ -4,7 +4,8 @@ import { SectionHeader } from "../../../src/components";
 import { Strings } from "../../../src/constants";
 import { RenderWrapper } from "../../Wrapper";
 
-const { nextAppointment: title, seeAll } = Strings.HomeScreen;
+const title = Strings.HomeScreen.recentDocuments;
+const seeAll = Strings.HomeScreen.viewAll;
 
 describe("SectionHeader", () => {
   it("matches the snapshot", async () => {

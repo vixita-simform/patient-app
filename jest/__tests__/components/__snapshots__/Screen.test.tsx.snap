@@ -13,7 +13,7 @@ exports[`Screen matches the snapshot 1`] = `
     }
     style={
       {
-        "backgroundColor": "#EEF4F1",
+        "backgroundColor": "#F4F7F8",
         "flex": 1,
       }
     }

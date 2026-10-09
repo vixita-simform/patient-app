@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import Svg, { Path, type SvgProps } from "react-native-svg";
+import Svg, { G, Path, type SvgProps } from "react-native-svg";
 
 import { theme } from "../../theme";
 
@@ -10,25 +10,26 @@ interface BackIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
 }
 
 /**
- * Back arrow (chevron) icon.
- * @param {BackIconProps} props - size, color and stroke width.
- * @returns {ReactElement} A React Element.
+ * Back icon (24x24 viewBox, stroked).
+ * @param {BackIconProps} props - size, color, strokeWidth plus any SvgProps.
+ * @returns {ReactElement} The SVG element.
  */
 export function BackIcon({
   size = 24,
   color = theme.colors.navy,
-  strokeWidth = 1.8,
+  strokeWidth = 2,
   ...rest
 }: BackIconProps): ReactElement {
   return (
     <Svg fill="none" height={size} viewBox="0 0 24 24" width={size} {...rest}>
-      <Path
-        d="M15 18l-6-6 6-6"
+      <G
         stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={strokeWidth}
-      />
+      >
+        <Path d="M15 18l-6-6 6-6" />
+      </G>
     </Svg>
   );
 }

@@ -17,7 +17,7 @@ interface BellIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
 export function BellIcon({
   size = 24,
   color = theme.colors.navy,
-  strokeWidth = 1.8,
+  strokeWidth = 2,
   ...rest
 }: BellIconProps): ReactElement {
   return (
@@ -26,9 +26,10 @@ export function BellIcon({
         stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={strokeWidth}>
-        <Path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z" />
-        <Path d="M10 21h4" />
+        strokeWidth={strokeWidth}
+      >
+        <Path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+        <Path d="M13.73 21a2 2 0 0 1-3.46 0" />
       </G>
     </Svg>
   );

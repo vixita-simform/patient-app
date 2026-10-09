@@ -30,6 +30,7 @@ const size = {
   f14: scale(14),
   f16: scale(16),
   f22: scale(22),
+  f24: scale(24),
   f28: scale(28),
   f32: scale(32),
   f64: scale(64),
@@ -51,6 +52,16 @@ const weight = {
 } as const;
 
 /**
+ * Letter spacing for headings (negative) and uppercase labels (positive)
+ */
+const letterSpacing = {
+  tight: scale(-0.18),
+  snug: scale(-0.14),
+  wide: scale(0.4),
+  wider: scale(0.5),
+} as const;
+
+/**
  * Derived types for external use (if needed)
  */
 export type FontFamily = typeof family;
@@ -59,4 +70,4 @@ export type FontWeight = typeof weight;
 export type FontSizeKey = keyof typeof size;
 export type FontWeightKey = keyof typeof weight;
 
-export default { family, weight, size };
+export default { family, weight, size, letterSpacing };

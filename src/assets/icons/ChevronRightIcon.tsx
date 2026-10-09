@@ -3,21 +3,24 @@ import Svg, { G, Path, type SvgProps } from "react-native-svg";
 
 import { theme } from "../../theme";
 
-interface ChevronRightIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
+interface ChevronRightIconProps extends Omit<
+  SvgProps,
+  "width" | "height" | "color"
+> {
   size?: number;
   color?: string;
   strokeWidth?: number;
 }
 
 /**
- * Right chevron icon (24x24 viewBox, stroked).
+ * Chevron right icon (24x24 viewBox, stroked).
  * @param {ChevronRightIconProps} props - size, color, strokeWidth plus any SvgProps.
  * @returns {ReactElement} The SVG element.
  */
 export function ChevronRightIcon({
   size = 24,
   color = theme.colors.navy,
-  strokeWidth = 1.8,
+  strokeWidth = 2,
   ...rest
 }: ChevronRightIconProps): ReactElement {
   return (
@@ -26,8 +29,9 @@ export function ChevronRightIcon({
         stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth={strokeWidth}>
-        <Path d="m9 5 7 7-7 7" />
+        strokeWidth={strokeWidth}
+      >
+        <Path d="M9 18l6-6-6-6" />
       </G>
     </Svg>
   );

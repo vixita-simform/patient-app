@@ -1,0 +1,17 @@
+{
+  "source": { "extractDir": "design/.rdr", "templateVar": null, "root": null, "screens": null },
+  "project": {
+    "conventions": "CLAUDE.md",
+    "srcDir": "src", "appDir": "src/app", "screensDir": "src/screens",
+    "componentsDir": "src/components", "iconsDir": "src/assets/icons", "assetsDir": "src/assets",
+    "themeDir": "src/theme", "colorsFile": "src/theme/Colors.ts", "fontsFile": "src/theme/Fonts.ts",
+    "stringsFile": "src/constants/Strings.ts", "scaleFn": "scale", "themeHook": "useTheme",
+    "textComponent": "AppText", "screenWrapper": "Screen", "router": "expo-router",
+    "navigationDir": "src/navigation", "tabConfigFile": "src/navigation/TabConfig.ts"
+  },
+  "verify": {
+    "simulator": true, "viewportWidth": 320, "viewportHeight": 680, "dpr": 2,
+    "deviceWidth": 393, "deviceHeight": 852, "cropActual": "7%,4%",
+    "threshold": 0.12, "maxMismatchPct": 10, "maxRepairRounds": 2
+  }
+}

@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import Svg, { Circle, Path, type SvgProps } from "react-native-svg";
+import Svg, { Circle, G, Line, type SvgProps } from "react-native-svg";
 
 import { theme } from "../../theme";
 
@@ -10,34 +10,27 @@ interface SearchIconProps extends Omit<SvgProps, "width" | "height" | "color"> {
 }
 
 /**
- * Magnifier icon.
- * @param {SearchIconProps} props - size, color and stroke width.
- * @returns {ReactElement} A React Element.
+ * Search icon (24x24 viewBox, stroked).
+ * @param {SearchIconProps} props - size, color, strokeWidth plus any SvgProps.
+ * @returns {ReactElement} The SVG element.
  */
 export function SearchIcon({
   size = 24,
   color = theme.colors.navy,
-  strokeWidth = 1.8,
+  strokeWidth = 2,
   ...rest
 }: SearchIconProps): ReactElement {
   return (
     <Svg fill="none" height={size} viewBox="0 0 24 24" width={size} {...rest}>
-      <Circle
-        cx={11}
-        cy={11}
-        r={7}
+      <G
         stroke={color}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={strokeWidth}
-      />
-      <Path
-        d="M20 20l-3.5-3.5"
-        stroke={color}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={strokeWidth}
-      />
+      >
+        <Circle cx="11" cy="11" r="8" />
+        <Line x1="21" x2="16.65" y1="21" y2="16.65" />
+      </G>
     </Svg>
   );
 }

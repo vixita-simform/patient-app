@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`icons ActivityIcon renders with defaults 1`] = `
+exports[`icons BackIcon renders with defaults 1`] = `
 <KeyboardProvider>
   <RNSVGSvgView
     align="xMidYMid"
@@ -60,10 +60,10 @@ exports[`icons ActivityIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
+        strokeWidth={2}
       >
         <RNSVGPath
-          d="M3 12h4l3-8 4 16 3-8h4"
+          d="M15 18l-6-6 6-6"
           fill={
             {
               "payload": 4278190080,
@@ -72,74 +72,6 @@ exports[`icons ActivityIcon renders with defaults 1`] = `
           }
         />
       </RNSVGGroup>
-    </RNSVGGroup>
-  </RNSVGSvgView>
-</KeyboardProvider>
-`;
-
-exports[`icons BackIcon renders with defaults 1`] = `
-<KeyboardProvider>
-  <RNSVGSvgView
-    align="xMidYMid"
-    bbHeight={24}
-    bbWidth={24}
-    fill="none"
-    focusable={false}
-    height={24}
-    meetOrSlice={0}
-    minX={0}
-    minY={0}
-    style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "borderWidth": 0,
-        },
-        {
-          "flex": 0,
-          "height": 24,
-          "width": 24,
-        },
-      ]
-    }
-    vbHeight={24}
-    vbWidth={24}
-    width={24}
-  >
-    <RNSVGGroup
-      fill={null}
-      propList={
-        [
-          "fill",
-        ]
-      }
-    >
-      <RNSVGPath
-        d="M15 18l-6-6 6-6"
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
     </RNSVGGroup>
   </RNSVGSvgView>
 </KeyboardProvider>
@@ -205,10 +137,10 @@ exports[`icons BellIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
+        strokeWidth={2}
       >
         <RNSVGPath
-          d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"
+          d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
           fill={
             {
               "payload": 4278190080,
@@ -217,7 +149,7 @@ exports[`icons BellIcon renders with defaults 1`] = `
           }
         />
         <RNSVGPath
-          d="M10 21h4"
+          d="M13.73 21a2 2 0 0 1-3.46 0"
           fill={
             {
               "payload": 4278190080,
@@ -268,38 +200,7 @@ exports[`icons CalendarIcon renders with defaults 1`] = `
         ]
       }
     >
-      <RNSVGRect
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        height={16}
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        rx={2}
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-        width={18}
-        x={3}
-        y={5}
-      />
-      <RNSVGPath
-        d="M3 10h18M8 3v4M16 3v4"
+      <RNSVGGroup
         fill={
           {
             "payload": 4278190080,
@@ -322,8 +223,387 @@ exports[`icons CalendarIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
+        strokeWidth={2}
+      >
+        <RNSVGRect
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          height="18"
+          rx="2"
+          ry="2"
+          width="18"
+          x="3"
+          y="4"
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="16"
+          x2="16"
+          y1="2"
+          y2="6"
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="8"
+          x2="8"
+          y1="2"
+          y2="6"
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="3"
+          x2="21"
+          y1="10"
+          y2="10"
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons CameraIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGCircle
+          cx="12"
+          cy="13"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          r="4"
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons CheckIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={3}
+      >
+        <RNSVGPath
+          d="M20 6L9 17l-5-5"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons ChecklistIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M9 11l3 3L22 4"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons ChevronDownIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M6 9 12 15 18 9"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
     </RNSVGGroup>
   </RNSVGSvgView>
 </KeyboardProvider>
@@ -389,10 +669,10 @@ exports[`icons ChevronRightIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
+        strokeWidth={2}
       >
         <RNSVGPath
-          d="m9 5 7 7-7 7"
+          d="M9 18l6-6-6-6"
           fill={
             {
               "payload": 4278190080,
@@ -406,7 +686,7 @@ exports[`icons ChevronRightIcon renders with defaults 1`] = `
 </KeyboardProvider>
 `;
 
-exports[`icons ClockIcon renders with defaults 1`] = `
+exports[`icons DataIcon renders with defaults 1`] = `
 <KeyboardProvider>
   <RNSVGSvgView
     align="xMidYMid"
@@ -466,98 +746,294 @@ exports[`icons ClockIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
+        strokeWidth={2}
+      >
+        <RNSVGEllipse
+          cx="12"
+          cy="5"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          rx="9"
+          ry="3"
+        />
+        <RNSVGPath
+          d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons DownloadIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M7 10 12 15 17 10"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="12"
+          x2="12"
+          y1="15"
+          y2="3"
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons FolderIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons HelpIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
       >
         <RNSVGCircle
-          cx={12}
-          cy={12}
+          cx="12"
+          cy="12"
           fill={
             {
               "payload": 4278190080,
               "type": 0,
             }
           }
-          r={9}
+          r="10"
         />
         <RNSVGPath
-          d="M12 7v5l3 2"
-          fill={
-            {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
-        />
-      </RNSVGGroup>
-    </RNSVGGroup>
-  </RNSVGSvgView>
-</KeyboardProvider>
-`;
-
-exports[`icons DropIcon renders with defaults 1`] = `
-<KeyboardProvider>
-  <RNSVGSvgView
-    align="xMidYMid"
-    bbHeight={24}
-    bbWidth={24}
-    fill="none"
-    focusable={false}
-    height={24}
-    meetOrSlice={0}
-    minX={0}
-    minY={0}
-    style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "borderWidth": 0,
-        },
-        {
-          "flex": 0,
-          "height": 24,
-          "width": 24,
-        },
-      ]
-    }
-    vbHeight={24}
-    vbWidth={24}
-    width={24}
-  >
-    <RNSVGGroup
-      fill={null}
-      propList={
-        [
-          "fill",
-        ]
-      }
-    >
-      <RNSVGGroup
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      >
-        <RNSVGPath
-          d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"
+          d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"
           fill={
             {
               "payload": 4278190080,
@@ -565,330 +1041,17 @@ exports[`icons DropIcon renders with defaults 1`] = `
             }
           }
         />
-      </RNSVGGroup>
-    </RNSVGGroup>
-  </RNSVGSvgView>
-</KeyboardProvider>
-`;
-
-exports[`icons FileIcon renders with defaults 1`] = `
-<KeyboardProvider>
-  <RNSVGSvgView
-    align="xMidYMid"
-    bbHeight={24}
-    bbWidth={24}
-    fill="none"
-    focusable={false}
-    height={24}
-    meetOrSlice={0}
-    minX={0}
-    minY={0}
-    style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "borderWidth": 0,
-        },
-        {
-          "flex": 0,
-          "height": 24,
-          "width": 24,
-        },
-      ]
-    }
-    vbHeight={24}
-    vbWidth={24}
-    width={24}
-  >
-    <RNSVGGroup
-      fill={null}
-      propList={
-        [
-          "fill",
-        ]
-      }
-    >
-      <RNSVGPath
-        d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
-      <RNSVGPath
-        d="M14 3v5h5M9 13h6M9 17h6"
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
-    </RNSVGGroup>
-  </RNSVGSvgView>
-</KeyboardProvider>
-`;
-
-exports[`icons FilterIcon renders with defaults 1`] = `
-<KeyboardProvider>
-  <RNSVGSvgView
-    align="xMidYMid"
-    bbHeight={24}
-    bbWidth={24}
-    fill="none"
-    focusable={false}
-    height={24}
-    meetOrSlice={0}
-    minX={0}
-    minY={0}
-    style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "borderWidth": 0,
-        },
-        {
-          "flex": 0,
-          "height": 24,
-          "width": 24,
-        },
-      ]
-    }
-    vbHeight={24}
-    vbWidth={24}
-    width={24}
-  >
-    <RNSVGGroup
-      fill={null}
-      propList={
-        [
-          "fill",
-        ]
-      }
-    >
-      <RNSVGPath
-        d="M4 6h16M7 12h10M10 18h4"
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
-    </RNSVGGroup>
-  </RNSVGSvgView>
-</KeyboardProvider>
-`;
-
-exports[`icons FlaskIcon renders with defaults 1`] = `
-<KeyboardProvider>
-  <RNSVGSvgView
-    align="xMidYMid"
-    bbHeight={24}
-    bbWidth={24}
-    fill="none"
-    focusable={false}
-    height={24}
-    meetOrSlice={0}
-    minX={0}
-    minY={0}
-    style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "borderWidth": 0,
-        },
-        {
-          "flex": 0,
-          "height": 24,
-          "width": 24,
-        },
-      ]
-    }
-    vbHeight={24}
-    vbWidth={24}
-    width={24}
-  >
-    <RNSVGGroup
-      fill={null}
-      propList={
-        [
-          "fill",
-        ]
-      }
-    >
-      <RNSVGGroup
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      >
-        <RNSVGPath
-          d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"
+        <RNSVGLine
           fill={
             {
               "payload": 4278190080,
               "type": 0,
             }
           }
-        />
-        <RNSVGPath
-          d="M7.5 15h9"
-          fill={
-            {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
-        />
-      </RNSVGGroup>
-    </RNSVGGroup>
-  </RNSVGSvgView>
-</KeyboardProvider>
-`;
-
-exports[`icons HeartIcon renders with defaults 1`] = `
-<KeyboardProvider>
-  <RNSVGSvgView
-    align="xMidYMid"
-    bbHeight={24}
-    bbWidth={24}
-    fill="none"
-    focusable={false}
-    height={24}
-    meetOrSlice={0}
-    minX={0}
-    minY={0}
-    style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "borderWidth": 0,
-        },
-        {
-          "flex": 0,
-          "height": 24,
-          "width": 24,
-        },
-      ]
-    }
-    vbHeight={24}
-    vbWidth={24}
-    width={24}
-  >
-    <RNSVGGroup
-      fill={null}
-      propList={
-        [
-          "fill",
-        ]
-      }
-    >
-      <RNSVGGroup
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      >
-        <RNSVGPath
-          d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"
-          fill={
-            {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
+          x1="12"
+          x2="12.01"
+          y1="17"
+          y2="17"
         />
       </RNSVGGroup>
     </RNSVGGroup>
@@ -933,74 +1096,6 @@ exports[`icons HomeIcon renders with defaults 1`] = `
         ]
       }
     >
-      <RNSVGPath
-        d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
-    </RNSVGGroup>
-  </RNSVGSvgView>
-</KeyboardProvider>
-`;
-
-exports[`icons PhoneIcon renders with defaults 1`] = `
-<KeyboardProvider>
-  <RNSVGSvgView
-    align="xMidYMid"
-    bbHeight={24}
-    bbWidth={24}
-    fill="none"
-    focusable={false}
-    height={24}
-    meetOrSlice={0}
-    minX={0}
-    minY={0}
-    style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "borderWidth": 0,
-        },
-        {
-          "flex": 0,
-          "height": 24,
-          "width": 24,
-        },
-      ]
-    }
-    vbHeight={24}
-    vbWidth={24}
-    width={24}
-  >
-    <RNSVGGroup
-      fill={null}
-      propList={
-        [
-          "fill",
-        ]
-      }
-    >
       <RNSVGGroup
         fill={
           {
@@ -1024,10 +1119,19 @@ exports[`icons PhoneIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
+        strokeWidth={2}
       >
         <RNSVGPath
-          d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"
+          d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M9 22 9 12 15 12 15 22"
           fill={
             {
               "payload": 4278190080,
@@ -1041,7 +1145,7 @@ exports[`icons PhoneIcon renders with defaults 1`] = `
 </KeyboardProvider>
 `;
 
-exports[`icons PillIcon renders with defaults 1`] = `
+exports[`icons InvoiceIcon renders with defaults 1`] = `
 <KeyboardProvider>
   <RNSVGSvgView
     align="xMidYMid"
@@ -1101,10 +1205,10 @@ exports[`icons PillIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
+        strokeWidth={2}
       >
         <RNSVGPath
-          d="M10.5 3.5a5 5 0 0 1 7 7l-7 7a5 5 0 0 1-7-7z"
+          d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
           fill={
             {
               "payload": 4278190080,
@@ -1113,7 +1217,117 @@ exports[`icons PillIcon renders with defaults 1`] = `
           }
         />
         <RNSVGPath
-          d="m7 7 7 7"
+          d="M14 2 14 8 20 8"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="16"
+          x2="8"
+          y1="13"
+          y2="13"
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="16"
+          x2="8"
+          y1="17"
+          y2="17"
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons LinkIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"
           fill={
             {
               "payload": 4278190080,
@@ -1127,7 +1341,7 @@ exports[`icons PillIcon renders with defaults 1`] = `
 </KeyboardProvider>
 `;
 
-exports[`icons PinIcon renders with defaults 1`] = `
+exports[`icons LogoutIcon renders with defaults 1`] = `
 <KeyboardProvider>
   <RNSVGSvgView
     align="xMidYMid"
@@ -1187,10 +1401,10 @@ exports[`icons PinIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
+        strokeWidth={2}
       >
         <RNSVGPath
-          d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"
+          d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"
           fill={
             {
               "payload": 4278190080,
@@ -1198,16 +1412,266 @@ exports[`icons PinIcon renders with defaults 1`] = `
             }
           }
         />
-        <RNSVGCircle
-          cx="12"
-          cy="10"
+        <RNSVGPath
+          d="M16 17 21 12 16 7"
           fill={
             {
               "payload": 4278190080,
               "type": 0,
             }
           }
-          r="2.5"
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="21"
+          x2="9"
+          y1="12"
+          y2="12"
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons MessageIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons PaperclipIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons PenIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M12 20h9"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
         />
       </RNSVGGroup>
     </RNSVGGroup>
@@ -1252,36 +1716,7 @@ exports[`icons SearchIcon renders with defaults 1`] = `
         ]
       }
     >
-      <RNSVGCircle
-        cx={11}
-        cy={11}
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        r={7}
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
-      <RNSVGPath
-        d="M20 20l-3.5-3.5"
+      <RNSVGGroup
         fill={
           {
             "payload": 4278190080,
@@ -1304,20 +1739,44 @@ exports[`icons SearchIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
+        strokeWidth={2}
+      >
+        <RNSVGCircle
+          cx="11"
+          cy="11"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          r="8"
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="21"
+          x2="16.65"
+          y1="21"
+          y2="16.65"
+        />
+      </RNSVGGroup>
     </RNSVGGroup>
   </RNSVGSvgView>
 </KeyboardProvider>
 `;
 
-exports[`icons StarIcon renders with defaults 1`] = `
+exports[`icons SendIcon renders with defaults 1`] = `
 <KeyboardProvider>
   <RNSVGSvgView
     align="xMidYMid"
     bbHeight={24}
     bbWidth={24}
-    fill="none"
+    fill="#14213D"
     focusable={false}
     height={24}
     meetOrSlice={0}
@@ -1341,7 +1800,12 @@ exports[`icons StarIcon renders with defaults 1`] = `
     width={24}
   >
     <RNSVGGroup
-      fill={null}
+      fill={
+        {
+          "payload": 4279509309,
+          "type": 0,
+        }
+      }
       propList={
         [
           "fill",
@@ -1349,17 +1813,12 @@ exports[`icons StarIcon renders with defaults 1`] = `
       }
     >
       <RNSVGPath
-        d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"
+        d="M2 21l21-9L2 3v7l15 2-15 2z"
         fill={
           {
-            "payload": 4293434159,
+            "payload": 4278190080,
             "type": 0,
           }
-        }
-        propList={
-          [
-            "fill",
-          ]
         }
       />
     </RNSVGGroup>
@@ -1367,103 +1826,7 @@ exports[`icons StarIcon renders with defaults 1`] = `
 </KeyboardProvider>
 `;
 
-exports[`icons UserIcon renders with defaults 1`] = `
-<KeyboardProvider>
-  <RNSVGSvgView
-    align="xMidYMid"
-    bbHeight={24}
-    bbWidth={24}
-    fill="none"
-    focusable={false}
-    height={24}
-    meetOrSlice={0}
-    minX={0}
-    minY={0}
-    style={
-      [
-        {
-          "backgroundColor": "transparent",
-          "borderWidth": 0,
-        },
-        {
-          "flex": 0,
-          "height": 24,
-          "width": 24,
-        },
-      ]
-    }
-    vbHeight={24}
-    vbWidth={24}
-    width={24}
-  >
-    <RNSVGGroup
-      fill={null}
-      propList={
-        [
-          "fill",
-        ]
-      }
-    >
-      <RNSVGCircle
-        cx={12}
-        cy={8}
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        r={4}
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
-      <RNSVGPath
-        d="M4 21c0-4 4-6 8-6s8 2 8 6"
-        fill={
-          {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-        propList={
-          [
-            "stroke",
-            "strokeWidth",
-            "strokeLinecap",
-            "strokeLinejoin",
-          ]
-        }
-        stroke={
-          {
-            "payload": 4279509309,
-            "type": 0,
-          }
-        }
-        strokeLinecap={1}
-        strokeLinejoin={1}
-        strokeWidth={1.8}
-      />
-    </RNSVGGroup>
-  </RNSVGSvgView>
-</KeyboardProvider>
-`;
-
-exports[`icons VideoIcon renders with defaults 1`] = `
+exports[`icons ServicesIcon renders with defaults 1`] = `
 <KeyboardProvider>
   <RNSVGSvgView
     align="xMidYMid"
@@ -1523,7 +1886,7 @@ exports[`icons VideoIcon renders with defaults 1`] = `
         }
         strokeLinecap={1}
         strokeLinejoin={1}
-        strokeWidth={1.8}
+        strokeWidth={2}
       >
         <RNSVGRect
           fill={
@@ -1532,20 +1895,494 @@ exports[`icons VideoIcon renders with defaults 1`] = `
               "type": 0,
             }
           }
-          height="12"
+          height="14"
           rx="2"
-          width="14"
+          ry="2"
+          width="20"
           x="2"
-          y="6"
+          y="7"
         />
         <RNSVGPath
-          d="m16 10 6-3v10l-6-3z"
+          d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"
           fill={
             {
               "payload": 4278190080,
               "type": 0,
             }
           }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons SettingsIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGCircle
+          cx="12"
+          cy="12"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          r="3"
+        />
+        <RNSVGPath
+          d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons ShieldIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons SwapIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M17 1l4 4-4 4"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M3 11V9a4 4 0 0 1 4-4h14"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M7 23l-4-4 4-4"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M21 13v2a4 4 0 0 1-4 4H3"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons TeamIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGCircle
+          cx="9"
+          cy="7"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          r="4"
+        />
+        <RNSVGPath
+          d="M23 21v-2a4 4 0 00-3-3.87"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M16 3.13a4 4 0 010 7.75"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGGroup>
+  </RNSVGSvgView>
+</KeyboardProvider>
+`;
+
+exports[`icons UploadIcon renders with defaults 1`] = `
+<KeyboardProvider>
+  <RNSVGSvgView
+    align="xMidYMid"
+    bbHeight={24}
+    bbWidth={24}
+    fill="none"
+    focusable={false}
+    height={24}
+    meetOrSlice={0}
+    minX={0}
+    minY={0}
+    style={
+      [
+        {
+          "backgroundColor": "transparent",
+          "borderWidth": 0,
+        },
+        {
+          "flex": 0,
+          "height": 24,
+          "width": 24,
+        },
+      ]
+    }
+    vbHeight={24}
+    vbWidth={24}
+    width={24}
+  >
+    <RNSVGGroup
+      fill={null}
+      propList={
+        [
+          "fill",
+        ]
+      }
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+        propList={
+          [
+            "stroke",
+            "strokeWidth",
+            "strokeLinecap",
+            "strokeLinejoin",
+          ]
+        }
+        stroke={
+          {
+            "payload": 4279509309,
+            "type": 0,
+          }
+        }
+        strokeLinecap={1}
+        strokeLinejoin={1}
+        strokeWidth={2}
+      >
+        <RNSVGPath
+          d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGPath
+          d="M17 8 12 3 7 8"
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+        />
+        <RNSVGLine
+          fill={
+            {
+              "payload": 4278190080,
+              "type": 0,
+            }
+          }
+          x1="12"
+          x2="12"
+          y1="3"
+          y2="15"
         />
       </RNSVGGroup>
     </RNSVGGroup>

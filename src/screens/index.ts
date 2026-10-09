@@ -1,7 +1,6 @@
+export { default as DocumentsScreen } from "./documents/DocumentsScreen";
+export { default as FeatureScreen } from "./feature/FeatureScreen";
 export { default as HomeScreen } from "./home/HomeScreen";
-export { default as ProfileScreen } from "./profile/ProfileScreen";
-export { default as RecordsScreen } from "./records/RecordsScreen";
-export { default as VisitsScreen } from "./visits/VisitsScreen";
-
-export { default as DoctorProfileScreen } from "./doctor-profile/DoctorProfileScreen";
-export { default as FindADoctorScreen } from "./find-a-doctor/FindADoctorScreen";
+export { default as MessagesScreen } from "./messages/MessagesScreen";
+export { default as MoreScreen } from "./more/MoreScreen";
+export { default as UploadScreen } from "./upload/UploadScreen";

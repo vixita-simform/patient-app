@@ -1,7 +1,6 @@
 import { Tabs } from "expo-router/js-tabs";
 
-import { TABS, useTabScreenOptions } from "../../navigation";
-import { scale } from "../../theme";
+import { TAB_ICON_SIZE, TABS, useTabScreenOptions } from "../../navigation";
 
 /**
  * Bottom tab navigator for the main app.
@@ -18,7 +17,7 @@ export default function TabLayout() {
           options={{
             title,
             tabBarIcon: ({ color }) => (
-              <Icon color={String(color)} size={scale(24)} />
+              <Icon color={String(color)} size={TAB_ICON_SIZE} />
             ),
           }}
         />

@@ -1,17 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Avatar matches the snapshot with default tone and size 1`] = `
+exports[`Avatar matches the snapshot 1`] = `
 <KeyboardProvider>
-  <View
+  <ViewManagerAdapter_ExpoLinearGradient
+    colors={
+      [
+        4278230182,
+        4278222474,
+      ]
+    }
+    endPoint={
+      [
+        1,
+        1,
+      ]
+    }
+    startPoint={
+      [
+        0,
+        0,
+      ]
+    }
     style={
       {
         "alignItems": "center",
-        "backgroundColor": "#2F7D6D",
-        "borderRadius": 35,
+        "borderRadius": 29.5,
         "flexShrink": 0,
-        "height": 70,
+        "height": 59,
         "justifyContent": "center",
-        "width": 70,
+        "width": 59,
       }
     }
   >
@@ -21,12 +38,13 @@ exports[`Avatar matches the snapshot with default tone and size 1`] = `
         {
           "color": "#FFFFFF",
           "fontFamily": "Figtree_700Bold",
-          "fontSize": 24,
+          "fontSize": 21,
+          "fontWeight": "700",
         }
       }
     >
       AP
     </Text>
-  </View>
+  </ViewManagerAdapter_ExpoLinearGradient>
 </KeyboardProvider>
 `;

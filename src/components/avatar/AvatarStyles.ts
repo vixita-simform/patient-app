@@ -1,37 +1,19 @@
 import { StyleSheet } from "react-native";
 
-import { Colors, Fonts, scale, type ThemeMode } from "../../theme";
+import { Colors, Fonts, type ThemeMode } from "../../theme";
 
 const styles = (theme: ThemeMode) =>
   StyleSheet.create({
+    // width / height / borderRadius come from the `size` prop at render time.
     avatar: {
-      width: scale(48),
-      height: scale(48),
       alignItems: "center",
       justifyContent: "center",
       flexShrink: 0,
-      borderRadius: scale(24),
     },
-    avatarText: {
+    initials: {
       fontFamily: Fonts.family.bold,
-      fontSize: Fonts.size.f16,
+      fontWeight: Fonts.weight.extraSemi,
       color: Colors[theme].white,
-    },
-    avatarNavy: {
-      backgroundColor: Colors[theme].navy,
-    },
-    avatarGreen: {
-      backgroundColor: Colors[theme].green,
-    },
-    avatarBlue: {
-      backgroundColor: Colors[theme].blue,
-    },
-    avatarAmber: {
-      backgroundColor: Colors[theme].amber,
-    },
-    avatarSize44: {
-      width: scale(44),
-      height: scale(44),
     },
   });
 

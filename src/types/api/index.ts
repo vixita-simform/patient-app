@@ -1,3 +1,1 @@
-export * from "./home";
-export * from "./findADoctor";
-export * from "./doctorProfile";
+export * from "./portal";

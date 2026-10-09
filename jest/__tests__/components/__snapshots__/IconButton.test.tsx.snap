@@ -106,10 +106,10 @@ exports[`IconButton matches the snapshot 1`] = `
           }
           strokeLinecap={1}
           strokeLinejoin={1}
-          strokeWidth={1.8}
+          strokeWidth={2}
         >
           <RNSVGPath
-            d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"
+            d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
             fill={
               {
                 "payload": 4278190080,
@@ -118,7 +118,7 @@ exports[`IconButton matches the snapshot 1`] = `
             }
           />
           <RNSVGPath
-            d="M10 21h4"
+            d="M13.73 21a2 2 0 0 1-3.46 0"
             fill={
               {
                 "payload": 4278190080,

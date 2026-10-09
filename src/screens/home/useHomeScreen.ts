@@ -1,112 +1,69 @@
 import { router } from "expo-router";
-import { useCallback, useMemo } from "react";
-import { Linking } from "react-native";
+import { useCallback, useMemo, useState } from "react";
 
 import {
-  EMERGENCY_AMBULANCE_NUMBER,
-  homeScreenDummyData,
+  CLIENT_CODES,
+  DOCUMENTS,
+  HOME_SUMMARY,
+  MESSAGES,
+  NOTIFICATIONS,
   STACK_ROUTES,
-  Strings,
+  TAB_ROUTES,
+  TEAM,
 } from "../../constants";
-import type { HomeDashboardResponse } from "../../types";
-import { formatDate, formatTime, getInitials, isToday } from "../../utils";
-import type { HomeViewData, UseHomeScreenReturn } from "./HomeScreenTypes";
+import type { ClientCode } from "../../types";
+import type { UseHomeScreenReturn } from "./HomeScreenTypes";
+
+const DOCUMENTS_PATH = `/${TAB_ROUTES.documents}` as const;
+const MESSAGES_PATH = `/${TAB_ROUTES.messages}` as const;
+const RECENT_DOCUMENT_COUNT = 3;
+const RECENT_MESSAGE_COUNT = 2;
 
 /**
- * Maps the dashboard API response to the props the Home screen renders.
- * @param {HomeDashboardResponse} response - dashboard API payload.
- * @returns {HomeViewData} View data for the header, token card, appointment and vitals.
+ * Home screen state and navigation handlers.
+ * @returns {UseHomeScreenReturn} data and handlers for the screen.
  */
-export const toHomeViewData = ({
-  patient,
-  opdToken,
-  nextAppointment,
-  vitals,
-}: HomeDashboardResponse): HomeViewData => {
-  const fullName = `${patient.firstName} ${patient.lastName}`;
+export default function useHomeScreen(): UseHomeScreenReturn {
+  const [client, setClient] = useState<ClientCode>(CLIENT_CODES[0]);
+  const [ccOpen, setCcOpen] = useState(false);
 
-  return {
-    user: { initials: getInitials(fullName), name: fullName },
-    token: {
-      department: opdToken.department,
-      tokenNumber: opdToken.tokenNumber,
-      servingNumber: opdToken.nowServing,
-      patientsAhead: opdToken.patientsAhead,
-      waitMinutes: opdToken.estimatedWaitMinutes,
-      progress: opdToken.queueProgress,
-    },
-    appointment: nextAppointment
-      ? {
-          initials: getInitials(nextAppointment.doctor.name),
-          doctorName: nextAppointment.doctor.name,
-          detail: `${nextAppointment.doctor.specialty} · ${nextAppointment.room}`,
-          badgeLabel: isToday(nextAppointment.scheduledAt)
-            ? Strings.HomeScreen.today
-            : undefined,
-          date: formatDate(nextAppointment.scheduledAt),
-          time: formatTime(nextAppointment.scheduledAt),
-        }
-      : null,
-    vitals: {
-      heart: {
-        value: String(vitals.heartRate.value),
-        unit: vitals.heartRate.unit,
-      },
-      // The design shows blood pressure without its unit
-      bloodPressure: {
-        value: `${vitals.bloodPressure.systolic}/${vitals.bloodPressure.diastolic}`,
-        unit: undefined,
-      },
-      sugar: {
-        value: String(vitals.bloodSugar.value),
-        unit: vitals.bloodSugar.unit,
-      },
-    },
-  };
-};
+  const unreadCount = useMemo(() => NOTIFICATIONS.filter((n) => !n.read).length, []);
+  const recentDocuments = useMemo(() => DOCUMENTS.slice(0, RECENT_DOCUMENT_COUNT), []);
+  const recentMessages = useMemo(() => MESSAGES.slice(0, RECENT_MESSAGE_COUNT), []);
 
-/**
- * Handlers and data for the Home screen. Data comes from the dummy dashboard
- * response until the API is wired up.
- * @returns {UseHomeScreenReturn} Screen data and press handlers.
- */
-const useHomeScreen = (): UseHomeScreenReturn => {
-  const data = useMemo(() => toHomeViewData(homeScreenDummyData), []);
-
-  const onPressBookVisit = useCallback(() => {
-    router.push(STACK_ROUTES.findADoctor);
+  const onOpenClientSheet = useCallback(() => setCcOpen(true), []);
+  const onCloseClientSheet = useCallback(() => setCcOpen(false), []);
+  const onSelectClient = useCallback((next: ClientCode) => {
+    setClient(next);
+    setCcOpen(false);
   }, []);
 
-  const onPressCallAmbulance = useCallback(() => {
-    Linking.openURL(`tel:${EMERGENCY_AMBULANCE_NUMBER}`).catch(() => {
-      // Dialer unavailable (e.g. simulator or tablet); nothing else to fall back to
-    });
-  }, []);
-
-  // TODO: notifications screen not built yet
-  const onPressBell = useCallback(() => {}, []);
-  // TODO: lab reports screen not built yet
-  const onPressLabReports = useCallback(() => {}, []);
-  // TODO: medicines screen not built yet
-  const onPressMedicines = useCallback(() => {}, []);
-  // TODO: appointments list screen not built yet
-  const onPressSeeAll = useCallback(() => {}, []);
-  // TODO: vitals history screen not built yet
-  const onPressHistory = useCallback(() => {}, []);
-  // TODO: appointment detail screen not built yet
-  const onPressAppointment = useCallback(() => {}, []);
+  const onPressNotifications = useCallback(() => router.push(STACK_ROUTES.notifications), []);
+  const onPressOutstanding = useCallback(() => router.push(STACK_ROUTES.checklist), []);
+  const onPressDocuments = useCallback(() => router.push(DOCUMENTS_PATH), []);
+  const onPressSigning = useCallback(() => router.push(STACK_ROUTES.signing), []);
+  const onPressMessages = useCallback(() => router.push(MESSAGES_PATH), []);
+  const onPressTeam = useCallback(() => router.push(STACK_ROUTES.team), []);
 
   return {
-    data,
-    onPressBell,
-    onPressBookVisit,
-    onPressLabReports,
-    onPressMedicines,
-    onPressCallAmbulance,
-    onPressSeeAll,
-    onPressHistory,
-    onPressAppointment,
+    client,
+    clientCodes: CLIENT_CODES,
+    showClientSwitch: CLIENT_CODES.length > 1,
+    ccOpen,
+    unreadCount,
+    recentDocuments,
+    recentMessages,
+    documentCount: DOCUMENTS.length,
+    summary: HOME_SUMMARY,
+    team: TEAM,
+    onOpenClientSheet,
+    onCloseClientSheet,
+    onSelectClient,
+    onPressNotifications,
+    onPressOutstanding,
+    onPressDocuments,
+    onPressSigning,
+    onPressMessages,
+    onPressTeam,
   };
-};
-
-export default useHomeScreen;
+}

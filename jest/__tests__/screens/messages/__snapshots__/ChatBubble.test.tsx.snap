@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatBubble matches the snapshot 1`] = `
+<KeyboardProvider>
+  <View
+    style={
+      {
+        "alignItems": "flex-start",
+        "flexDirection": "column",
+        "marginBottom": 12,
+      }
+    }
+  >
+    <Text
+      maxFontSizeMultiplier={1.3}
+      style={
+        {
+          "color": "#00B74F",
+          "fontFamily": "Figtree_600SemiBold",
+          "fontSize": 14,
+          "fontWeight": "600",
+          "marginBottom": 3,
+          "marginLeft": 6,
+        }
+      }
+    >
+      Sarah Murphy
+    </Text>
+    <View
+      style={
+        {
+          "backgroundColor": "#E8F5E9",
+          "borderBottomLeftRadius": 5,
+          "borderBottomRightRadius": 18,
+          "borderTopLeftRadius": 18,
+          "borderTopRightRadius": 18,
+          "maxWidth": "85%",
+          "paddingHorizontal": 18,
+          "paddingVertical": 14,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#002B49",
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Hello there
+      </Text>
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#545859",
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 14,
+            "marginTop": 5,
+            "textAlign": "right",
+          }
+        }
+      >
+        10:30 AM
+      </Text>
+    </View>
+  </View>
+</KeyboardProvider>
+`;

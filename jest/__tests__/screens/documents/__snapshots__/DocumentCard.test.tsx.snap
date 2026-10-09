@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DocumentCard matches the snapshot 1`] = `
+<KeyboardProvider>
+  <View
+    style={
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#E1E6E8",
+        "borderRadius": 18,
+        "borderWidth": 2,
+        "padding": 21,
+        "paddingHorizontal": 18,
+        "paddingVertical": 18,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "marginBottom": 11,
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#002B49",
+            "fontFamily": "Figtree_600SemiBold",
+            "fontSize": 19,
+            "fontWeight": "600",
+            "marginBottom": 5,
+          }
+        }
+      >
+        Annual Accounts 2024
+      </Text>
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#545859",
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 17,
+          }
+        }
+      >
+        Annual Accounts · 2024
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        maxFontSizeMultiplier={1.3}
+        style={
+          {
+            "color": "#545859",
+            "fontFamily": "Figtree_400Regular",
+            "fontSize": 15,
+          }
+        }
+      >
+        2025-01-15 · 2.4 MB
+      </Text>
+      <View
+        accessibilityLabel="Download Annual Accounts 2024"
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#F4F7F8",
+            "borderColor": "#E1E6E8",
+            "borderRadius": 8,
+            "borderWidth": 2,
+            "flexDirection": "row",
+            "gap": 5,
+            "paddingHorizontal": 14,
+            "paddingVertical": 5,
+          }
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={15}
+          bbWidth={15}
+          fill="none"
+          focusable={false}
+          height={15}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 15,
+                "width": 15,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={15}
+        >
+          <RNSVGGroup
+            fill={null}
+            propList={
+              [
+                "fill",
+              ]
+            }
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "stroke",
+                  "strokeWidth",
+                  "strokeLinecap",
+                  "strokeLinejoin",
+                ]
+              }
+              stroke={
+                {
+                  "payload": 4278230182,
+                  "type": 0,
+                }
+              }
+              strokeLinecap={1}
+              strokeLinejoin={1}
+              strokeWidth={2}
+            >
+              <RNSVGPath
+                d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              />
+              <RNSVGPath
+                d="M7 10 12 15 17 10"
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+              />
+              <RNSVGLine
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+                x1="12"
+                x2="12"
+                y1="15"
+                y2="3"
+              />
+            </RNSVGGroup>
+          </RNSVGGroup>
+        </RNSVGSvgView>
+        <Text
+          maxFontSizeMultiplier={1.3}
+          style={
+            {
+              "color": "#009CA6",
+              "fontFamily": "Figtree_600SemiBold",
+              "fontSize": 15,
+              "fontWeight": "600",
+            }
+          }
+        >
+          Download
+        </Text>
+      </View>
+    </View>
+  </View>
+</KeyboardProvider>
+`;

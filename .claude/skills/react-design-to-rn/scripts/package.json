@@ -1,0 +1,10 @@
+{
+  "name": "react-design-to-rn-scripts",
+  "private": true,
+  "type": "module",
+  "description": "Helper scripts for the react-design-to-rn skill. Dependencies resolve from the host project's node_modules first (any Expo/RN app already has them); run `npm i` here only if a script says a module is missing.",
+  "dependencies": {
+    "@babel/parser": "^7.24.0",
+    "pngjs": "^7.0.0"
+  }
+}

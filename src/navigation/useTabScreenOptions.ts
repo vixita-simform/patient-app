@@ -5,7 +5,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useTheme } from "../hooks";
 import { Colors } from "../theme";
-import TabBarStyles, { TAB_BAR_BASE_HEIGHT } from "./TabBarStyles";
+import { renderTabBarLabel } from "./TabBarLabel";
+import TabBarStyles, { TAB_BAR_BASE_HEIGHT, TAB_BAR_BOTTOM_PADDING } from "./TabBarStyles";
 
 /**
  * Screen options for the bottom tab navigator, themed and sized to the bottom safe-area inset.
@@ -18,13 +19,15 @@ export default function useTabScreenOptions(): BottomTabNavigationOptions {
   return useMemo(
     () => ({
       headerShown: false,
-      tabBarActiveTintColor: Colors[theme].green,
-      tabBarInactiveTintColor: Colors[theme].tabInactive,
+      tabBarActiveTintColor: Colors[theme].primary,
+      tabBarInactiveTintColor: Colors[theme].textSecondary,
       tabBarStyle: StyleSheet.flatten([
         styles.tabBar,
-        { height: TAB_BAR_BASE_HEIGHT + bottom },
+        { height: TAB_BAR_BASE_HEIGHT + bottom, paddingBottom: TAB_BAR_BOTTOM_PADDING + bottom },
       ]),
-      tabBarLabelStyle: styles.tabBarLabel,
+      tabBarItemStyle: styles.tabBarItem,
+      tabBarIconStyle: styles.tabBarIcon,
+      tabBarLabel: renderTabBarLabel,
     }),
     [theme, styles, bottom],
   );
